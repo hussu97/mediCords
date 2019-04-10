@@ -16,8 +16,33 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
-    res.render('index');
+  res.render('landing');
 });
+//NEED TO ADD AUTH LOGIC
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname+'/views/login.html'));
+});
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname+'/views/register.html'));
+});
+
+// CHECK FOR AUTH
+app.get('/patient', (req, res) => {
+  res.render('dashboardPatient', {name: 'Mohammed Yaseen'});
+});
+// CHECK FOR AUTH
+app.get('/doctor', (req, res) => {
+  res.render('dashboardDoctor', {name: 'Dr. Raafat'});
+});
+// AUTH LOGIC
+app.post('/userAuth', (req, res) => {
+  console.log('hi');
+  res.redirect('/patient');
+});
+app.get('*', (req,res) => {
+  res.sendFile(path.join(__dirname+'/views/404.html'));
+});
+
 app.set('view engine', 'ejs');
 
 app.listen(port, () => {
