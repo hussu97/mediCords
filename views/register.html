@@ -37,7 +37,7 @@
     <div class="login-area">
         <div class="container">
             <div class="login-box ptb--100">
-                <form method="GET" action="/">
+                <form method="POST" action="/authenticate">
                     <div class="login-form-head">
                         <h4>Sign up</h4>
                         <p>Hello there, Sign up and Join with Us</p>
@@ -45,12 +45,12 @@
                     <div class="login-form-body">
                         <div class="form-gp">
                             <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name">
+                            <input type="text" id="name" name="full_name">
                             <i class="ti-user"></i>
                         </div>
                         <div class="form-gp">
                             <label for="email">Email address</label>
-                            <input type="email" id="email" name="email">
+                            <input type="email" id="email" name="email_address">
                             <i class="ti-email"></i>
                         </div>
                         <div class="form-gp">
@@ -67,7 +67,7 @@
                             <button id="form_submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
                         </div>
                         <div class="form-footer text-center mt-5">
-                            <p class="text-muted">Don't have an account? <a href="login.html">Sign in</a></p>
+                            <p class="text-muted">Don't have an account? <a href="login">Sign in</a></p>
                         </div>
                     </div>
                 </form>
