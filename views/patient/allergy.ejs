@@ -1,0 +1,65 @@
+<% include ./partials/header %>
+<% include ./partials/medicalInfo/header %>
+<!-- page title area end -->
+<div class="main-content-inner">
+    <div class="container">
+        <div class="row">
+            <!-- Progress Table start -->
+            <div class="col-12 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Previous Allergies</h4>
+                        <div class="single-table">
+                            <div class="table-responsive">
+                                <table class="table table-hover progress-table text-center">
+                                    <thead class="text-uppercase">
+                                        <tr>
+                                            <th scope="col">Allergic To</th>
+                                            <th scope="col">Diagnosed By</th>
+                                            <th scope="col">Date of Diagnosis</th>
+                                            <th scope="col">Severity</th>
+                                            <th scope="col">Medications</th>  
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% allergies.forEach((al)=> { %>
+                                        <tr>
+                                            
+                                            <th scope="row"><%= al.name %></th>
+                                            <td><%= al.doctor %></td>
+                                            <td><%= al.date %></td>
+                                            <% 
+                                            let serverityList = {
+                                                low : "success",
+                                                med : "warning",
+                                                high: "danger"
+                                            }
+                                            %>
+                                            <td><span class="status-p bg-<%= serverityList[al.severity] %>"><%= al.severity %></span></td>
+                                            <td><%= al.medication %></td>
+                                        </tr>
+                                        <%}); %>
+                                    </tbody>
+                                    <% if(allergies.length === 0) {%>
+                                        <p>No allergies have been recorded for you</p>
+                                        <br/>
+                                    <% }; %>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress Table end -->
+        </div>
+    </div>
+</div>
+<!-- main content area end -->
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
+
+</html>

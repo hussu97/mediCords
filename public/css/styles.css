@@ -54,6 +54,7 @@
 /* COLORS
     blue-primary #1498ff
     blue-secondary #185685
+    blue-light-shade #a2c0ef
 */
 /*------------------------- 1. Core Css -------------------*/
 
@@ -76,6 +77,16 @@
     background-color: #fff;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    position: relative;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.card-profile .card-header {
+    height: 9rem;
+    background-size: cover;
+    background-image: url(http://source.unsplash.com/QTu7FStK4AE);
 }
 
 .card:hover {
@@ -98,6 +109,7 @@
 
 .main-content-inner {
     padding: 0 30px 50px;
+    margin-top: 1.5rem;
 }
 
 /*------------------------- END Core Css -------------------*/
@@ -304,6 +316,10 @@
     margin-right: 5px;
 }
 
+.horizontal-menu-hr {
+    border: 1px solid #f3f8fb;
+}
+
 .horizontal-menu .submenu {
     position: absolute;
     left: 0;
@@ -349,7 +365,8 @@
 /* mobile menu */
 
 .slicknav_menu {
-    background: #8255f7;
+    background: -webkit-linear-gradient(left, #185685 0%, #1498ff 100%);
+    background: linear-gradient(to right, #185685 0%, #1498ff 100%);
     padding: 0;
     margin-top: 20px;
 }
@@ -382,7 +399,7 @@
 
 .slicknav_nav .slicknav_row:hover {
     border-radius: 0;
-    background: #8e66f7;
+    background: #a2c0ef;
 }
 
 .slicknav_nav li i {
@@ -661,7 +678,7 @@
     top: 50%;
     width: 4px;
     height: 36px;
-    background: var(--primary-color);
+    background: #1498ff;
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
 }
@@ -1919,7 +1936,8 @@ p.card-text {
     font-size: 14px;
     border: 1px solid rgba(170, 170, 170, .3);
     padding: 10.72px 12.8px;
-    padding: .67rem .8rem;
+    padding: 0.5rem 1.75rem 0.5rem 0.75rem;
+    line-height: 1.5;
 }
 
 .form-control-sm,
@@ -2426,6 +2444,38 @@ table.dataTable thead td {
 }
 
 .submit-btn-area button:hover i {
+    margin-left: 20px;
+}
+
+.submit-btn-area input {
+    width: 100%;
+    height: 50px;
+    border: none;
+    text-align: center;
+    background: #fff;
+    color: #585b5f;
+    border-radius: 40px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    font-weight: 600;
+    font-size: 12px;
+    box-shadow: 0 0 22px rgba(0, 0, 0, 0.07);
+    -webkit-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+
+.submit-btn-area input:hover {
+    background: #a7aeba;
+    color: #ffffff;
+}
+
+.submit-btn-area input i {
+    margin-left: 15px;
+    -webkit-transition: margin-left 0.3s ease 0s;
+    transition: margin-left 0.3s ease 0s;
+}
+
+.submit-btn-area input:hover i {
     margin-left: 20px;
 }
 

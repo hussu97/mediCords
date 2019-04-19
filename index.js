@@ -12,7 +12,10 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var flash = require('connect-flash');
 var methodOverride = require('method-override');
-
+var {countryList} = require('./public/js/constants');
+var patientRoutes = require('./routes/patients');
+var indexRoutes = require('./routes/index');
+var moment = require('moment');
 port = 8080;
 
 app.use(flash());
@@ -21,101 +24,107 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: false
 })
 app.use(bodyParser.json());
-//app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
-app.get('/', (req, res) => {
-  res.render('landing');
-});
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname + '/views/login.html'));
-});
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname + '/views/register.html'));
-});
-app.post('/authenticate', urlencodedParser, function (req, res, next) {
-  var response = {
-    full_name: req.body.full_name,
-    email_address: req.body.email_address,
-    password: req.body.password
-    //comfirm_pass: req.query.confirm_pass
-  }
-  mongo.connect(url, {useNewUrlParser:true}, function (err, client) {
-    assert.equal(null, err);
-    var db = client.db('test01');
-    db.collection('userData').insertOne(response, function (err, db) {
-      assert.equal(null, err);
-      console.log('User added')
-      client.close();
-      res.redirect('/login');
-    });
+app.get('/patient', (req, res) => {
+  res.render('patient/profile',{
+    patient : {
+      firstName : 'John',
+      lastName : 'Doe',
+      country : 'Madagascar',
+      isVerified : true,
+      id : 123
+    },
+    countryList : countryList
   });
 });
-app.get('/showItems', (req, res) => {
-  var resArr = [];
-  mongo.connect(url, {useNewUrlParser:true},function (err, client) {
-    assert.equal(null, err);
-    var db = client.db('test01');
-    var pointer = db.collection('userData').find();
-    pointer.forEach(function (doc, err) {
-      assert.equal(null, err);
-      resArr.push(doc);
-    }, function () {
-      client.close();
-      console.log('Viewed');
-      res.send({
-        users: resArr
+app.get('/patientOperation', (req, res) => {
+  res.render('patient/operation',{
+    patient : {
+      firstName : 'John',
+      lastName : 'Doe',
+      country : 'Madagascar',
+      isVerified : true,
+      id : 123
+    },
+    operations : [
+      {
+        date: moment().format('MMM Do YY'),
+        name: 'Tonsil Surgery',
+        doctor: 'Steven',
+        dischargeDate : moment().subtract(10, 'days').format('MMM Do YY'),
+        daysInHospital : '23',
+        comment:'Successful operation'
+      }
+    ]
+  });
+});
+app.get('/patientAllergy', (req, res) => {
+  res.render('patient/allergy',{
+    patient : {
+      firstName : 'John',
+      lastName : 'Doe',
+      country : 'Madagascar',
+      isVerified : true,
+      id : 123
+    },
+    allergies : [
+      {
+        name : 'Peanut Butter',
+        doctor : 'Hello',
+        date : moment().format('MMM Do YY'),
+        severity : 'low',
+        medication : 'N/A'
+      },
+      {
+        name : 'Peanut Butter',
+        doctor : 'Hello',
+        date : moment().format('MMM Do YY'),
+        severity : 'med',
+        medication : 'N/A'
+      },
+      {
+        name : 'Peanut Butter',
+        doctor : 'Hello',
+        date : moment().format('MMM Do YY'),
+        severity : 'high',
+        medication : 'Water'
+      }
+    ]
+  });
+});
+app.get('patient/:id/profile',(req,res) => {
+    res.render('patient/profile',{
+        patient : {
+          firstName : 'John',
+          lastName : 'Doe',
+          country : 'Madagascar',
+          isVerified : true,
+          id : req.params.id
+        },
+        countryList : countryList
       });
-    });
-  });
+});
+app.put('patient/:id/profile', (req,res)=> {
+    res.redirect('/patient/'+req.params.id);
 });
 
-app.get('/patient', urlencodedParser, function (req, res, next) {
-  var passedVar = req.query.valid; // Passed full_name variable
-  res.render('dashboardPatient', {
-    name: passedVar
-  })
+
+app.use('/',indexRoutes);
+//app.use('/patient',patientRoutes);
+app.get('/2', (req, res) => {
+  res.sendFile(path.join(__dirname + '/./cards.html'));
 });
-// CHECK FOR AUTH
-app.post('/authUser', urlencodedParser, function (req, res, next) {
-  var response = {
-    email_address: req.body.email_address,
-    password: req.body.password
-  }
-  var resArr = [];
-  mongo.connect(url,{useNewUrlParser:true}, function (err, client) {
-    assert.equal(null, err);
-    var db = client.db('test01');
-    var pointer = db.collection('userData').find();
-    pointer.forEach(function (doc, err) {
-      assert.equal(null, err);
-      resArr.push(doc);
-    }, function () {
-      client.close();
-      console.log(response);
-      for (i = 0; i < resArr.length; i++) {
-        if (resArr[i].email_address == response.email_address) {
-          if (resArr[i].password == response.password) {
-            // User found
-            var passable = encodeURIComponent(resArr[i].full_name); // Pass full_name variable
-            res.redirect('/patient?valid=' + resArr[i].full_name);
-            return 0;
-          }
-        }
-      }
-      // User not found
-      res.redirect('/login')
-    });
-  });
-});
+
 app.get('/doctor', (req, res) => {
   res.render('dashboardDoctor', {
     name: 'Dr. Raafat'
   });
 });
-// AUTH LOGIC
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/views/404.html'));
+  res.sendFile(path.join(__dirname + '/./404.html'));
 });
 
 app.set('view engine', 'ejs');
