@@ -22,10 +22,11 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="/patient/:id/bill"><i class="ti-notepad"></i><span>Bills</span></a>
+                                <a href="/patient/<%=patient.id%>/bill"><i class="ti-notepad"></i><span>Bills</span></a>
                             </li>
                             <li class="mega-menu">
-                                <a href="/patient/:id/insurance"><i class="ti-light-bulb"></i><span>Insurance
+                                <a href="/patient/<%=patient.id%>/insurance"><i
+                                        class="ti-light-bulb"></i><span>Insurance
                                         Company</span></a>
                             </li>
                         </ul>
@@ -81,11 +82,11 @@
                             Citizen at <%= patient.country %>
                         </p>
                         <% if(patient.isVerified){ %>
-                        <a href="#" class="btn btn-outline-success btn-sm">
+                        <a href="javascript:void(0)" class="btn btn-outline-success btn-sm">
                             <span class="fa fa-check"></span> Verified
                         </a>
                         <% } else { %>
-                        <a href="#" class="btn btn-outline-danger btn-sm">
+                        <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm">
                             <span class="fa fa-times"></span> Not Verified
                         </a>
                         <% } %>
@@ -112,8 +113,7 @@
                                         <a href="javascript:void(0)">Diseases</a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="javascript:void(0)" title="" data-toggle="tooltip"
-                                            data-original-title="@skypename">Bills</a>
+                                        <a href="/patient/<%=patient.id%>/bill">Bills</a>
                                     </li>
                                 </ul>
 
@@ -156,7 +156,7 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <form class="card" method="POST" action="/patients/<%=patient.id %>?_method=PUT">
+                <form class="card" method="POST" action="/patient/<%=patient.id %>?_method=PUT">
                     <div class="card-header"></div>
                     <div class="card-body">
                         <h3 class="card-title">Edit Profile</h3>

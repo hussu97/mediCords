@@ -1,0 +1,197 @@
+<% include ../patient/partials/header %>
+<!-- header area start -->
+<script>
+    updateInsurance = () => {
+        var buttonVal = $('.update-insurance').text();
+        if (buttonVal === 'Edit') {
+            $('.update-insurance').text('Save   ');
+            $('.update-insurance').removeClass('btn-outline-danger').addClass('btn-outline-success');
+            $('#name').prop('disabled', false);
+        } else {
+            $('.update-insurance').text('Edit');
+            $('.update-insurance').removeClass('btn-outline-success').addClass('btn-outline-danger');
+            $('#name').prop('disabled', true);
+        }
+    }
+</script>
+<div class="header-area header-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9  d-none d-lg-block">
+                <div class="horizontal-menu">
+                    <nav>
+                        <ul id="nav_menu">
+                            <li>
+                                <a href="/patient/<%=patient.id%>/profile"><i
+                                        class="ti-dashboard"></i><span>Profile</span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><i class="ti-layout-sidebar-left"></i><span>Medical
+                                        Information</span></a>
+                                <ul class="submenu">
+                                    <li><a href="/patient/<%=patient.id%>/operation">Operations</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/allergy">Allergies</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disease">Diseases</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disability">Disabilities</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/patient/<%=patient.id%>/bill"><i class="ti-notepad"></i><span>Bills</span></a>
+                            </li>
+                            <li class="active">
+                                <a href="/patient/<%=patient.id%>/insurance"><i
+                                        class="ti-light-bulb"></i><span>Insurance
+                                        Company</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- nav and search button -->
+            <div class="col-lg-3 clearfix">
+                <div class="search-box">
+                    <form action="#">
+                        <input type="text" name="search" placeholder="Search..." required>
+                        <i class="ti-search"></i>
+                    </form>
+                </div>
+            </div>
+            <!-- mobile_menu -->
+            <div class="col-12 d-block d-lg-none">
+                <div id="mobile_menu"></div>
+            </div>
+        </div>
+    </div>
+    <hr class="horizontal-menu-hr">
+    </hr>
+    <div class="container">
+        <div class="page-title-area">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="breadcrumbs-area clearfix">
+                        <h4 class="page-title pull-left">Dashboard</h4>
+                        <ul class="breadcrumbs pull-left">
+                            <li><a href="/patient/<%=patient.id%>/">Home</a></li>
+                            <li><span>Insurance</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header area end -->
+<!-- page title area end -->
+<div class="main-content-inner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card card-profile">
+                    <div class="card-header"></div>
+                    <div class="card-body text-center">
+
+                        <h3 class="mb-3"><%= patientInsurance.name %></h3>
+
+                        <p class="mb-4">
+                            Established in <%=patientInsurance.country%>
+                        </p>
+                        <% if(patientInsurance.isVerified){ %>
+                        <a href="javascript:void(0)" class="btn btn-outline-success btn-sm">
+                            <span class="fa fa-check"></span> Verified
+                        </a>
+                        <% } else { %>
+                        <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm">
+                            <span class="fa fa-times"></span> Not Verified
+                        </a>
+                        <% } %>
+                        <br /><br />
+                        <p class="mb-6 lg-6 status-p bg-success pull-left">
+                            Approved: <%= billsCount.approved %>
+                        </p>
+                        <p class="mb-6 lg-6 status-p bg-danger pull-right">
+                            Pending: <%= billsCount.pending %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <form class="card" method="POST" action="/patient/<%=patient.id%>/insurance?_method=PUT">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <h3 class="card-title">Insurance Details</h3>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="form-label">Company</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id="name" name="name" class="form-control" disabled=""
+                                            value="<%= patientInsurance.name%>" placeholder="Company">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger update-insurance" type="button"
+                                                onclick="updateInsurance()">Edit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Insurance ID</label>
+                                    <input type="text" class="form-control" disabled="" placeholder="ID"
+                                        value="<%=patientInsurance.id%>">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">License Expiry</label>
+                                    <input type="text" class="form-control" disabled="" placeholder="Date"
+                                        value="<%= patientInsurance.expiry %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" class="form-control" disabled="" placeholder="Home Address"
+                                        value="<%= patientInsurance.address %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" placeholder="City"
+                                        value="<%= patientInsurance.city %>" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Country</label>
+                                    <input type="text" class="form-control" placeholder="Country"
+                                        value="<%= patientInsurance.country %>" disabled="">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button type="submit" class="btn btn-primary btn-block">Update Insurance Company</button>
+                    </div>
+            </div>
+
+            </form>
+        </div>
+        <!-- testimonial area end -->
+    </div>
+</div>
+</div>
+<!-- main content area end -->
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
+
+</html>

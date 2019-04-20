@@ -12,10 +12,9 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var flash = require('connect-flash');
 var methodOverride = require('method-override');
-var {countryList} = require('./public/js/constants');
+var insuranceRoutes = require('./routes/insurance');
 var patientRoutes = require('./routes/patients');
 var indexRoutes = require('./routes/index');
-var moment = require('moment');
 port = 8080;
 
 // app.use(flash());
@@ -29,10 +28,7 @@ app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.use('/',indexRoutes);
 app.use('/patient',patientRoutes);
-app.get('/2', (req, res) => {
-  res.sendFile(path.join(__dirname + '/./cards.html'));
-});
-
+app.use('/insurance',insuranceRoutes);
 app.get('/doctor', (req, res) => {
   res.render('dashboardDoctor', {
     name: 'Dr. Raafat'
