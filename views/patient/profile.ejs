@@ -15,17 +15,17 @@
                                 <a href="javascript:void(0)"><i class="ti-layout-sidebar-left"></i><span>Medical
                                         Information</span></a>
                                 <ul class="submenu">
-                                    <li><a href="/patientOperation">Operations</a></li>
-                                    <li><a href="linechart.html">Allergies</a></li>
-                                    <li><a href="piechart.html">Diseases</a></li>
-                                    <li><a href="piechart.html">Disabilities</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/operation">Operations</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/allergy">Allergies</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disease">Diseases</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disability">Disabilities</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><i class="ti-notepad"></i><span>Bills</span></a>
+                                <a href="/patient/:id/bill"><i class="ti-notepad"></i><span>Bills</span></a>
                             </li>
                             <li class="mega-menu">
-                                <a href="javascript:void(0)"><i class="ti-light-bulb"></i><span>Insurance
+                                <a href="/patient/:id/insurance"><i class="ti-light-bulb"></i><span>Insurance
                                         Company</span></a>
                             </li>
                         </ul>
@@ -95,15 +95,15 @@
                     <div class="card-body">
                         <div class="media">
                             <span class="avatar avatar-xxl mr-5"
-                                style="background-image: url(demo/faces/male/21.jpg)"></span>
+                                style="background-image: url(/demo/faces/male/21.jpg)"></span>
                             <div class="media-body">
                                 <h4 class="m-0">Quick Links</h4>
                                 <ul class="social-links list-inline mb-0 mt-2">
                                     <li class="list-inline-item">
-                                        <a href="/patientOperation">Operations</a>
+                                        <a href="/patient/<%=patient.id%>/operation">Operations</a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="/patientAllergy">Allergies</i></a>
+                                        <a href="/patient/<%=patient.id%>/allergy">Allergies</i></a>
                                     </li>
                                     <li class="list-inline-item">
                                         <a href="javascript:void(0)">Disabilities</a>
@@ -129,7 +129,7 @@
                         <form>
                             <div class="row">
                                 <div class="col-auto">
-                                    <img class="avatar user-thumb" src="images/author/avatar.png" alt="avatar">
+                                    <img class="avatar user-thumb" src="/images/author/avatar.png" alt="avatar">
                                 </div>
                                 <div class="col">
                                     <div class="form-group">

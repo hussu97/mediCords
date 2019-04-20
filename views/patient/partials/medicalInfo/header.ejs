@@ -1,67 +1,68 @@
 <!-- header area start -->
 <div class="header-area header-bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-9  d-none d-lg-block">
-                    <div class="horizontal-menu">
-                        <nav>
-                            <ul id="nav_menu">
-                                <li>
-                                    <a href="/patient"><i class="ti-dashboard"></i><span>Profile</span></a>
-                                </li>
-                                <li class="active">
-                                    <a href="javascript:void(0)"><i class="ti-layout-sidebar-left"></i><span>Medical
-                                            Information</span></a>
-                                    <ul class="submenu">
-                                        <li><a href="/patientOperation">Operations</a></li>
-                                        <li><a href="/patientAllergy">Allergies</a></li>
-                                        <li><a href="piechart.html">Diseases</a></li>
-                                        <li><a href="piechart.html">Disabilities</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><i class="ti-notepad"></i><span>Bills</span></a>
-                                </li>
-                                <li class="mega-menu">
-                                    <a href="javascript:void(0)"><i class="ti-light-bulb"></i><span>Insurance
-                                            Company</span></a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <!-- nav and search button -->
-                <div class="col-lg-3 clearfix">
-                    <div class="search-box">
-                        <form action="#">
-                            <input type="text" name="search" placeholder="Search..." required>
-                            <i class="ti-search"></i>
-                        </form>
-                    </div>
-                </div>
-                <!-- mobile_menu -->
-                <div class="col-12 d-block d-lg-none">
-                    <div id="mobile_menu"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9  d-none d-lg-block">
+                <div class="horizontal-menu">
+                    <nav>
+                        <ul id="nav_menu">
+                            <li>
+                                <a href="/patient/<%=patient.id%>/profile"><i
+                                        class="ti-dashboard"></i><span>Profile</span></a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0)"><i class="ti-layout-sidebar-left"></i><span>Medical
+                                        Information</span></a>
+                                <ul class="submenu">
+                                    <li><a href="/patient/<%=patient.id%>/operation">Operations</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/allergy">Allergies</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disease">Diseases</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disability">Disabilities</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/patient/:id/bill"><i class="ti-notepad"></i><span>Bills</span></a>
+                            </li>
+                            <li class="mega-menu">
+                                <a href="/patient/:id/insurance"><i class="ti-light-bulb"></i><span>Insurance
+                                        Company</span></a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
+            <!-- nav and search button -->
+            <div class="col-lg-3 clearfix">
+                <div class="search-box">
+                    <form action="#">
+                        <input type="text" name="search" placeholder="Search..." required>
+                        <i class="ti-search"></i>
+                    </form>
+                </div>
+            </div>
+            <!-- mobile_menu -->
+            <div class="col-12 d-block d-lg-none">
+                <div id="mobile_menu"></div>
+            </div>
         </div>
-        <hr class="horizontal-menu-hr">
-        </hr>
-        <div class="container">
-            <div class="page-title-area">
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Dashboard</h4>
-                            <ul class="breadcrumbs pull-left">
-                                <li><a href="/patient">Home</a></li>
-                                <li><a href="javascript:void(0)">Medical Information</a></li>
-                                <li><span>Operations</span></li>
-                            </ul>
-                        </div>
+    </div>
+    <hr class="horizontal-menu-hr">
+    </hr>
+    <div class="container">
+        <div class="page-title-area">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="breadcrumbs-area clearfix">
+                        <h4 class="page-title pull-left">Dashboard</h4>
+                        <ul class="breadcrumbs pull-left">
+                            <li><a href="/patient/<%=patient.id%>/">Home</a></li>
+                            <li><a href="javascript:void(0)">Medical Information</a></li>
+                            <li><span>Operations</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- header area end -->
+</div>
+<!-- header area end -->

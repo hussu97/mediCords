@@ -1,0 +1,128 @@
+<% include ../patient/partials/header %>
+<!-- header area start -->
+<div class="header-area header-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9  d-none d-lg-block">
+                <div class="horizontal-menu">
+                    <nav>
+                        <ul id="nav_menu">
+                            <li>
+                                <a href="/patient/<%=patient.id%>/profile"><i
+                                        class="ti-dashboard"></i><span>Profile</span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><i class="ti-layout-sidebar-left"></i><span>Medical
+                                        Information</span></a>
+                                <ul class="submenu">
+                                    <li><a href="/patient/<%=patient.id%>/operation">Operations</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/allergy">Allergies</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disease">Diseases</a></li>
+                                    <li><a href="/patient/<%=patient.id%>/disability">Disabilities</a></li>
+                                </ul>
+                            </li>
+                            <li class="active">
+                                <a href="/patient/:id/bill"><i class="ti-notepad"></i><span>Bills</span></a>
+                            </li>
+                            <li class="mega-menu">
+                                <a href="/patient/:id/insurance"><i class="ti-light-bulb"></i><span>Insurance
+                                        Company</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- nav and search button -->
+            <div class="col-lg-3 clearfix">
+                <div class="search-box">
+                    <form action="#">
+                        <input type="text" name="search" placeholder="Search..." required>
+                        <i class="ti-search"></i>
+                    </form>
+                </div>
+            </div>
+            <!-- mobile_menu -->
+            <div class="col-12 d-block d-lg-none">
+                <div id="mobile_menu"></div>
+            </div>
+        </div>
+    </div>
+    <hr class="horizontal-menu-hr">
+    </hr>
+    <div class="container">
+        <div class="page-title-area">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="breadcrumbs-area clearfix">
+                        <h4 class="page-title pull-left">Dashboard</h4>
+                        <ul class="breadcrumbs pull-left">
+                            <li><a href="/patient/<%=patient.id%>/">Home</a></li>
+                            <li><span>Profile</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header area end -->
+<!-- page title area end -->
+<div class="main-content-inner">
+    <div class="container">
+        <div class="row">
+            <!-- Progress Table start -->
+            <div class="col-12 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Previous Operations</h4>
+                        <div class="single-table">
+                            <div class="table-responsive">
+                                <table class="table table-hover progress-table text-center">
+                                    <thead class="text-uppercase bg-primary">
+                                        <tr>
+                                            <th scope="col">Date of Bill</th>
+                                            <th scope="col">Hospital</th>
+                                            <th scope="col">Doctor</th>
+                                            <th scope="col">Cost (AED)</th>
+                                            <th scope="col">VAT (5% AED)</th>
+                                            <th scope="col">Total (AED)</th>
+                                            <th scope="col">Send to Insurance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% bills.forEach((bi)=> { %>
+                                        <tr>
+
+                                            <th scope="row"><%= bi.date %></th>
+                                            <td><%= bi.hospital %></td>
+                                            <td><%= bi.doctor %></td>
+                                            <td><%= bi.cost %></td>
+                                            <td><%= bi.vat %></td>
+                                            <th scope="row"><%= bi.total %></td>
+                                            <td><form action="/patient/<%=patient.id%>/bill/<%= bi.id%>/send" method="POST"><a href="javascript:void(0)" onclick="this.parentNode.submit()"><i class="ti-arrow-right"></i></a></form></td>
+                                        </tr>
+                                        <%}); %>
+                                    </tbody>
+                                    <% if(bills.length === 0) {%>
+                                    <p>No bills have been recorded for you</p>
+                                    <br />
+                                    <% }; %>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress Table end -->
+        </div>
+    </div>
+</div>
+<!-- main content area end -->
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
+
+</html>
