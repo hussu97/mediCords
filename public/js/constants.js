@@ -1,3 +1,4 @@
+var moment = require('moment');
 var constants = {
 countryList : [ 
     {"name": "Afghanistan", "code": "AF"}, 

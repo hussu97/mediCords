@@ -13,7 +13,8 @@
     <link rel="stylesheet" type="text/css" href="/css/metisMenu.css">
     <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
     <link rel="stylesheet" type="text/css" href="/css/slicknav.min.css">
-    <link rel="stylesheet" type="text/css" href="https://github.com/downloads/lafeber/world-flags-sprite/flags64.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://github.com/downloads/lafeber/world-flags-sprite/flags32.css" />
     <!-- amchart css -->
     <link rel="stylesheet" type="text/css" href="https://www.amcharts.com/lib/3/plugins/export/export.css"
         type="text/css" media="all" />
@@ -31,20 +32,7 @@
     <link rel="stylesheet" type="text/css" href="/css/responsive.css">
     <!-- modernizr css -->
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
-        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
-    <script>
-        changeID = () => {
-            var buttonVal = $('.change-id-btn').text();
-            if (buttonVal === 'Change') {
-                $('.change-id-btn').text('Save');
-                $('#id').prop('disabled', false);
-            } else {
-                $('.change-id-btn').text('Change');
-                $('#id').prop('disabled', true);
-            }
-        }
-    </script>
+    
 </head>
 
 <body>
@@ -64,7 +52,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
-                            <a href="/patient/<%=patient.id%>"><img class="img-fluid" src="/images/icon/logo.png"
+                            <a href="/government/<%=government.id%>"><img class="img-fluid" src="/images/icon/logo.png"
                                     alt="logo"></a>
                         </div>
                     </div>
@@ -82,9 +70,12 @@
                         </div>
                         <div class="clearfix d-md-inline-block d-block">
                             <div class="user-profile m-0">
-                                <img class="avatar user-thumb" src="/images/author/avatar.png" alt="avatar">
-                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><%= patient.firstName %>
-                                    <%= patient.lastName %><i class="fa fa-angle-down"></i></h4>
+                                <span class="avatar user-thumb f32"><span
+                                        class="flag <%=government.country.toLowerCase().substring(0,2)%>">
+                                    </span></span>
+                                <!-- <img class="avatar user-thumb" src="/images/author/avatar.png" alt="avatar"> -->
+                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">&nbsp;&nbsp;Government of
+                                    <%= government.country %><i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="/login">Log Out</a>
                                 </div>

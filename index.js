@@ -12,9 +12,14 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var flash = require('connect-flash');
 var methodOverride = require('method-override');
-var insuranceRoutes = require('./routes/insurance');
-var patientRoutes = require('./routes/patients');
-var indexRoutes = require('./routes/index');
+
+const insuranceRoutes  = require('./routes/insurance'),
+      patientRoutes    = require('./routes/patient'),
+      governmentRoutes = require('./routes/government'),
+      doctorRoutes     = require('./routes/doctor'),
+      hospitalRoutes   = require('./routes/hospital'),
+      indexRoutes      = require('./routes/index');
+
 port = 8080;
 
 // app.use(flash());
@@ -26,9 +31,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
-app.use('/',indexRoutes);
+
 app.use('/patient',patientRoutes);
 app.use('/insurance',insuranceRoutes);
+app.use('/government',governmentRoutes);
+app.use('/doctor',doctorRoutes);
+app.use('/hospital',hospitalRoutes);
+app.use('/',indexRoutes);
 app.get('/doctor', (req, res) => {
   res.render('dashboardDoctor', {
     name: 'Dr. Raafat'

@@ -3,7 +3,8 @@ const express = require('express'),
     mergeParams: true
   }),
   {
-    countryList
+    countryList,
+    patient
   } = require('../public/js/constants'),
   moment = require('moment');
 
@@ -13,29 +14,31 @@ const express = require('express'),
 //=========================================
 router.get('/:id', (req, res) => {
   res.render('patient/profile', {
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      address : 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      id: req.params.id
-    },
+    patient :{
+        firstName: 'John',
+        lastName: 'Doe',
+        country: 'Madagascar',
+        isVerified: true,
+        address : 'xyz,abc, helo',
+        identificationNumber: '2iie02i3203i0ewi',
+        id: req.params.id,
+        dob : moment().format('MMM Do YY')
+      },
     countryList: countryList
   });
 });
 router.get('/:id/profile', (req, res) => {
   res.render('patient/profile', {
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      address : 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      id: req.params.id
-    },
+    patient :{
+        firstName: 'John',
+        lastName: 'Doe',
+        country: 'Madagascar',
+        isVerified: true,
+        address : 'xyz,abc, helo',
+        identificationNumber: '2iie02i3203i0ewi',
+        id: req.params.id,
+        dob : moment().format('MMM Do YY')
+      },
     countryList: countryList
   });
 });
@@ -48,12 +51,15 @@ router.put('/:id/profile', (req, res) => {
 //=========================================
 router.get('/:id/operation', (req, res) => {
   res.render('patient/operation', {
-    patient: {
+    patient :{
       firstName: 'John',
       lastName: 'Doe',
       country: 'Madagascar',
       isVerified: true,
-      id: req.params.id
+      address : 'xyz,abc, helo',
+      identificationNumber: '2iie02i3203i0ewi',
+      id: req.params.id,
+      dob : moment().format('MMM Do YY')
     },
     operations: [{
       date: moment().format('MMM Do YY'),
@@ -67,12 +73,15 @@ router.get('/:id/operation', (req, res) => {
 });
 router.get('/:id/allergy', (req, res) => {
   res.render('patient/allergy', {
-    patient: {
+    patient :{
       firstName: 'John',
       lastName: 'Doe',
       country: 'Madagascar',
       isVerified: true,
-      id: req.params.id
+      address : 'xyz,abc, helo',
+      identificationNumber: '2iie02i3203i0ewi',
+      id: req.params.id,
+      dob : moment().format('MMM Do YY')
     },
     allergies: [{
         name: 'Peanut Butter',
@@ -102,13 +111,16 @@ router.get('/:id/allergy', (req, res) => {
 //UI not made yet
 router.get('/:id/disease', (req, res) => {
   res.render('patient/allergy', {
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      id: req.params.id
-    },
+    patient :{
+        firstName: 'John',
+        lastName: 'Doe',
+        country: 'Madagascar',
+        isVerified: true,
+        address : 'xyz,abc, helo',
+        identificationNumber: '2iie02i3203i0ewi',
+        id: req.params.id,
+        dob : moment().format('MMM Do YY')
+      },
     allergies: [{
         name: 'Peanut Butter',
         doctor: 'Hello',
@@ -137,13 +149,16 @@ router.get('/:id/disease', (req, res) => {
 //UI not made yet
 router.get('/:id/disability', (req, res) => {
   res.render('patient/allergy', {
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      id: req.params.id
-    },
+    patient :{
+        firstName: 'John',
+        lastName: 'Doe',
+        country: 'Madagascar',
+        isVerified: true,
+        address : 'xyz,abc, helo',
+        identificationNumber: '2iie02i3203i0ewi',
+        id: req.params.id,
+        dob : moment().format('MMM Do YY')
+      },
     allergies: [{
         name: 'Peanut Butter',
         doctor: 'Hello',
@@ -173,13 +188,16 @@ router.get('/:id/disability', (req, res) => {
 //=========================================
 router.get('/:id/bill', (req, res) => {
   res.render('patient/bill', {
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      id: req.params.id
-    },
+    patient :{
+        firstName: 'John',
+        lastName: 'Doe',
+        country: 'Madagascar',
+        isVerified: true,
+        address : 'xyz,abc, helo',
+        identificationNumber: '2iie02i3203i0ewi',
+        id: req.params.id,
+        dob : moment().format('MMM Do YY')
+      },
     bills: [{
       id: '1234',
       date: moment().format('MMM Do YY'),
@@ -221,13 +239,16 @@ router.get('/:id/bill', (req, res) => {
 
 router.get('/:id/insurance', (req, res) => {
   res.render('patient/insurance', {
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      id: req.params.id
-    },
+    patient :{
+        firstName: 'John',
+        lastName: 'Doe',
+        country: 'Madagascar',
+        isVerified: true,
+        address : 'xyz,abc, helo',
+        identificationNumber: '2iie02i3203i0ewi',
+        id: req.params.id,
+        dob : moment().format('MMM Do YY')
+      },
     countryList : countryList,
     patientInsurance : {
       id: 1234,
