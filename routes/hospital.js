@@ -83,7 +83,7 @@ router.get('/:id/doctors', (req, res) => {
 });
 // doctor details + list of patients under doctor
 router.get('/:id/doctors/:doctorid', (req, res) => {
-  res.render('hospital/doctorDetails', {
+  res.render('hospital/doctor-details', {
     hospital: {
       name: 'XYZ Hospital',
       expiry: moment().format('MMM Do YY'),
@@ -204,7 +204,7 @@ router.get('/:id/patients', (req, res) => {
 });
 // more info about a patient
 router.get('/:id/patients/:id', (req, res) => {
-  res.render('hospital/patientDetails', {
+  res.render('hospital/patient-details', {
     hospital: {
       name: 'XYZ Hospital',
       expiry: moment().format('MMM Do YY'),
@@ -275,8 +275,33 @@ router.delete('/:id/patients/:patientid', (req, res) => {
 //=========================================
 //                hospital add patient routes
 //=========================================
-router.post('/hospital/:id/patient/new',(req,res)=> {
-  console.log(req.body.patientid);
-    res.redirect('/hospital/123');
+// adds new patient using id
+router.post('/:id/patient',(req,res)=> {
+  var patientID = req.body.patientid;
+  var hospitalID = req.params.id;
+  req.flash('error','ok');
+  res.redirect('back');
 });
+//=========================================
+//                hospital add doctor routes
+//=========================================
+router.get('/:id/doctor/new', (req,res) => {
+  res.render('hospital/doctor-new',{
+    hospital: {
+      name: 'XYZ Hospital',
+      expiry: moment().format('MMM Do YY'),
+      isVerified: true,
+      address: 'xyz,abc, helo',
+      identificationNumber: '2iie02i3203i0ewi',
+      country: 'Hong Kong',
+      city: 'Shanghai',
+      id: req.params.id
+    }
+  })
+});
+router.post('/:id/doctor',(req,res) => {
+  console.log(req.body.id);
+  console.log(req.body.doctor);
+  res.redirect('back')
+})
 module.exports = router;

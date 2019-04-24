@@ -12,6 +12,7 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var flash = require('connect-flash');
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 const insuranceRoutes  = require('./routes/insurance'),
       patientRoutes    = require('./routes/patient'),
@@ -28,9 +29,14 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: false
 })
 app.use(bodyParser.json());
+app.use(flash());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
+app.use(session({ cookie: { maxAge: 60000 }, 
+  secret: 'woot',
+  resave: false, 
+  saveUninitialized: false}));
 
 app.use('/patient',patientRoutes);
 app.use('/insurance',insuranceRoutes);

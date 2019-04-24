@@ -1,0 +1,176 @@
+<% include ./partials/header %>
+<!-- header area start -->
+<div class="header-area header-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9  d-none d-lg-block">
+                <div class="horizontal-menu">
+                    <nav>
+                        <ul id="nav_menu">
+                            <li>
+                                <a href="/hospital/<%=hospital.id%>/profile"><i
+                                        class="ti-dashboard"></i><span>Profile</span></a>
+                            </li>
+                            <li>
+                                <a href="/hospital/<%=hospital.id%>/doctors"><i
+                                        class="ti-layout-sidebar-left"></i><span>Doctors</span></a>
+                            </li>
+                            <li>
+                                <a href="/hospital/<%=hospital.id%>/patients"><i
+                                        class="ti-notepad"></i><span>Patients</span></a>
+                            </li>
+                            <li class="active">
+                                <% include ./partials/add-patient-modal %>
+                                <!-- mobile_menu -->
+                                <div class="col-12 d-block d-lg-none">
+                                    <div id="mobile_menu"></div>
+                                </div>
+                </div>
+            </div>
+            <hr class="horizontal-menu-hr">
+            </hr>
+            <div class="container">
+                <div class="page-title-area">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <div class="breadcrumbs-area clearfix">
+                                <h4 class="page-title pull-left">Dashboard</h4>
+                                <ul class="breadcrumbs pull-left">
+                                    <li><a href="/hospital/<%=hospital.id%>/">Home</a></li>
+                                    <li><span>Add Doctor</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header area end -->
+        <!-- page title area end -->
+        <div class="main-content-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header"></div>
+                            <div class="card-body text-center">
+                                <h3 class="mb-3">Add An Existing Doctor</h3>
+                                <form method="POST" action="/hospital/<%=hospital.id %>/doctor">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label pull-left">Doctor ID</label>
+                                            <input type="text" name="doctor[id]" class="form-control"
+                                                placeholder="doctor ID" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-success btn-block mt-2">Add Doctor</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <script>
+                            changeBtn = (idName, className) => {
+                                var buttonVal = $(className).text();
+                                if (buttonVal === 'Change') {
+                                    $(className).text('Save');
+                                    $(idName).prop('disabled', false);
+                                } else {
+                                    $(className).text('Change');
+                                    $(idName).prop('disabled', true);
+                                }
+                            }
+                        </script>
+                    </div>
+                    <div class="col-lg-8">
+                        <form class="card" method="POST" action="/hospital/<%=hospital.id %>/doctor">
+                            <div class="card-header"></div>
+                            <div class="card-body">
+                                <h3 class="card-title">Add a New Doctor</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" name="doctor[firstName]" class="form-control"
+                                                placeholder="James" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" name="doctor[lastName]" class="form-control"
+                                                placeholder="hospitalID" required>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $('#password, #confirm-password').on('keyup', function () {
+                                            if ($('#password').val() == $('#confirm-password').val()) {
+                                                $('#message').html('Matching').css('color', 'green');
+                                            } else
+                                                $('#message').html('Not Matching').css('color', 'red');
+                                        });
+                                    </script>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Password</label>
+                                            <input type="password" id="password" name="doctor[password]"
+                                                class="form-control" placeholder="*****" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Confirm Password</label>
+                                            <input type="password" id="confirm-password" name="confirmPassword"
+                                                class="form-control" placeholder="*****" required>
+                                        </div>
+                                    </div>
+                                    <!-- //TODO update this  -->
+                                    <!-- <div class="row">
+                                        <small id="message">w</small>
+                                    </div> -->
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">License ID</label>
+                                            <input type="text" id="id" class="form-control" placeholder="License ID"
+                                                name="doctor[identificationNumber]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">License Expiry</label>
+                                            <input type="date" class="form-control" name="doctor[expiry]"
+                                                placeholder="Date" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Country of Issue</label>
+                                                <input type="text" class="form-control" name="doctor[country]"
+                                                    placeholder="Country" required>
+                                            </div>
+                                        </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Speciality</label>
+                                            <input type="text" id="speciality" class="form-control"
+                                                placeholder="Speciality" name="doctor[speciality]" required>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="submit" class="btn btn-success btn-block">Add Doctor</button>
+                                </div>
+                        </form>
+                    </div>
+                    <!-- testimonial area end -->
+                </div>
+            </div>
+        </div>
+        <!-- main content area end -->
+        <% include ./partials/footer %>
+    </div>
+    <!-- main wrapper start -->
+    <% include ./partials/offset %>
+    <% include ./partials/scripts %>
+    </body>
+
+    </html>
