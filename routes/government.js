@@ -9,44 +9,7 @@ const express = require('express'),
 //                government profile routes
 //=========================================
 router.get('/:id', (req, res) => {
-    res.render('government/patients', {
-        government : {
-            country : 'India',
-            id : req.params.id, 
-        },
-        patients : [
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                address : 'xyz,abc, helo',
-                identificationNumber: '2iie02i3203i0ewi',
-                id: 111,
-                dob : moment().format('MMM Do YY')
-            },
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                address : 'xyz,abc, helo',
-                identificationNumber: '2iie02i3203i0ewi',
-                id: 2222,
-                dob : moment().format('MMM Do YY')
-            },
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                address : 'xyz,abc, helo',
-                identificationNumber: '2iie02i3203i0ewi',
-                id: 333,
-                dob : moment().format('MMM Do YY')
-            },
-        ]
-    });
+    res.redirect(`/government/${req.params.id}/patients`);
 });
 //=========================================
 //                government patients routes

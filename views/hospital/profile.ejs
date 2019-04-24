@@ -8,26 +8,23 @@
                     <nav>
                         <ul id="nav_menu">
                             <li class="active">
-                                <a href="/patient/<%=patient.id%>/profile"><i
+                                <a href="/hospital/<%=hospital.id%>/profile"><i
                                         class="ti-dashboard"></i><span>Profile</span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><i class="ti-layout-sidebar-left"></i><span>Medical
-                                        Information</span></a>
-                                <ul class="submenu">
-                                    <li><a href="/patient/<%=patient.id%>/operation">Operations</a></li>
-                                    <li><a href="/patient/<%=patient.id%>/allergy">Allergies</a></li>
-                                    <li><a href="/patient/<%=patient.id%>/disease">Diseases</a></li>
-                                    <li><a href="/patient/<%=patient.id%>/disability">Disabilities</a></li>
-                                </ul>
+                                <a href="/hospital/<%=hospital.id%>/doctors"><i
+                                        class="ti-layout-sidebar-left"></i><span>Doctors</span></a>
                             </li>
                             <li>
-                                <a href="/patient/<%=patient.id%>/bill"><i class="ti-notepad"></i><span>Bills</span></a>
+                                <a href="/hospital/<%=hospital.id%>/patients"><i
+                                        class="ti-notepad"></i><span>Patients</span></a>
                             </li>
-                            <li class="mega-menu">
-                                <a href="/patient/<%=patient.id%>/insurance"><i
-                                        class="ti-light-bulb"></i><span>Insurance
-                                        Company</span></a>
+                            <li>
+                                <a href="javascript:void(0)"><i class="ti-cloud-up"></i><span>Add</span></a>
+                                <ul class="submenu">
+                                    <li><a href="/hospital/<%=hospital.id%>/patient/new">Patient</a></li>
+                                    <li><a href="/hospital/<%=hospital.id%>/patient/new">Doctor</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </nav>
@@ -57,7 +54,7 @@
                     <div class="breadcrumbs-area clearfix">
                         <h4 class="page-title pull-left">Dashboard</h4>
                         <ul class="breadcrumbs pull-left">
-                            <li><a href="/patient/<%=patient.id%>/">Home</a></li>
+                            <li><a href="/hospital/<%=hospital.id%>/">Home</a></li>
                             <li><span>Profile</span></li>
                         </ul>
                     </div>
@@ -73,15 +70,15 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="card card-profile">
-                    <div class="card-header card-header-patient"></div>
+                    <div class="card-header card-header-hospital"></div>
                     <div class="card-body text-center">
 
-                        <h3 class="mb-3"><%= patient.firstName %> <%= patient.lastName %></h3>
+                        <h3 class="mb-3"><%= hospital.name %></h3>
 
                         <p class="mb-4">
-                            Citizen at <%= patient.country %>
+                            Established in <%= hospital.country %>
                         </p>
-                        <% if(patient.isVerified){ %>
+                        <% if(hospital.isVerified){ %>
                         <a href="javascript:void(0)" class="btn btn-outline-success btn-sm">
                             <span class="fa fa-check"></span> Verified
                         </a>
@@ -101,26 +98,28 @@
                                 <h4 class="m-0">Quick Links</h4>
                                 <ul class="social-links list-inline mb-0 mt-2">
                                     <li class="list-inline-item">
-                                        <a href="/patient/<%=patient.id%>/operation">Operations</a>
+                                        <a href="/hospital/<%=hospital.id%>/doctors">Doctor List</a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="/patient/<%=patient.id%>/allergy">Allergies</i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript:void(0)">Disabilities</a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript:void(0)">Diseases</a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="/patient/<%=patient.id%>/bill">Bills</a>
+                                        <a href="/hospital/<%=hospital.id%>/patients">Patient List</i></a>
                                     </li>
                                 </ul>
-
                             </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    changeBtn = (idName,className) => {
+                        var buttonVal = $(className).text();
+                        if (buttonVal === 'Change') {
+                            $(className).text('Save');
+                            $(idName).prop('disabled', false);
+                        } else {
+                            $(className).text('Change');
+                            $(idName).prop('disabled', true);
+                        }
+                    }
+                </script>
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Change Password</h3>
@@ -156,7 +155,7 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <form class="card" method="POST" action="/patient/<%=patient.id %>?_method=PUT">
+                <form class="card" method="POST" action="/hospital/<%=hospital.id %>?_method=PUT">
                     <div class="card-header"></div>
                     <div class="card-body">
                         <h3 class="card-title">Edit Profile</h3>
@@ -170,89 +169,76 @@
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group">
-                                    <label class="form-label">Patient ID</label>
-                                    <input type="text" name="patient[id]" class="form-control" disabled=""
-                                        placeholder="PatientID" value="<%=patient.id%>">
+                                    <label class="form-label">Hospital ID</label>
+                                    <input type="text" name="hospital[id]" class="form-control" disabled=""
+                                        placeholder="hospitalID" value="<%=hospital.id%>">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-4">
                                 <div class="form-group">
-                                    <label class="form-label">Email address</label>
-                                    <input type="email" name="patient[email]" class="form-control" placeholder="Email"
-                                        value="<%= patient.email %>">
+                                    <label class="form-label">Corporate ID</label>
+                                    <a href="javascript:void(0);" class="change-id-btn pull-right"
+                                        onclick="changeBtn('#id','.change-id-btn')">Change</a>
+                                    <input type="text" id="id" class="form-control" placeholder="Identification Number"
+                                        name="hospital[identificationNumber]" disabled=""
+                                        value="<%= hospital.identificationNumber %>">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">First Name</label>
-                                    <input type="text" class="form-control" name="patient[firstName]"
-                                        placeholder="Company" value="<%= patient.firstName %>">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" name="hospital[name]"
+                                        placeholder="Company" value="<%= hospital.name %>">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" name="patient[lastName]"
-                                        placeholder="Last Name" value="<%= patient.lastName %>">
+                                    <label class="form-label">Expiry</label>
+                                    <a href="javascript:void(0);" class="change-expiry-btn pull-right"
+                                        onclick="changeBtn('#expiry','.change-expiry-btn')">Change</a>
+                                    <input type="text" id="expiry" class="form-control"
+                                        placeholder="Expiry" name="hospital[expiry]" disabled=""
+                                        value="<%= hospital.expiry %>">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Address</label>
-                                    <input type="text" class="form-control" name="patient[address]"
-                                        placeholder="Home Address" value="<%= patient.address %>">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label">Identification Number</label>
-                                    <a href="javascript:void(0);" class="change-id-btn pull-right"
-                                        onclick="changeID()">Change</a>
-                                    <input type="text" id="id" class="form-control" placeholder="Identification Number"
-                                        name="patient[identificationNumber]" disabled=""
-                                        value="<%= patient.identificationNumber %>">
+                                    <input type="text" class="form-control" name="hospital[address]"
+                                        placeholder="Home Address" value="<%= hospital.address %>">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">City</label>
-                                    <input type="text" class="form-control" name="patient[city]" placeholder="City"
-                                        value="<%= patient.city %>">
+                                    <input type="text" class="form-control" name="hospital[city]" placeholder="City"
+                                        value="<%= hospital.city %>">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Country</label>
-                                    <select id="country" name="patient[country]" class="form-control">
-                                        <%
-                                                        for ( var i = 0; i < countryList.length; i++ )
-                                                        {
-                                                            var selected = ( patient.country == countryList[i].name ) ? "selected" : "";
-                                                            %>
-                                        <option value="<%=countryList[i].name %>" <%=selected %>>
-                                            <%=countryList[i].name %></option>
-                                        <%}%>
-                                            </select>
-                                        </div>
-                                        
-                                    </div>                       
+                                    <input type="text" class="form-control" name="hospital[country]" placeholder="City"
+                                        value="<%= hospital.country %>">
                                 </div>
                             </div>
-                            <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                    <!-- testimonial area end -->
-                </div>
+                    <div class="card-footer text-right">
+                        <button type="submit" class="btn btn-primary btn-block">Update Hospital Details</button>
+                    </div>
+                </form>
             </div>
+            <!-- testimonial area end -->
         </div>
-        <!-- main content area end -->
-        <% include ./partials/footer %>
-                                </div>
-                                <!-- main wrapper start -->
-                                <% include ./partials/offset %>
-                                <% include ./partials/scripts %>
-                                </body>
+    </div>
+</div>
+<!-- main content area end -->
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
 
-                                </html>
+</html>

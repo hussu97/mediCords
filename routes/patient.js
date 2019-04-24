@@ -13,19 +13,7 @@ const express = require('express'),
 //                patient profile routes
 //=========================================
 router.get('/:id', (req, res) => {
-  res.render('patient/profile', {
-    patient :{
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address : 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: req.params.id,
-        dob : moment().format('MMM Do YY')
-      },
-    countryList: countryList
-  });
+  res.redirect(`/patient/${req.params.id}/profile`);
 });
 router.get('/:id/profile', (req, res) => {
   res.render('patient/profile', {

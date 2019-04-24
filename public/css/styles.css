@@ -92,10 +92,14 @@
 
 .card-profile .card-header {
     height: 9rem;
-    background-size: cover;
+    background-size: cover;   
+}
+.card-header-patient {
     background-image: url(http://source.unsplash.com/QTu7FStK4AE);
 }
-
+.card-header-hospital {
+    background-image: url(http://source.unsplash.com/iqGtaQnk3VM);
+}
 .card:hover {
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.02);
 }
@@ -2149,6 +2153,10 @@ div.dataTables_wrapper div.dataTables_length select {
 
 table.dataTable.no-footer {
     border-bottom: 1px solid rgba(120, 130, 140, 0.13) !important;
+}
+table.dataTable {
+    border-collapse: collapse;
+    width: 100%;
 }
 
 table.dataTable thead th,
