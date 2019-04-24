@@ -1,7 +1,4 @@
 var express = require('express');
-router = express.Router({
-  mergeParams: true
-});
 var app = express();
 var bodyParser = require('body-parser');
 var assert = require('assert');
@@ -14,47 +11,47 @@ var flash = require('connect-flash');
 var methodOverride = require('method-override');
 var session = require('express-session');
 
-const insuranceRoutes  = require('./routes/insurance'),
-      patientRoutes    = require('./routes/patient'),
-      governmentRoutes = require('./routes/government'),
-      doctorRoutes     = require('./routes/doctor'),
-      hospitalRoutes   = require('./routes/hospital'),
-      indexRoutes      = require('./routes/index');
+const port = 8080;
 
-port = 8080;
-
-// app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
-var urlencodedParser = bodyParser.urlencoded({
-  extended: false
-})
 app.use(bodyParser.json());
 app.use(flash());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
-app.use(session({ cookie: { maxAge: 60000 }, 
+app.use(session({
+  cookie: {
+    maxAge: 60000
+  },
   secret: 'woot',
-  resave: false, 
-  saveUninitialized: false}));
-
-app.use('/patient',patientRoutes);
-app.use('/insurance',insuranceRoutes);
-app.use('/government',governmentRoutes);
-app.use('/doctor',doctorRoutes);
-app.use('/hospital',hospitalRoutes);
-app.use('/',indexRoutes);
-app.get('/doctor', (req, res) => {
-  res.render('dashboardDoctor', {
-    name: 'Dr. Raafat'
-  });
+  resave: false,
+  saveUninitialized: false
+}));
+app.use((req, res, next) => {
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
+  next();
 });
+
+const insuranceRoutes = require('./routes/insurance'),
+  patientRoutes = require('./routes/patient'),
+  governmentRoutes = require('./routes/government'),
+  doctorRoutes = require('./routes/doctor'),
+  hospitalRoutes = require('./routes/hospital'),
+  indexRoutes = require('./routes/index');
+
+app.use('/patient', patientRoutes);
+app.use('/insurance', insuranceRoutes);
+app.use('/government', governmentRoutes);
+app.use('/doctor', doctorRoutes);
+app.use('/hospital', hospitalRoutes);
+app.use('/', indexRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/./404.html'));
 });
-
-
 
 app.listen(port, () => {
   console.log(`Server Starts on ${port}`);

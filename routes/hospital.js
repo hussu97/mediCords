@@ -196,14 +196,11 @@ router.get('/:id/patients', (req, res) => {
         id: 333,
         dob: moment().format('MMM Do YY')
       },
-    ],
-    insurance: {
-      id: 12
-    }
+    ]
   });
 });
 // more info about a patient
-router.get('/:id/patients/:id', (req, res) => {
+router.get('/:id/patients/:patientid', (req, res) => {
   res.render('hospital/patient-details', {
     hospital: {
       name: 'XYZ Hospital',

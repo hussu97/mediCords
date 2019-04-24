@@ -1,0 +1,240 @@
+<% include ./partials/header %>
+<!-- header area start -->
+
+<div class="header-area header-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9  d-none d-lg-block">
+                <div class="horizontal-menu">
+                    <nav>
+                        <ul id="nav_menu">
+                            <li>
+                                <a href="/insurance/<%=insurance.id%>/profile"><i
+                                        class="ti-dashboard"></i><span>Profile</span></a>
+                            </li>
+                            <li class="active">
+                                <a href="/insurance/<%=insurance.id%>/patients"><i
+                                        class="ti-layout-sidebar-left"></i><span>Customers</span></a>
+                            </li>
+                            <li>
+                                <% include ./partials/add-patient-modal %>
+                                <% include ./partials/search-bar %>
+                                <!-- mobile_menu -->
+                                <div class="col-12 d-block d-lg-none">
+                                    <div id="mobile_menu"></div>
+                                </div>
+                </div>
+            </div>
+            <hr class="horizontal-menu-hr">
+            </hr>
+            <div class="container">
+                <div class="page-title-area">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <div class="breadcrumbs-area clearfix">
+                                <h4 class="page-title pull-left">Dashboard</h4>
+                                <ul class="breadcrumbs pull-left">
+                                    <li><a href="/insurance/<%=insurance.id%>/">Home</a></li>
+                                    <li><a href="/insurance/<%=insurance.id%>/patients">Customers</a></li>
+                                    <li><span><%= patient.firstName%> <%=patient.lastName%></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header area end -->
+        <!-- header area end -->
+        <!-- page title area end -->
+        <div class="main-content-inner">
+            <div class="container">
+                <div class="row">
+                    <script>
+                        changeBtn = (idName, className) => {
+                            var buttonVal = $(className).text();
+                            if (buttonVal === 'Change') {
+                                $(className).text('Save');
+                                $(idName).prop('disabled', false);
+                            } else {
+                                $(className).text('Change');
+                                $(idName).prop('disabled', true);
+                            }
+                        }
+                    </script>
+                    <div class="col-lg-4">
+                        <form class="card" method="POST"
+                            action="/insurance/<%=insurance.id%>/patients/<%=patient.id%>?_method=DELETE">
+                            <div class="card-header"></div>
+                            <div class="card-body">
+                                <h3 class="card-title">Details &nbsp;&nbsp;
+                                    <% if(patient.isVerified){ %>
+                                    <a href="javascript:void(0)" class="btn btn-outline-success btn-sm">
+                                        <span class="fa fa-check"></span> Verified
+                                    </a>
+                                    <% } else { %>
+                                    <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm">
+                                        <span class="fa fa-times"></span> Not Verified
+                                    </a>
+                                    <% } %>
+                                </h3>
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Customer ID</label>
+                                            <input type="text" name="patient[id]" class="form-control" disabled=""
+                                                placeholder="patientID" value="<%=patient.id%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Identification ID</label>
+                                            <input type="text" id="id" class="form-control"
+                                                placeholder="Identification Number" name="patient[identificationNumber]"
+                                                disabled="" value="<%= patient.identificationNumber %>">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Date of Birth</label>
+                                            <input type="text" id="dob" class="form-control" placeholder="Expiry"
+                                                name="patient[dob]" value="<%= patient.dob %>" disabled="">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Nationality</label>
+                                            <input type="text" id="country" class="form-control" name="patient[country]"
+                                                placeholder="City" value="<%= patient.country %>" disabled="">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" class="form-control" name="patient[firstName]"
+                                                placeholder="Company" value="<%= patient.firstName %>" disabled="">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" name="patient[lastName]"
+                                                placeholder="Company" value="<%= patient.lastName %>" disabled="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-12 mt-2">
+                                        <button type="submit" class="btn btn-danger btn-block">Remove Customer</button>
+                                    </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- testimonial area end -->
+            <!-- data table start -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <h3 class="card-title">Bills History</h3>
+                        <div class="data-tables">
+                            <table id="dataTable" class="text-center table-hover">
+                                <thead class="bg-light text-capitalize">
+                                    <tr>
+                                        <th scope="col">Date of Bill</th>
+                                        <th scope="col">Hospital</th>
+                                        <th scope="col">Doctor</th>
+                                        <th scope="col">Cost (AED)</th>
+                                        <th scope="col">VAT (5% AED)</th>
+                                        <th scope="col">Total (AED)</th>
+                                        <th scope="col">Insurance Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% patient.bills.forEach((bi)=> { %>
+                                    <tr>
+                                        <th scope="row"><%= bi.date %></th>
+                                        <td><%= bi.hospital %></td>
+                                        <td><%= bi.doctor %></td>
+                                        <td><%= bi.cost %></td>
+                                        <td><%= bi.vat %></td>
+                                        <th scope="row"><%= bi.total %></th>
+                                        <%if(bi.status==='pending'){%>
+                                        <td><span class="status-p bg-danger"><%= bi.status %></span></td>
+                                        <td>
+                                            <form
+                                                action="/insurance/<%=insurance.id%>/patient/<%=patient.id%>/approve?_method=PUT"
+                                                method="POST">
+                                                <a href="javascript:void(0)"
+                                                    onclick="this.parentNode.submit()">Approve</a>
+                                                <input type="hidden" value="approved" name="status" />
+                                            </form>
+                                        </td>
+                                        <%} else {%>
+                                        <td><span class="status-p bg-success"><%= bi.status %></span></td>
+                                        <td>-</td>
+                                        <%}%> 
+                                    </tr>
+                                    <%}); %>
+                                </tbody>
+                                <% if(patient.bills.length === 0) {%>
+                                <p>No patients have been registered</p>
+                                <br />
+                                <% }; %>
+                            </table>
+                            <!-- <table id="dataTable" class="table-hover text-center">
+                                <thead class="text-uppercase bg-light">
+                                    <tr>
+                                        <th scope="col">Date of Bill</th>
+                                        <th scope="col">Hospital</th>
+                                        <th scope="col">Doctor</th>
+                                        <th scope="col">Cost (AED)</th>
+                                        <th scope="col">VAT (5% AED)</th>
+                                        <th scope="col">Total (AED)</th>
+                                        <th scope="col">Insurance Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% patient.bills.forEach((bi)=> { %>
+                                    <tr>
+                                        <% if(bi.status!=='not sent'){ %>
+                                        <th scope="row"><%= bi.date %></th>
+                                        <td><%= bi.hospital %></td>
+                                        <td><%= bi.doctor %></td>
+                                        <td><%= bi.cost %></td>
+                                        <td><%= bi.vat %></td>
+                                        <th scope="row"><%= bi.total %></td>
+                                        <%if(bi.status==='pending'){%>
+                                        <td><span class="status-p bg-danger"><%= bi.status %></span></td>
+                                        <%} else {%>
+                                        <td><span class="status-p bg-success"><%= bi.status %></span></td>
+                                        <%}%>                       
+                                            </tr>
+                                            <%}}); %>
+                                </tbody>
+                                <% if(patient.bills.length === 0) {%>
+                                <p>No bills have been recorded for this customer</p>
+                                <br />
+                                <% }; %>
+                            </table> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- data table end -->
+        </div>
+    </div>
+</div>
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
+
+</html>

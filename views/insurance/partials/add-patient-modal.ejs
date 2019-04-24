@@ -1,0 +1,33 @@
+<a href="javascript:void(0)"><i class="ti-cloud-up"></i><span>Add</span></a>
+<ul class="submenu">
+    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#addPatientModal">Customer</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addPatientModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add cutomer to insurance plan</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <form action="/insurance/<%=insurance.id%>/patient" class="container" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Who you wish to add</label>
+                        <input type="text" name="patientid" class="form-control" required placeholder="Cutomer ID">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary col-6 mp-2" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success col-6 mp-2">Add</button>
+                    </div>
+                </div>
+            </form>
+
+    </div>
+</div>
+</div>

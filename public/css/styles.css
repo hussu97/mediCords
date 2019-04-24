@@ -88,6 +88,8 @@
     background-color: #fff;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.0rem;
 }
 
 .card-profile .card-header {
@@ -99,6 +101,9 @@
 }
 .card-header-hospital {
     background-image: url(http://source.unsplash.com/iqGtaQnk3VM);
+}
+.card-header-insurance {
+    background-image: url(http://source.unsplash.com/tvleqH3p1os);
 }
 .card:hover {
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.02);
