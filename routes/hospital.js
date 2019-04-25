@@ -7,8 +7,6 @@ const express = require('express'),
   } = require('../public/js/constants'),
   moment = require('moment');
 
-
-
 //=========================================
 //                hospital profile routes
 //=========================================
