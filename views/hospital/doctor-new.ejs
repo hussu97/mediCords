@@ -51,126 +51,135 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4">
+                        
+                        <div class="card-header"></div>
+                        
                         <div class="card">
-                            <div class="card-header"></div>
+                                <div class="
+                                <% if (hospital.isVerified) { %>
+                                    overlay-not-verified">
+                                <div class="overlay-text">Overlay Text</div>
+                                <%}%> 
                             <div class="card-body text-center">
+                                
                                 <h3 class="mb-3">Add An Existing Doctor</h3>
-                                <form method="POST" action="/hospital/<%=hospital.id %>/doctor">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label class="form-label pull-left">Doctor ID</label>
-                                            <input type="text" name="doctor[id]" class="form-control"
-                                                placeholder="doctor ID" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-block mt-2">Add Doctor</button>
-                                    </div>
-                                </form>
+                                    <form method="POST" action="/hospital/<%=hospital.id %>/doctor">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label pull-left">Doctor ID</label>
+                                    <input type="text" name="doctor[id]" class="form-control" placeholder="doctor ID"
+                                        required>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mt-2">Add Doctor</button>
                             </div>
+                            </form>
                         </div>
-                        <script>
-                            changeBtn = (idName, className) => {
-                                var buttonVal = $(className).text();
-                                if (buttonVal === 'Change') {
-                                    $(className).text('Save');
-                                    $(idName).prop('disabled', false);
-                                } else {
-                                    $(className).text('Change');
-                                    $(idName).prop('disabled', true);
-                                }
-                            }
-                        </script>
                     </div>
-                    <div class="col-lg-8">
-                        <form class="card" method="POST" action="/hospital/<%=hospital.id %>/doctor">
-                            <div class="card-header"></div>
-                            <div class="card-body">
-                                <h3 class="card-title">Add a New Doctor</h3>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">First Name</label>
-                                            <input type="text" name="doctor[firstName]" class="form-control"
-                                                placeholder="James" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Last Name</label>
-                                            <input type="text" name="doctor[lastName]" class="form-control"
-                                                placeholder="hospitalID" required>
-                                        </div>
-                                    </div>
-                                    <script>
-                                        $('#password, #confirm-password').on('keyup', function () {
-                                            if ($('#password').val() == $('#confirm-password').val()) {
-                                                $('#message').html('Matching').css('color', 'green');
-                                            } else
-                                                $('#message').html('Not Matching').css('color', 'red');
-                                        });
-                                    </script>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Password</label>
-                                            <input type="password" id="password" name="doctor[password]"
-                                                class="form-control" placeholder="*****" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Confirm Password</label>
-                                            <input type="password" id="confirm-password" name="confirmPassword"
-                                                class="form-control" placeholder="*****" required>
-                                        </div>
-                                    </div>
-                                    <!-- //TODO update this  -->
-                                    <!-- <div class="row">
+                </div>
+                <script>
+                    changeBtn = (idName, className) => {
+                        var buttonVal = $(className).text();
+                        if (buttonVal === 'Change') {
+                            $(className).text('Save');
+                            $(idName).prop('disabled', false);
+                        } else {
+                            $(className).text('Change');
+                            $(idName).prop('disabled', true);
+                        }
+                    }
+                </script>
+            </div>
+            <div class="col-lg-8">
+                <form class="card" method="POST" action="/hospital/<%=hospital.id %>/doctor">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <h3 class="card-title">Add a New Doctor</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" name="doctor[firstName]" class="form-control" placeholder="James"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" name="doctor[lastName]" class="form-control"
+                                        placeholder="hospitalID" required>
+                                </div>
+                            </div>
+                            <script>
+                                $('#password, #confirm-password').on('keyup', function () {
+                                    if ($('#password').val() == $('#confirm-password').val()) {
+                                        $('#message').html('Matching').css('color', 'green');
+                                    } else
+                                        $('#message').html('Not Matching').css('color', 'red');
+                                });
+                            </script>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" id="password" name="doctor[password]" class="form-control"
+                                        placeholder="*****" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" id="confirm-password" name="confirmPassword"
+                                        class="form-control" placeholder="*****" required>
+                                </div>
+                            </div>
+                            <!-- //TODO update this  -->
+                            <!-- <div class="row">
                                         <small id="message">w</small>
                                     </div> -->
-                                    <div class="col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">License ID</label>
-                                            <input type="text" id="id" class="form-control" placeholder="License ID"
-                                                name="doctor[identificationNumber]" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">License Expiry</label>
-                                            <input type="date" class="form-control" name="doctor[expiry]"
-                                                placeholder="Date" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label">Country of Issue</label>
-                                                <input type="text" class="form-control" name="doctor[country]"
-                                                    placeholder="Country" required>
-                                            </div>
-                                        </div>
-                                    <div class="col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Speciality</label>
-                                            <input type="text" id="speciality" class="form-control"
-                                                placeholder="Speciality" name="doctor[speciality]" required>
-                                        </div>
-                                    </div>
-                                    
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">License ID</label>
+                                    <input type="text" id="id" class="form-control" placeholder="License ID"
+                                        name="doctor[identificationNumber]" required>
                                 </div>
-                                <div class="card-footer text-right">
-                                    <button type="submit" class="btn btn-success btn-block">Add Doctor</button>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">License Expiry</label>
+                                    <input type="date" class="form-control" name="doctor[expiry]" placeholder="Date"
+                                        required>
                                 </div>
-                        </form>
-                    </div>
-                    <!-- testimonial area end -->
-                </div>
-            </div>
-        </div>
-        <!-- main content area end -->
-        <% include ./partials/footer %>
-    </div>
-    <!-- main wrapper start -->
-    <% include ./partials/offset %>
-    <% include ./partials/scripts %>
-    </body>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Country of Issue</label>
+                                    <input type="text" class="form-control" name="doctor[country]" placeholder="Country"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Speciality</label>
+                                    <input type="text" id="speciality" class="form-control" placeholder="Speciality"
+                                        name="doctor[speciality]" required>
+                                </div>
+                            </div>
 
-    </html>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-success btn-block">Add Doctor</button>
+                        </div>
+                </form>
+            </div>
+            <!-- testimonial area end -->
+        </div>
+    </div>
+</div>
+<!-- main content area end -->
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
+
+</html>
