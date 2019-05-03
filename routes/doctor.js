@@ -5,15 +5,16 @@ const express = require('express'),
   {
     countryList,
   } = require('../public/js/constants'),
-  moment = require('moment');
-
+  moment = require('moment'),
+  middlewareObj = require('../middleware');
+  middlware_hasTypeDoctor = middlewareObj.isLoggedIn('doctor');
 //=========================================
 //                doctor profile routes
 //=========================================
-router.get('/:id', (req, res) => {
+router.get('/:id',middlware_hasTypeDoctor, (req, res) => {
   res.redirect(`/doctor/${req.params.id}/profile`);
 });
-router.get('/:id/profile', (req, res) => {
+router.get('/:id/profile',middlware_hasTypeDoctor, (req, res) => {
   res.render('doctor/profile', {
     doctor: {
       firstName: 'John',
@@ -22,19 +23,19 @@ router.get('/:id/profile', (req, res) => {
       isVerified: true,
       expiry: moment().format('MMM Do YY'),
       identificationNumber: 'ii0ewi',
-      id: 111,
+      id: req.params.id,
       speciality: 'Surgeon'
     }
   });
 });
 //update doctor profile
-router.put('/:id/profile', (req, res) => {
+router.put('/:id/profile',middlware_hasTypeDoctor, (req, res) => {
   res.redirect('/doctor/' + req.params.id);
 });
 //=========================================
 //                doctor patients routes
 //=========================================
-router.get('/:id/patients', (req, res) => {
+router.get('/:id/patients',middlware_hasTypeDoctor, (req, res) => {
   res.render('doctor/patients', {
     doctor: {
       firstName: 'Jossshn',
@@ -80,7 +81,7 @@ router.get('/:id/patients', (req, res) => {
   });
 });
 // more info about a patient
-router.get('/:id/patients/:patientid', (req, res) => {
+router.get('/:id/patients/:patientid',middlware_hasTypeDoctor, (req, res) => {
   res.render('doctor/patient-details', {
     doctor: {
       name: 'XYZ doctor',
@@ -139,7 +140,7 @@ router.get('/:id/patients/:patientid', (req, res) => {
 //=========================================
 //                doctor hospital routes (if it is)
 //=========================================
-router.get('/:id/doctors/hospital', (req, res) => {
+router.get('/:id/doctors/hospital',middlware_hasTypeDoctor, (req, res) => {
   res.render('doctor/hospital', {
     doctor: {
       firstName: 'Jossshn',

@@ -1,0 +1,19 @@
+{
+    "staging": {
+        "awscloudformation": {
+            "AuthRoleName": "medicords-staging-20190504004101-authRole",
+            "UnauthRoleArn": "arn:aws:iam::815292321556:role/medicords-staging-20190504004101-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::815292321556:role/medicords-staging-20190504004101-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "medicords-staging-20190504004101-deployment",
+            "UnauthRoleName": "medicords-staging-20190504004101-unauthRole",
+            "StackName": "medicords-staging-20190504004101",
+            "StackId": "arn:aws:cloudformation:eu-west-1:815292321556:stack/medicords-staging-20190504004101/c467ede0-6de3-11e9-885f-064aa725f74e"
+        },
+        "categories": {
+            "auth": {
+                "cognitoc595f884": {}
+            }
+        }
+    }
+}

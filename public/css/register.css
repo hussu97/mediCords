@@ -1,8 +1,7 @@
 /*custom font*/
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-/*basic reset*/
-* {margin: 0; padding: 0;}
+
 
 html {
 	height: 100%;
@@ -13,9 +12,6 @@ html {
 		linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
 }
 
-body {
-	font-family: montserrat, arial, verdana;
-}
 /*form styles*/
 #msform {
 }
@@ -85,11 +81,12 @@ body {
 }
 #progressbar li {
 	list-style-type: none;
-	color: #6c757d;
+	color: #1384e7;
 	text-transform: uppercase;
 	font-size: 9px;
 	width: 33.33%;
 	float: left;
+	text-align: center;
 	position: relative;
 }
 #progressbar li:before {
@@ -99,7 +96,7 @@ body {
 	line-height: 20px;
 	display: block;
 	font-size: 10px;
-	color: #333;
+	color: #FFF;
 	background: #6c757d;
 	border-radius: 3px;
 	margin: 0 auto 5px auto;
@@ -111,7 +108,6 @@ body {
 	height: 2px;
 	background: #6c757d;
 	position: absolute;
-	left: -50%;
 	top: 9px;
 	z-index: -1; /*put it behind the numbers*/
 }
@@ -123,7 +119,7 @@ body {
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before,  #progressbar li.active:after{
 	background: #007bff;
-	color: #6c757d;
+	color: #FFF;
 }
 
 

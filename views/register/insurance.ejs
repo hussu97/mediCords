@@ -1,0 +1,93 @@
+<fieldset id="insurance-1" class="insurance">
+        <div class="login-form-head">
+            <h4>Personal Details</h4>
+            <p>Going to ask for some information</p>
+        </div>
+        <div class="login-form-body">
+            <div class="form-gp">
+                <label for="ins.name">Insurance Company Name</label>
+                <input type="text" id="ins.name" name="insurance[name]">
+                <i class="ti-user"></i>
+            </div>
+            <div class="form-gp">
+                <label for="p.username">Username</label>
+                <input type="text" id="ins.username" name="insurance[username]">
+                <i class="ti-bolt"></i>
+            </div>
+            <div class="form-gp">
+                <label for="ins.email">Email address (for verification code)</label>
+                <input type="email" id="ins.email" name="insurance[email]">
+                <i class="ti-email"></i>
+            </div>
+            <div class="form-gp">
+                <label for="ins.password">Password</label>
+                <input type="password" id="ins.password" name="password">
+                <i class="ti-lock"></i>
+            </div>
+    
+            <div class="submit-btn-area">
+                <input class="previous" value="Previous"
+                    onclick="changeFieldSet('insurance-1','mainpage-0')"></input>
+            </div>
+            <br />
+            <div class="submit-btn-area">
+                <input class="next" value="Next" onclick="changeFieldSet('insurance-1','insurance-2')"></input>
+            </div>
+            <div class="form-footer text-center mt-5">
+                <p class="text-muted">Don't have an account? <a href="/login">Sign in</a></p>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset id="insurance-2">
+        <div class="login-form-head">
+            <h4>Identification</h4>
+            <p>Used to verify yourself</p>
+        </div>
+        <div class="login-form-body">
+            <div class="form-gp">
+                <label for="ins.identification-number">Corporate License Number</label>
+                <input type="text" id="ins.identification-number" name="insurance[identificationNumber]">
+                <i class="fa-address-card-o"></i>
+            </div>
+            <div class="form-gp">
+                <label for="ins.country">Country of Issue</label>
+                <br /><br />
+                <!-- <input type="text" id="country" name="country"> -->
+                <select id="ins.country" name="insurance[country]" class="form-control">
+                    <%
+                                            for ( var i = 0; i < countryList.length; i++ )
+                                            {
+                                                
+                                                %>
+                    <option value="<%=countryList[i].name %>">
+                        <%=countryList[i].name %></option>
+                    <%}%>
+                    </select>
+                </div>
+                <div class="form-gp">
+                    <label for="ins.city">City</label>
+                    <input type="text" id="ins.city" name="insurance[city]">
+                    <i class="fa fa-map-marker"></i>
+                </div>
+                <div class="form-gp">
+                        <label for="ins.expiry">Expiry</label>
+                        <br />
+                        <input type="date" id="ins.expiry" name="insurance[expiry]">
+                </div>
+                <div class="form-gp">
+                        <label for="ins.address">Company address</label>
+                        <input type="text" id="ins.address" name="insurance[address]">
+                        <i class="fa fa-cube"></i>
+                </div>
+                <div class="submit-btn-area">
+                        <input class="previous" value="Previous" onclick="changeFieldSet('insurance-2','insurance-1')"></input>
+                </div>
+                <br/>
+                <div class="submit-btn-area">
+                    <button type="submit">Submit <i class="ti-arrow-right"></i></button>
+                </div>
+                <div class="form-footer text-center mt-5">
+                    <p class="text-muted">Don't have an account? <a href="/login">Sign in</a></p>
+                </div>
+            </div>
+        </fieldset>

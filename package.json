@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/hussu97/mediCords#readme",
   "dependencies": {
+    "amazon-cognito-identity-js": "^3.0.11",
+    "aws-sdk": "^2.448.0",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "ejs": "^2.6.1",
@@ -30,8 +33,10 @@
     "moment": "^2.24.0",
     "mongo": "^0.1.0",
     "mongodb": "^3.2.3",
+    "node-fetch": "^2.5.0",
     "path": "^0.12.7",
     "reload": "^3.0.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "window-mock": "0.0.13"
   }
 }

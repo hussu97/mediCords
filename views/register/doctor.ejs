@@ -1,0 +1,98 @@
+<fieldset id="doctor-1" class="doctor">
+    <div class="login-form-head">
+        <h4>Personal Details</h4>
+        <p>Going to ask for some information</p>
+    </div>
+    <div class="login-form-body">
+        <div class="form-gp">
+            <label for="d.fName">First Name</label>
+            <input type="text" id="d.fName" name="doctor[firstName]">
+            <i class="ti-user"></i>
+        </div>
+        <div class="form-gp">
+            <label for="d.lName">Last Name</label>
+            <input type="text" id="d.lName" name="doctor[lastName]">
+            <i class="ti-user"></i>
+        </div>
+        <div class="form-gp">
+            <label for="p.username">Username</label>
+            <input type="text" id="d.username" name="doctor[username]">
+            <i class="ti-bolt"></i>
+        </div>
+        <div class="form-gp">
+            <label for="d.email">Email address (for verification code)</label>
+            <input type="email" id="d.email" name="doctor[email]">
+            <i class="ti-email"></i>
+        </div>
+        <div class="form-gp">
+            <label for="d.password">Password</label>
+            <input type="password" id="d.password" name="password">
+            <i class="ti-lock"></i>
+        </div>
+
+        <div class="submit-btn-area">
+            <input class="previous" value="Previous"
+                onclick="changeFieldSet('doctor-1','mainpage-0')"></input>
+        </div>
+        <br />
+        <div class="submit-btn-area">
+            <input class="next" value="Next" onclick="changeFieldSet('doctor-1','doctor-2')"></input>
+        </div>
+        <div class="form-footer text-center mt-5">
+            <p class="text-muted">Don't have an account? <a href="/login">Sign in</a></p>
+        </div>
+    </div>
+</fieldset>
+<fieldset id="doctor-2">
+    <div class="login-form-head">
+        <h4>Identification</h4>
+        <p>Used to verify yourself</p>
+    </div>
+    <div class="login-form-body">
+        <div class="form-gp">
+            <label for="d.identification-number">License Number</label>
+            <input type="text" id="d.identification-number" name="doctor[identificationNumber]">
+            <i class="fa-address-card-o"></i>
+        </div>
+        <div class="form-gp">
+            <label for="d.country">Country of Issue</label>
+            <br /><br />
+            <!-- <input type="text" id="country" name="country"> -->
+            <select id="d.country" name="doctor[country]" class="form-control">
+                <%
+                                        for ( var i = 0; i < countryList.length; i++ )
+                                        {
+                                            
+                                            %>
+                <option value="<%=countryList[i].name %>">
+                    <%=countryList[i].name %></option>
+                <%}%>
+                </select>
+            </div>
+            <div class="form-gp">
+                <label for="d.city">City</label>
+                <input type="text" id="d.city" name="doctor[city]">
+                <i class="fa fa-map-marker"></i>
+            </div>
+            <div class="form-gp">
+                    <label for="d.expiry">Expiry</label>
+                    <br />
+                    <input type="date" id="d.expiry" name="doctor[expiry]">
+            </div>
+            <div class="form-gp">
+                    <label for="d.speciality">Speciality</label>
+                    <input type="text" id="d.speciality" name="doctor[speciality]">
+                    <i class="fa fa-cube"></i>
+            </div>
+            <div class="submit-btn-area">
+                    <input class="previous" value="Previous" onclick="changeFieldSet('doctor-2','doctor-1')"></input>
+            </div>
+            <br/>
+            <div class="submit-btn-area">
+                <button type="submit">Submit <i class="ti-arrow-right"></i></button>
+            </div>
+            <div class="form-footer text-center mt-5">
+                <p class="text-muted">Don't have an account? <a href="/login">Sign in</a></p>
+            </div>
+        </div>
+    </fieldset>

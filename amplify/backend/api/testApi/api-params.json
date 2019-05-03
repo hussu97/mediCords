@@ -1,0 +1,44 @@
+{
+    "paths": [
+        {
+            "name": "/items",
+            "lambdaFunction": "testLambda",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            }
+        }
+    ],
+    "resourceName": "testApi",
+    "apiName": "testApi",
+    "functionArns": [
+        {
+            "lambdaFunction": "testLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "medicords-staging-20190504004101-authRole",
+        "unAuthRoleName": "medicords-staging-20190504004101-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "testLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

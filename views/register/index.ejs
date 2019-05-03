@@ -1,0 +1,120 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Sign up - MediCords</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="images/icon/logo.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/metisMenu.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css"
+        media="all" />
+    <!-- others css -->
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/default-css.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/register.css">
+    <!-- modernizr css -->
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script>
+        changeFieldSet = (hideFieldSet, showFieldSet) => {
+            document.getElementById(hideFieldSet).style.display = "none";
+            document.getElementById(showFieldSet).style.display = "block";
+            var hideNumber = Number(hideFieldSet.split('-')[1]);
+            var showNumber = Number(showFieldSet.split('-')[1]);
+            var lis = document.getElementById("progressbar").getElementsByTagName("li");
+            lis[hideNumber].className = "";
+            lis[showNumber].className = "active";
+        }
+        setType = type => {
+            document.getElementById('userType').value = type;
+        }
+    </script>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- login area start -->
+    <div class="login-area">
+        <div class="container">
+            <div class="login-box ptb--100">
+                <form method="POST" action="/register">
+                    <ul id="progressbar">
+                        <li class="active">User Type</li>
+                        <li>Personal Details</li>
+                        <li>Identification</li>
+                    </ul>
+                    <fieldset id="mainpage-0">
+                        <div class="login-form-head">
+                            <h4>User Type</h4>
+                            <p>What kind of user are you?</p>
+                        </div>
+                        <div class="login-form-body">
+                            <div class="submit-btn-area">
+                                <input class="next" value="Patient"
+                                    onclick="setType('patient');changeFieldSet('mainpage-0','patient-1')"></input>
+                            </div>
+                            <br />
+                            <div class="submit-btn-area">
+                                <input class="next" value="Doctor"
+                                    onclick="setType('doctor');changeFieldSet('mainpage-0','doctor-1')"></input>
+                            </div>
+                            <br />
+                            <div class="submit-btn-area">
+                                <input class="next" value="Hospital"
+                                    onclick="setType('hospital');changeFieldSet('mainpage-0','hospital-1')"></input>
+                            </div>
+                            <br />
+                            <div class="submit-btn-area">
+                                <input class="next" value="Insurance"
+                                    onclick="setType('insurance');changeFieldSet('mainpage-0','insurance-1')"></input>
+                            </div>
+                            <div class="form-footer text-center mt-5">
+                                <p class="text-muted">Already have an account? <a href="/login">Sign in</a></p>
+                            </div>
+                            <input id="userType" name="userType" hidden></input>
+                        </div>
+                    </fieldset>
+                    <% include ./patient %>
+                    <% include ./doctor %>
+                    <% include ./hospital %>
+                    <% include ./insurance %>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- login area end -->
+
+    <!-- bootstrap 4 js -->
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/metisMenu.min.js"></script>
+    <script src="js/jquery.slimscroll.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+
+    <!-- others plugins -->
+    <script src="js/plugins.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/register.js"></script>
+</body>
+
+</html>

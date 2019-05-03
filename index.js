@@ -10,6 +10,7 @@ var path = require('path');
 var flash = require('connect-flash');
 var methodOverride = require('method-override');
 var session = require('express-session');
+global.fetch = require('node-fetch');
 
 const port = 8080;
 

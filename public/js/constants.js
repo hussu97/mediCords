@@ -1,4 +1,4 @@
-var moment = require('moment');
+
 var constants = {
 countryList : [ 
     {"name": "Afghanistan", "code": "AF"}, 
@@ -245,7 +245,7 @@ countryList : [
     {"name": "Yemen", "code": "YE"}, 
     {"name": "Zambia", "code": "ZM"}, 
     {"name": "Zimbabwe", "code": "ZW"} 
-    ]
+    ],
 }
 
 module.exports =  constants;
