@@ -9,30 +9,13 @@ const express = require('express'),
   con = require('../web-service-connector'),
   middlewareObj = require('../middleware');
 middlware_hasTypeDoctor = middlewareObj.isLoggedIn('doctor');
-var doctor = {
-  firstName: 'ssJohn',
-  lastName: 'Doe',
-  country: 'Madagascar',
-  isVerified: true,
-  expiry: moment().format('YYYY-MM-DD'),
-  identificationNumber: 'ii0ewi',
-  id: 'werrr',
-  username: 'docA',
-  speciality: 'Surgeon',
-  city: 'Sharjah',
-  address: 'this is address',
-  hospitalName: '212s3',
-  patientIds: [
-    'wksosw', 'swwwdwd', 'swwswsw'
-  ]
-}
 //=========================================
 //                doctor profile routes
 //=========================================
-router.get('/:id', (req, res) => {
+router.get('/:id', middlware_hasTypeDoctor,(req, res) => {
   res.redirect(`/doctor/${req.params.id}/profile`);
 });
-router.get('/:id/profile', async (req, res) => {
+router.get('/:id/profile', middlware_hasTypeDoctor,async (req, res) => {
   var doctor = await con.getDoctor(req.params.id);
   req.session.isVerified = doctor.isVerified;
   res.render('doctor/profile', {
@@ -41,14 +24,14 @@ router.get('/:id/profile', async (req, res) => {
   });
 });
 //update doctor profile
-router.put('/:id/profile', async (req, res) => {
+router.put('/:id/profile', middlware_hasTypeDoctor,async (req, res) => {
   console.log(req.body);
   res.redirect('/doctor/' + req.params.id);
 });
 //=========================================
 //                doctor patients routes
 //=========================================
-router.get('/:id/patients', async (req, res) => {
+router.get('/:id/patients', middlware_hasTypeDoctor,async (req, res) => {
   var doctor = await con.getDoctor(req.params.id);
   req.session.isVerified = doctor.isVerified;
   patients = [];
@@ -62,7 +45,7 @@ router.get('/:id/patients', async (req, res) => {
   });
 });
 // more info about a patient
-router.get('/:id/patients/:patientid', async (req, res) => {
+router.get('/:id/patients/:patientid', middlware_hasTypeDoctor,async (req, res) => {
   var doctor = await con.getDoctor(req.params.id);
   req.session.isVerified = doctor.isVerified;
   var patient = await con.getPatient(req.params.patientid);
@@ -74,7 +57,7 @@ router.get('/:id/patients/:patientid', async (req, res) => {
 //=========================================
 //                doctor patient add bill route
 //=========================================
-router.get('/:id/bill/new', async (req, res) => {
+router.get('/:id/bill/new', middlware_hasTypeDoctor,async (req, res) => {
   var doctor = await con.getDoctor(req.params.id);
   req.session.isVerified = doctor.isVerified;
   patients = [];
@@ -87,7 +70,7 @@ router.get('/:id/bill/new', async (req, res) => {
     patients: patients
   })
 });
-router.post('/:id/bill', async (req, res) => {
+router.post('/:id/bill', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the bill');
     bill = req.body.bill;
@@ -102,7 +85,7 @@ router.post('/:id/bill', async (req, res) => {
 //=========================================
 //                doctor add medical info routes
 //=========================================
-router.get('/:id/medical/new', async (req, res) => {
+router.get('/:id/medical/new', middlware_hasTypeDoctor,async (req, res) => {
   var doctor = await con.getDoctor(req.params.id);
   req.session.isVerified = doctor.isVerified;
   patients = [];
@@ -115,7 +98,7 @@ router.get('/:id/medical/new', async (req, res) => {
     patients: patients
   })
 });
-router.post('/:id/operation', async (req, res) => {
+router.post('/:id/operation', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the operation for the patient');
     operation = req.body.operation;
@@ -128,7 +111,7 @@ router.post('/:id/operation', async (req, res) => {
   }
   res.redirect('back');
 });
-router.post('/:id/allergy', async (req, res) => {
+router.post('/:id/allergy', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the allergy for the patient');
     allergy = req.body.allergy;
@@ -139,7 +122,7 @@ router.post('/:id/allergy', async (req, res) => {
   }
   res.redirect('back');
 });
-router.post('/:id/disability', async (req, res) => {
+router.post('/:id/disability', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the disability for the patient');
     disability = req.body.disability;
@@ -150,7 +133,7 @@ router.post('/:id/disability', async (req, res) => {
   }
   res.redirect('back');
 });
-router.post('/:id/disease', async (req, res) => {
+router.post('/:id/disease', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the disease for the patient');
     disease = req.body.disease;

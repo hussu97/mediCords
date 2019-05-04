@@ -162,6 +162,12 @@
     $('#dataTableSearch').keyup(function () {
         $('#dataTable')
         .DataTable().search($(this).val()).draw();
+        $('#dataTable2')
+        .DataTable().search($(this).val()).draw();
+        $('#dataTable3')
+        .DataTable().search($(this).val()).draw();
+        $('#dataTable4')
+        .DataTable().search($(this).val()).draw();
         $('#dataTable-non-resp')
         .DataTable().search($(this).val()).draw();
     })

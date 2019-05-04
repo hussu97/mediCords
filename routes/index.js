@@ -130,6 +130,7 @@ router.post('/verify', (req, res) => {
                                 break;
                         }
                     }
+                    res.redirect('/login');
                     req.session.user = '';
                 });
             },

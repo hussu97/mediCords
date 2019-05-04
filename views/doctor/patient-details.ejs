@@ -177,19 +177,23 @@
                             <table id="dataTable" class="text-center table-hover">
                                 <thead class="bg-light text-capitalize">
                                     <tr>
-                                        <th>ID Number</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>DOB</th>
+                                        <th>Date Admitted</th>
+                                        <th>Name</th>
+                                        <th>Doctor</th>
+                                        <th>Date of Discharged</th>
+                                        <th>Days in Hospital</th>
+                                        <th>Comments</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% patient.operations.forEach((op)=> { %>
                                     <tr>
-                                        <th scope="row"><%= op.identificationNumber %></th>
-                                        <td><%= op.firstName %></td>
-                                        <td><%= op.lastName %></td>
-                                        <td><%= op.dob %></td>
+                                        <th scope="row"><%= op.date %></th>
+                                        <td><%= op.name %></td>
+                                        <td><%= op.doctor %></td>
+                                        <td><%= op.dischargeDate %></td>
+                                        <td><%= op.daysInHospital %></td>
+                                        <td><%= op.comment %></td>
                                     </tr>
                                     <%}); %>
                                 </tbody>
@@ -205,19 +209,21 @@
                             <table id="dataTable2" class="text-center table-hover">
                                 <thead class="bg-light text-capitalize">
                                     <tr>
-                                        <th>ID Number</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>DOB</th>
+                                        <th>Date of Diagnosis</th>
+                                        <th>Name</th>
+                                        <th>Doctor</th>
+                                        <th>Severity</th>
+                                        <th>Medication</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% patient.allergies.forEach((al)=> { %>
                                     <tr>
-                                        <th scope="row"><%= al.identificationNumber %></th>
-                                        <td><%= al.firstName %></td>
-                                        <td><%= al.lastName %></td>
-                                        <td><%= al.dob %></td>
+                                        <th scope="row"><%= al.date %></th>
+                                        <td><%= al.name %></td>
+                                        <td><%= al.doctor %></td>
+                                        <td><%= al.severity %></td>
+                                        <td><%= al.medication %></td>
                                     </tr>
                                     <%}); %>
                                 </tbody>
@@ -233,19 +239,21 @@
                             <table id="dataTable3" class="text-center table-hover">
                                 <thead class="bg-light text-capitalize">
                                     <tr>
-                                        <th>ID Number</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>DOB</th>
+                                        <th>Date of Diagnosis</th>
+                                        <th>Name</th>
+                                        <th>Doctor</th>
+                                        <th>Symptoms</th>
+                                        <th>Medication</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% patient.diseases.forEach((di)=> { %>
                                     <tr>
-                                        <th scope="row"><%= di.identificationNumber %></th>
-                                        <td><%= di.firstName %></td>
-                                        <td><%= di.lastName %></td>
-                                        <td><%= di.dob %></td>
+                                        <th scope="row"><%= di.date %></th>
+                                        <td><%= di.name %></td>
+                                        <td><%= di.doctor %></td>
+                                        <td><%= di.symptoms %></td>
+                                        <td><%= di.medication %></td>
                                     </tr>
                                     <%}); %>
                                 </tbody>
@@ -261,19 +269,21 @@
                             <table id="dataTable4" class="text-center table-hover">
                                 <thead class="bg-light text-capitalize">
                                     <tr>
-                                        <th>ID Number</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>DOB</th>
+                                        <th>Date of Diagnosis</th>
+                                        <th>Name</th>
+                                        <th>Doctor</th>
+                                        <th>Side Effects</th>
+                                        <th>Medication</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% patient.disabilities.forEach((dis)=> { %>
                                     <tr>
-                                        <th scope="row"><%= dis.identificationNumber %></th>
-                                        <td><%= dis.firstName %></td>
-                                        <td><%= dis.lastName %></td>
-                                        <td><%= dis.dob %></td>
+                                        <th scope="row"><%= dis.date %></th>
+                                        <td><%= dis.name %></td>
+                                        <td><%= dis.doctor %></td>
+                                        <td><%= dis.sideEffects %></td>
+                                        <td><%= dis.medication %></td>
                                     </tr>
                                     <%}); %>
                                 </tbody>

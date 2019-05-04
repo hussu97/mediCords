@@ -328,7 +328,7 @@ countryList : [
         username : 'govUser'
       },
       hospital : {
-        id: 1234,
+        id: '49ea1ab9-ba4b-4a87-8015-d3f242bc551f',
         username : 'insurUser',
         identificationNumber : 'w2i0wi20w',
         name: 'XYZ Hospital',
@@ -345,7 +345,7 @@ countryList : [
         ]
       },
       doctor : {
-        id: 1234,
+        id: '292b882c-ac28-4a51-a0d8-fb76bfc532de',
         username : 'insurUser',
         identificationNumber : 'w2i0wi20w',
         firstName: 'XYZ',

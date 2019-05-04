@@ -32,5 +32,20 @@
 <!-- others plugins -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script>
+        navclicked = () => {
+            console.log('hi')
+            $("#dataTable2").dataTable().fnDestroy()
+            $('#dataTable2').DataTable(
+                {
+                    rowReorder: {
+                selector: 'td:nth-child(2)'
+            },
+            "sDom":"ltipr",
+            responsive:true
+                }
+            );
+        }
+    </script>
 <script src="/js/plugins.js"></script>
 <script src="/js/scripts.js"></script>
