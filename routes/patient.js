@@ -3,11 +3,11 @@ const express = require('express'),
     mergeParams: true
   }),
   {
-    countryList,
-    patient
+    countryList
   } = require('../public/js/constants'),
-  moment = require('moment');
-
+  middlewareObj = require('../middleware'),
+  con = require('../web-service-connector');
+middlware_hasTypePatient = middlewareObj.isLoggedIn('patient');
 
 //=========================================
 //                patient profile routes
@@ -15,249 +15,83 @@ const express = require('express'),
 router.get('/:id', (req, res) => {
   res.redirect(`/patient/${req.params.id}/profile`);
 });
-router.get('/:id/profile', (req, res) => {
-  res.render('patient/profile', {
-    patient :{
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address : 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: req.params.id,
-        dob : moment().format('MMM Do YY')
-      },
-    countryList: countryList
-  });
+router.get('/:id/profile', middlware_hasTypePatient,async(req, res) => {
+  var patient = await con.getPatient(req.params.id);
+    res.render('patient/profile', {
+      patient: patient,
+      countryList: countryList
+    });
 });
 //update patient profile
-router.put('/:id/profile', (req, res) => {
-  res.redirect('/patient/' + req.params.id);
+router.put('/:id', middlware_hasTypePatient,async(req, res) => {
+  req.body.patient.isVerified = false;
+  var status = await con.updatePatient(req.params.id,req.body.patient);
+  req.flash('success', 'Patient successfully updated');
+  req.flash('error', 'patient could not be updated');
+  res.redirect(`/patient/${req.params.id}/profile`);
 });
 //=========================================
 //                patient medical info routes
 //=========================================
-router.get('/:id/operation', (req, res) => {
+router.get('/:id/operation', middlware_hasTypePatient,async(req, res) => {
+  var patient = await con.getPatient(req.params.id);
   res.render('patient/operation', {
-    patient :{
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      address : 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      id: req.params.id,
-      dob : moment().format('MMM Do YY')
-    },
-    operations: [{
-      date: moment().format('MMM Do YY'),
-      name: 'Tonsil Surgery',
-      doctor: 'Steven',
-      dischargeDate: moment().subtract(10, 'days').format('MMM Do YY'),
-      daysInHospital: '23',
-      comment: 'Successful operation'
-    }]
+    patient: patient
   });
 });
-router.get('/:id/allergy', (req, res) => {
+router.get('/:id/allergy', middlware_hasTypePatient,async(req, res) => {
+  var patient = await con.getPatient(req.params.id);
   res.render('patient/allergy', {
-    patient :{
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      address : 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      id: req.params.id,
-      dob : moment().format('MMM Do YY')
-    },
-    allergies: [{
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'low',
-        medication: 'N/A'
-      },
-      {
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'med',
-        medication: 'N/A'
-      },
-      {
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'high',
-        medication: 'Water'
-      }
-    ]
+    patient: patient
   });
 });
-
-//UI not made yet
-router.get('/:id/disease', (req, res) => {
-  res.render('patient/allergy', {
-    patient :{
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address : 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: req.params.id,
-        dob : moment().format('MMM Do YY')
-      },
-    allergies: [{
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'low',
-        medication: 'N/A'
-      },
-      {
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'med',
-        medication: 'N/A'
-      },
-      {
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'high',
-        medication: 'Water'
-      }
-    ]
+router.get('/:id/disease', middlware_hasTypePatient,async(req, res) => {
+  var patient = await con.getPatient(req.params.id);
+  res.render('patient/disease', {
+    patient: patient
   });
 });
-
-//UI not made yet
-router.get('/:id/disability', (req, res) => {
-  res.render('patient/allergy', {
-    patient :{
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address : 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: req.params.id,
-        dob : moment().format('MMM Do YY')
-      },
-    allergies: [{
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'low',
-        medication: 'N/A'
-      },
-      {
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'med',
-        medication: 'N/A'
-      },
-      {
-        name: 'Peanut Butter',
-        doctor: 'Hello',
-        date: moment().format('MMM Do YY'),
-        severity: 'high',
-        medication: 'Water'
-      }
-    ]
+router.get('/:id/disability', middlware_hasTypePatient,async(req, res) => {
+  var patient = await con.getPatient(req.params.id);
+  res.render('patient/disability', {
+    patient: patient
   });
 });
 //=========================================
 //                patient bills routes
 //=========================================
-router.get('/:id/bill', (req, res) => {
+router.get('/:id/bill', middlware_hasTypePatient,async(req, res) => {
+  var patient = await con.getPatient(req.params.id);
+  var insurance = await con.getInsurance(patient.insuranceId);
   res.render('patient/bill', {
-    patient :{
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address : 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: req.params.id,
-        dob : moment().format('MMM Do YY')
-      },
-    bills: [{
-      id: '1234',
-      date: moment().format('MMM Do YY'),
-      hospital: 'XYZ Hospital',
-      doctor: 'Mazin Raf',
-      cost: 234.34,
-      vat: 5.67,
-      total : 245.23,
-      status : 'not sent'
-    },
-    {
-      id: '1234',
-      date: moment().format('MMM Do YY'),
-      hospital: 'XYZ Hospital',
-      doctor: 'Mazin Raf',
-      cost: 234.34,
-      vat: 5.67,
-      total : 245.23,
-      status : 'pending'
-    },
-    {
-      id: '1234',
-      date: moment().format('MMM Do YY'),
-      hospital: 'XYZ Hospital',
-      doctor: 'Mazin Raf',
-      cost: 234.34,
-      vat: 5.67,
-      total : 245.23,
-      status : 'approved'
-    }],
-    insurance: {
-      id: 12
-    }
+    patient: patient,
+    insurance: insurance
   });
 });
 //=========================================
 //                patient insurance routes
 //=========================================
 
-router.get('/:id/insurance', (req, res) => {
-  res.render('patient/insurance', {
-    patient :{
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address : 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: req.params.id,
-        dob : moment().format('MMM Do YY')
-      },
-    countryList : countryList,
-    patientInsurance : {
-      id: 1234,
-      name: 'XYZ Insurance',
-      country : 'USA',
-      city:'Cali',
-      address : '123,223,yellow st',
-      expiry : moment().format('MMM Do YY'),
-      isVerified : false
-    },
-    billsCount : {
-      approved : 5,
-      pending : 6
+router.get('/:id/insurance', middlware_hasTypePatient,async(req, res) => {
+  var patient = await con.getPatient(req.params.id);
+  var insurance = await con.getInsurance(patient.insuranceId);
+  var pendingCount = 0;
+  var approvedCount = 0;
+  patient.bills.forEach((el) => {
+    if (el.status === 'pending') {
+      pendingCount += 1;
+    } else if (el.status === 'approved') {
+      approvedCount += 1;
     }
-  },
-  );
-});
-// Update insurance details using insurance name
-router.put('/:id/insurance', (req, res) => {
-  var insuranceName = req.body.name;
-  console.log(`${req.body.name}`);
-  res.redirect(`/patient/${req.params.id}/insurance`);
+  })
+  res.render('patient/insurance', {
+    patient: patient,
+    countryList: countryList,
+    patientInsurance: insurance,
+    billsCount: {
+      approved: approvedCount,
+      pending: pendingCount
+    }
+  });
 });
 module.exports = router;

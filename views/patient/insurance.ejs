@@ -1,19 +1,5 @@
 <% include ../patient/partials/header %>
 <!-- header area start -->
-<script>
-    updateInsurance = () => {
-        var buttonVal = $('.update-insurance').text();
-        if (buttonVal === 'Edit') {
-            $('.update-insurance').text('Save   ');
-            $('.update-insurance').removeClass('btn-outline-danger').addClass('btn-outline-success');
-            $('#name').prop('disabled', false);
-        } else {
-            $('.update-insurance').text('Edit');
-            $('.update-insurance').removeClass('btn-outline-success').addClass('btn-outline-danger');
-            $('#name').prop('disabled', true);
-        }
-    }
-</script>
 <div class="header-area header-bottom">
     <div class="container">
         <div class="row align-items-center">
@@ -87,7 +73,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="card card-profile">
-                    <div class="card-header"></div>
+                    <div class="card-header card-header-insurance"></div>
                     <div class="card-body text-center">
 
                         <h3 class="mb-3"><%= patientInsurance.name %></h3>
@@ -115,7 +101,7 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <form class="card" method="POST" action="/patient/<%=patient.id%>/insurance?_method=PUT">
+                <form class="card">
                     <div class="card-header"></div>
                     <div class="card-body">
                         <h3 class="card-title">Insurance Details</h3>
@@ -124,26 +110,22 @@
                                 <div class="form-group">
                                     <label class="form-label">Company</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" id="name" name="name" class="form-control" disabled=""
+                                        <input type="text" id="name" name="name" class="form-control" readonly
                                             value="<%= patientInsurance.name%>" placeholder="Company">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-danger update-insurance" type="button"
-                                                onclick="updateInsurance()">Edit</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group">
                                     <label class="form-label">Insurance ID</label>
-                                    <input type="text" class="form-control" disabled="" placeholder="ID"
+                                    <input type="text" class="form-control" readonly placeholder="ID"
                                         value="<%=patientInsurance.id%>">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-4">
                                 <div class="form-group">
                                     <label class="form-label">License Expiry</label>
-                                    <input type="text" class="form-control" disabled="" placeholder="Date"
+                                    <input type="text" class="form-control" readonly placeholder="Date"
                                         value="<%= patientInsurance.expiry %>">
                                 </div>
                             </div>
@@ -152,7 +134,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Address</label>
-                                    <input type="text" class="form-control" disabled="" placeholder="Home Address"
+                                    <input type="text" class="form-control" readonly placeholder="Home Address"
                                         value="<%= patientInsurance.address %>">
                                 </div>
                             </div>
@@ -162,21 +144,21 @@
                                 <div class="form-group">
                                     <label class="form-label">City</label>
                                     <input type="text" class="form-control" placeholder="City"
-                                        value="<%= patientInsurance.city %>" disabled="">
+                                        value="<%= patientInsurance.city %>" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Country</label>
                                     <input type="text" class="form-control" placeholder="Country"
-                                        value="<%= patientInsurance.country %>" disabled="">
+                                        value="<%= patientInsurance.country %>" readonly>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer text-right">
-                        <button type="submit" class="btn btn-primary btn-block">Update Insurance Company</button>
+                    <div class="card-footer text-left">
+                        <p><b>Please inform your insurance company for any changes to your insurance plan</b></p>
                     </div>
             </div>
 

@@ -1,0 +1,43 @@
+<div class="tab-pane fade show active" id="nav-operations" role="tabpanel" aria-labelledby="nav-home-tab">
+        <form class="card" method="POST" action="/doctor/<%=doctor.id %>/operation">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h3 class="card-title">2- New Operation Details</h3>
+                <div class="row">
+                    <input type="text" class="patientId" name="patientid" required hidden>
+                    <input type="text" name="operation[doctor]" value="<%=doctor.firstName%> <%=doctor.lastName%>" required
+                        hidden>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Operation Name</label>
+                            <input type="text" name="operation[name]" class="form-control" placeholder="operation X" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Date Admitted</label>
+                            <input type="date" id="total" name="operation[date]" class="form-control"
+                                placeholder="Use commas to seperate" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Date Discharged</label>
+                                <input type="date" id="total" name="operation[dischargeDate]" class="form-control"
+                                    placeholder="Use commas to seperate" required>
+                            </div>
+                        </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Comments on operation</label>
+                            <input type="text" id="total" name="operation[comment]" class="form-control"
+                                placeholder="This is a comment" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-success btn-block">Add operation to patient profile</button>
+                </div>
+            </div>
+        </form>
+    </div>

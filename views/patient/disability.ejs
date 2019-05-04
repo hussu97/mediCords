@@ -1,0 +1,67 @@
+<% include ./partials/header %>
+<% include ./partials/medicalInfo/header %>
+<li><span>Disabilities</span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- header area end -->
+<!-- page title area end -->
+<div class="main-content-inner">
+    <div class="container">
+        <div class="row">
+            <!-- Progress Table start -->
+            <div class="col-12 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Previous Disabilities</h4>
+                        <div class="data-tables">
+                            <div class="table-responsive">
+                                <table id="dataTable" class="table-hover text-center">
+                                    <thead class="text-uppercase">
+                                        <tr>
+                                            <th scope="col">Date of Diagnosis</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Diagnosed By</th>
+                                            <th scope="col">Side Effects</th>
+                                            <th scope="col">Medications</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% patient.disabilities.forEach((al)=> { %>
+                                        <tr>
+
+                                            <th scope="row"><%= al.date %></th>
+                                            <td><%= al.name %></td>
+                                            <td><%= al.doctor %></td>
+                                            <td><%= al.sideEffects %></td>
+                                            <td><%= al.medication %></td>
+                                        </tr>
+                                        <%}); %>
+                                    </tbody>
+                                    <% if(patient.disabilities.length === 0) {%>
+                                    <p>No disabilities have been recorded for you</p>
+                                    <br />
+                                    <% }; %>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress Table end -->
+        </div>
+    </div>
+</div>
+<!-- main content area end -->
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
+
+</html>

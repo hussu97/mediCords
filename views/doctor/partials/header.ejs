@@ -48,13 +48,14 @@
     <!-- preloader area end -->
     <!-- main wrapper start -->
     <div class="horizontal-main-wrapper">
+        <% include ../../flash-message %>
         <!-- main header area start -->
         <div class="mainheader-area">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
-                            <a href="/hospital/<%=hospital.id%>"><img class="img-fluid" src="/images/icon/logo.png"
+                            <a href="/doctor/<%=doctor.id%>"><img class="img-fluid" src="/images/icon/logo.png"
                                     alt="logo"></a>
                         </div>
                     </div>
@@ -73,11 +74,11 @@
                         <div class="clearfix d-md-inline-block d-block">
                             <div class="user-profile m-0">
                                 <span class="avatar user-thumb f32"><span
-                                        class="flag <%=hospital.country.toLowerCase().substring(0,2)%>">
+                                        class="flag <%=doctor.country.toLowerCase().substring(0,2)%>">
                                     </span></span>
                                 <!-- <img class="avatar user-thumb" src="/images/author/avatar.png" alt="avatar"> -->
                                 <h4 class="user-name dropdown-toggle" data-toggle="dropdown">&nbsp;&nbsp;
-                                    <%= hospital.name %><i class="fa fa-angle-down"></i></h4>
+                                    <%= doctor.firstName %> <%= doctor.lastName %><i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="/login">Log Out</a>
                                 </div>

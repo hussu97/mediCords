@@ -1,0 +1,40 @@
+<div class="tab-pane fade" id="nav-allergies" role="tabpanel" aria-labelledby="nav-home-tab">
+    <form class="card" method="POST" action="/doctor/<%=doctor.id %>/allergy">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <h3 class="card-title">2- New Allergy Details</h3>
+            <div class="row">
+                <input type="text" class="patientId" name="patientid" required hidden>
+                <input type="text" name="allergy[doctor]" value="<%=doctor.firstName%> <%=doctor.lastName%>" required
+                    hidden>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Allergy Name</label>
+                        <input type="text" name="allergy[name]" class="form-control" placeholder="Allergy X" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Severity</label>
+                        <select id="type" name="allergy[severity]" class="form-control">
+                            <option>low</option>
+                            <option>medium</option>
+                            <option>high</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Medication(s)</label>
+                        <input type="text" id="total" name="allergy[medication]" class="form-control"
+                            placeholder="Use commas to seperate" required>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-success btn-block">Add allergy to patient profile</button>
+            </div>
+        </div>
+    </form>
+</div>

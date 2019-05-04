@@ -1,0 +1,134 @@
+<% include ./partials/header %>
+<!-- header area start -->
+<div class="header-area header-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9  d-none d-lg-block">
+                <div class="horizontal-menu">
+                    <nav>
+                        <ul id="nav_menu">
+                            <li>
+                                <a href="/doctor/<%=doctor.id%>/profile"><i
+                                        class="ti-dashboard"></i><span>Profile</span></a>
+                            </li>
+                            <li>
+                                <a href="/doctor/<%=doctor.id%>/patients"><i
+                                        class="ti-layout-sidebar-left"></i><span>Patients</span></a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0)"><i class="ti-cloud-up"></i><span>Create</span></a>
+                                <ul class="submenu">
+                                    <li><a href="/doctor/<%=doctor.id%>/bill/new">Bill</a></li>
+                                    <li><a href="/doctor/<%=doctor.id%>/medical/new">Medical Information</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <% include ./partials/search-bar %>
+            <!-- mobile_menu -->
+            <div class="col-12 d-block d-lg-none">
+                <div id="mobile_menu"></div>
+            </div>
+        </div>
+    </div>
+    <hr class="horizontal-menu-hr">
+    </hr>
+    <div class="container">
+        <div class="page-title-area">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="breadcrumbs-area clearfix">
+                        <h4 class="page-title pull-left">Dashboard</h4>
+                        <ul class="breadcrumbs pull-left">
+                            <li><a href="/doctor/<%=doctor.id%>/">Home</a></li>
+                            <li><span>Create Bill</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header area end -->
+<!-- page title area end -->
+<div class="main-content-inner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <script>
+                    setPatientID = id => {
+                        document.getElementById('patientId').value = id;
+                        console.log(id);
+                    }
+                    calc = () => {
+                        document.getElementById('total').value = document.getElementById('vat').value*document.getElementById('cost').value/100;
+                    }
+                </script>
+                <div class="card-header"></div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Select Patient</h3>
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <% patients.forEach((pa)=> { %>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" role="tab"
+                                onclick="setPatientID('<%=pa.id%>')"><%= pa.firstName %> <%=pa.lastName%></a>
+                            <% })%>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <form class="card" method="POST" action="/doctor/<%=doctor.id %>/bill">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <h3 class="card-title">New Bill Details</h3>
+                        <div class="row">
+                            <input type="text" id="patientId" name="patientid" required hidden>
+                            <input type="text" name="bill[doctor]" value="<%=doctor.firstName%> <%=doctor.lastName%>"
+                                required hidden>
+                            <input type="text" name="bill[status]" value="not sent" required hidden>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Cost (AED)</label>
+                                    <input type="number" id="cost" step="0.01" name="bill[cost]" class="form-control" placeholder="0.00"
+                                        required onchange="calc()">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">VAT (%)</label>
+                                    <input type="number" id="vat" step="0.01" min="0" max="100" name="bill[VAT]" class="form-control"
+                                        placeholder="5" onchange="calc()" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Total (AED)</label>
+                                    <input type="text" id="total" name="bill[total]" class="form-control"
+                                        placeholder="0.00" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-success btn-block">Create Bill</button>
+                        </div>
+                </form>
+            </div>
+            <!-- testimonial area end -->
+        </div>
+    </div>
+</div>
+<!-- main content area end -->
+<% include ./partials/footer %>
+</div>
+<!-- main wrapper start -->
+<% include ./partials/offset %>
+<% include ./partials/scripts %>
+</body>
+
+</html>

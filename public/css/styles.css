@@ -110,6 +110,10 @@
     background-image: url(http://source.unsplash.com/tvleqH3p1os);
 }
 
+.card-header-doctor {
+    background-image: url(http://source.unsplash.com/E285pJbC4uE);
+}
+
 .card:hover {
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.02);
 }

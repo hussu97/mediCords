@@ -1,4 +1,4 @@
-
+var moment = require('moment');
 var constants = {
 countryList : [ 
     {"name": "Afghanistan", "code": "AF"}, 
@@ -246,6 +246,121 @@ countryList : [
     {"name": "Zambia", "code": "ZM"}, 
     {"name": "Zimbabwe", "code": "ZW"} 
     ],
+    patient : {
+        username : 'username',
+        firstName: 'John',
+        lastName: 'Doe',
+        country: 'Madagascar',
+        isVerified: true,
+        address: 'xyz,abc, helo',
+        identificationNumber: '2iie02i3203i0ewi',
+        id: 'a0e26b81-b87c-4180-b87e-3d1432987244',
+        expiry : moment().format('YYYY-MM-DD'),
+        city : 'cityA',
+        insuranceId : 'xyz',
+        hospitalId : 'abcd',
+        operations : [
+          {
+            date: moment().format('MMM Do YY'),
+            name: 'Tonsil Surgery',
+            doctor: 'Steven',
+            dischargeDate: moment().subtract(10, 'days').format('MMM Do YY'),
+            daysInHospital: '23',
+            comment: 'Successful operation'
+          }
+        ],
+        diseases : [
+          {
+            name: 'Peanut Butter',
+            doctor: 'HelloA',
+            date: moment().format('MMM Do YY'),
+            symptoms: 'anxiety,pressure',
+            medication: 'N/A'
+          }
+        ],
+        disabilities : [
+          {
+            name: 'Peanut Butter',
+            doctor: 'Hello',
+            date: moment().format('MMM Do YY'),
+            sideEffects: 'sideEffectlow',
+            medication: 'Nss/A'
+          }
+        ],
+        allergies : [
+          {
+            name: 'Peanut Butter',
+            doctor: 'Hello',
+            date: moment().format('MMM Do YY'),
+            severity: 'low',
+            medication: 'N/A'
+          }
+        ],
+        bills : [
+          {
+            id : 'w22rewe',
+            date: moment().format('MMM Do YY'),
+            doctor: 'Mazin Raf',
+            cost: 234.34,
+            vat: 5.67,
+            total: 245.23,
+            status: 'pending'
+          }
+        ]
+      },
+      insurance : {
+        id: 1234,
+        username : 'insurUser',
+        identificationNumber : 'w2i0wi20w',
+        name: 'XYZ Insurance',
+        country: 'USA',
+        city: 'Cali',
+        address: '123,223,yellow st',
+        expiry: moment().format('YYYY-MM-DD'),
+        isVerified: false,
+        patientIds : [
+          'sss','ddd'
+        ]
+      },
+      government : {
+        id : 'w2ii9i2ee',
+        country : 'China',
+        username : 'govUser'
+      },
+      hospital : {
+        id: 1234,
+        username : 'insurUser',
+        identificationNumber : 'w2i0wi20w',
+        name: 'XYZ Hospital',
+        country: 'USA',
+        city: 'Cali',
+        address: '123,223,yellow st',
+        expiry: moment().format('YYYY-MM-DD'),
+        isVerified: true,
+        patientIds : [
+          'sss','ddd'
+        ],
+        doctorIds : [
+          'ww','e2e2','ewe'
+        ]
+      },
+      doctor : {
+        id: 1234,
+        username : 'insurUser',
+        identificationNumber : 'w2i0wi20w',
+        firstName: 'XYZ',
+        lastName:'Abbasss',
+        country: 'USA',
+        city: 'Cali',
+        address: '123,223,yellow st',
+        expiry: moment().format('YYYY-MM-DD'),
+        isVerified: true,
+        patientIds : [
+          'sss','ddd'
+        ],
+        hospitalName : 'St. Marys Hospital',
+        speciality : 'Heart Surgeon'
+      }
 }
 
 module.exports =  constants;

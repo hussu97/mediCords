@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/slicknav.min.css">
     <!-- amchart css -->
-    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css"
+        media="all" />
     <!-- others css -->
     <link rel="stylesheet" href="css/typography.css">
     <link rel="stylesheet" href="css/default-css.css">
@@ -35,12 +36,13 @@
     <!-- preloader area end -->
     <!-- login area start -->
     <div class="login-area">
+        <% include flash-message.ejs %>
         <div class="container">
             <div class="login-box ptb--100">
                 <form method="POST" action="/login">
                     <div class="login-form-head">
                         <h4>Sign In</h4>
-                        <p>Hello there, Sign in and start managing your Admin Template</p>
+                        <p>Hello there, Sign in and start managing your MediCords Functionalities</p>
                     </div>
                     <div class="login-form-body">
                         <div class="form-gp">
@@ -55,7 +57,7 @@
                         </div>
                         <div class="form-gp">
                             <label for="type">Type of User</label>
-                            <br /><br/>
+                            <br /><br />
                             <select id="type" name="type" class="form-control">
                                 <option>Patient</option>
                                 <option>Doctor</option>
@@ -68,7 +70,8 @@
                             <div class="col-6">
                                 <div class="custom-control custom-checkbox mr-sm-2">
                                     <input type="checkbox" class="custom-control-input" id="isRemember">
-                                    <label class="custom-control-label" for="isRemember" name="isRemember">Remember Me</label>
+                                    <label class="custom-control-label" for="isRemember" name="isRemember">Remember
+                                        Me</label>
                                 </div>
                             </div>
                             <div class="col-6 text-right">
@@ -97,7 +100,7 @@
     <script src="js/metisMenu.min.js"></script>
     <script src="js/jquery.slimscroll.min.js"></script>
     <script src="js/jquery.slicknav.min.js"></script>
-    
+
     <!-- others plugins -->
     <script src="js/plugins.js"></script>
     <script src="js/scripts.js"></script>

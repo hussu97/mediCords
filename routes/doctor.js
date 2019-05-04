@@ -6,183 +6,159 @@ const express = require('express'),
     countryList,
   } = require('../public/js/constants'),
   moment = require('moment'),
+  con = require('../web-service-connector'),
   middlewareObj = require('../middleware');
-  middlware_hasTypeDoctor = middlewareObj.isLoggedIn('doctor');
+middlware_hasTypeDoctor = middlewareObj.isLoggedIn('doctor');
+var doctor = {
+  firstName: 'ssJohn',
+  lastName: 'Doe',
+  country: 'Madagascar',
+  isVerified: true,
+  expiry: moment().format('YYYY-MM-DD'),
+  identificationNumber: 'ii0ewi',
+  id: 'werrr',
+  username: 'docA',
+  speciality: 'Surgeon',
+  city: 'Sharjah',
+  address: 'this is address',
+  hospitalName: '212s3',
+  patientIds: [
+    'wksosw', 'swwwdwd', 'swwswsw'
+  ]
+}
 //=========================================
 //                doctor profile routes
 //=========================================
-router.get('/:id',middlware_hasTypeDoctor, (req, res) => {
+router.get('/:id', (req, res) => {
   res.redirect(`/doctor/${req.params.id}/profile`);
 });
-router.get('/:id/profile',middlware_hasTypeDoctor, (req, res) => {
+router.get('/:id/profile', async (req, res) => {
+  var doctor = await con.getDoctor(req.params.id);
+  req.session.isVerified = doctor.isVerified;
   res.render('doctor/profile', {
-    doctor: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      expiry: moment().format('MMM Do YY'),
-      identificationNumber: 'ii0ewi',
-      id: req.params.id,
-      speciality: 'Surgeon'
-    }
+    doctor: doctor,
+    countryList: countryList
   });
 });
 //update doctor profile
-router.put('/:id/profile',middlware_hasTypeDoctor, (req, res) => {
+router.put('/:id/profile', async (req, res) => {
+  console.log(req.body);
   res.redirect('/doctor/' + req.params.id);
 });
 //=========================================
 //                doctor patients routes
 //=========================================
-router.get('/:id/patients',middlware_hasTypeDoctor, (req, res) => {
+router.get('/:id/patients', async (req, res) => {
+  var doctor = await con.getDoctor(req.params.id);
+  req.session.isVerified = doctor.isVerified;
+  patients = [];
+  for (i = 0; i < doctor.patientIds.length; i++) {
+    var p = await con.getPatient(doctor.patientIds[i])
+    patients.push(p);
+  }
   res.render('doctor/patients', {
-    doctor: {
-      firstName: 'Jossshn',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      expiry: moment().format('MMM Do YY'),
-      identificationNumber: 'ii0ewi',
-      id: 1113,
-      speciality: 'Surgeon'
-    },
-    patients: [{
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address: 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: 111,
-        dob: moment().format('MMM Do YY')
-      },
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address: 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: 2222,
-        dob: moment().format('MMM Do YY')
-      },
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        country: 'Madagascar',
-        isVerified: true,
-        address: 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: 333,
-        dob: moment().format('MMM Do YY')
-      }
-    ]
+    doctor: doctor,
+    patients: patients
   });
 });
 // more info about a patient
-router.get('/:id/patients/:patientid',middlware_hasTypeDoctor, (req, res) => {
+router.get('/:id/patients/:patientid', async (req, res) => {
+  var doctor = await con.getDoctor(req.params.id);
+  req.session.isVerified = doctor.isVerified;
+  var patient = await con.getPatient(req.params.patientid);
   res.render('doctor/patient-details', {
-    doctor: {
-      name: 'XYZ doctor',
-      expiry: moment().format('MMM Do YY'),
-      isVerified: true,
-      address: 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      country: 'India',
-      city: 'Shanghai',
-      id: req.params.id
-    },
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Jamaica',
-      isVerified: true,
-      address: 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      id: req.params.id,
-      dob: moment().format('MMM Do YY'),
-      operations: [{
-        date: moment().format('MMM Do YY'),
-        name: 'Tonsil Surgery',
-        doctor: 'Steven',
-        dischargeDate: moment().subtract(10, 'days').format('MMM Do YY'),
-        daysIndoctor: '23',
-        comment: 'Successful operation'
-      }],
-      allergies: [{
-          name: 'Peanut Butter',
-          doctor: 'Hello',
-          date: moment().format('MMM Do YY').fr,
-          severity: 'low',
-          medication: 'N/A'
-        },
-        {
-          name: 'Peanut Butter',
-          doctor: 'Hello',
-          date: moment().format('MMM Do YY'),
-          severity: 'med',
-          medication: 'N/A'
-        },
-        {
-          name: 'Peanut Butter',
-          doctor: 'Hello',
-          date: moment().format('MMM Do YY'),
-          severity: 'high',
-          medication: 'Water'
-        }
-      ],
-      diseases: [],
-      disabilities: []
-    }
-  });
-});
-//=========================================
-//                doctor hospital routes (if it is)
-//=========================================
-router.get('/:id/doctors/hospital',middlware_hasTypeDoctor, (req, res) => {
-  res.render('doctor/hospital', {
-    doctor: {
-      firstName: 'Jossshn',
-      lastName: 'Doe',
-      country: 'Madagascar',
-      isVerified: true,
-      expiry: moment().format('MMM Do YY'),
-      identificationNumber: 'ii0ewi',
-      id: 1113,
-      speciality: 'Surgeon'
-    },
-    hospital: {}
+    doctor: doctor,
+    patient: patient
   });
 });
 //=========================================
 //                doctor patient add bill route
 //=========================================
-router.get('/:id/bill',(req,res) => {
-  res.render('doctor/bill-new')
+router.get('/:id/bill/new', async (req, res) => {
+  var doctor = await con.getDoctor(req.params.id);
+  req.session.isVerified = doctor.isVerified;
+  patients = [];
+  for (i = 0; i < doctor.patientIds.length; i++) {
+    var p = await con.getPatient(doctor.patientIds[i])
+    patients.push(p);
+  }
+  res.render('doctor/bill-new', {
+    doctor: doctor,
+    patients: patients
+  })
 });
-router.post('/:id/bill', (req, res) => {
-  var patientID = req.body.patientid;
-  var doctorID = req.params.id;
-  req.flash('error', 'ok');
+router.post('/:id/bill', async (req, res) => {
+  if (req.session.isVerified) {
+    req.flash('success', 'you successfully added the bill');
+    bill = req.body.bill;
+    bill.date = middlewareObj.getCurrentTS();
+    bill.id = String(Math.floor(Math.random() * 1000000));
+    var status = await con.addBill(req.body.patientid, bill);
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   res.redirect('back');
 });
 //=========================================
 //                doctor add medical info routes
 //=========================================
-router.get('/:id/medical', (req, res) => {
-  res.render('doctor/medical-new')
+router.get('/:id/medical/new', async (req, res) => {
+  var doctor = await con.getDoctor(req.params.id);
+  req.session.isVerified = doctor.isVerified;
+  patients = [];
+  for (i = 0; i < doctor.patientIds.length; i++) {
+    var p = await con.getPatient(doctor.patientIds[i])
+    patients.push(p);
+  }
+  res.render('doctor/medical-new', {
+    doctor: doctor,
+    patients: patients
+  })
 });
-router.post('/:id/bill', (req, res) => {
+router.post('/:id/operation', async (req, res) => {
+  if (req.session.isVerified) {
+    req.flash('success', 'you successfully added the operation for the patient');
+    operation = req.body.operation;
+    operation.daysInHospital = moment(operation.dischargeDate).diff(moment(operation.date), 'days')
+    operation.date = middlewareObj.convertToTimeStamp(operation.date);
+    operation.dischargeDate = middlewareObj.convertToTimeStamp(operation.dischargeDate);
+    var status = await con.addOperation(req.body.patientid, operation);
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   res.redirect('back');
 });
-router.post('/:id/allergy', (req, res) => {
+router.post('/:id/allergy', async (req, res) => {
+  if (req.session.isVerified) {
+    req.flash('success', 'you successfully added the allergy for the patient');
+    allergy = req.body.allergy;
+    allergy.date = middlewareObj.getCurrentTS();
+    var status = await con.addAllergy(req.body.patientid, allergy);
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   res.redirect('back');
 });
-router.post('/:id/disability', (req, res) => {
+router.post('/:id/disability', async (req, res) => {
+  if (req.session.isVerified) {
+    req.flash('success', 'you successfully added the disability for the patient');
+    disability = req.body.disability;
+    disability.date = middlewareObj.getCurrentTS();
+    var status = await con.addDisability(req.body.patientid, disability);
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   res.redirect('back');
 });
-router.post('/:id/disease', (req, res) => {
+router.post('/:id/disease', async (req, res) => {
+  if (req.session.isVerified) {
+    req.flash('success', 'you successfully added the disease for the patient');
+    disease = req.body.disease;
+    disease.date = middlewareObj.getCurrentTS();
+    var status = await con.addDisease(req.body.patientid, disease);
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   res.redirect('back');
 });
 module.exports = router;

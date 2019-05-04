@@ -1,0 +1,36 @@
+<div class="tab-pane fade" id="nav-disabilities" role="tabpanel" aria-labelledby="nav-home-tab">
+        <form class="card" method="POST" action="/doctor/<%=doctor.id %>/disability">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h3 class="card-title">2- New Disability Details</h3>
+                <div class="row">
+                    <input type="text" class="patientId" name="patientid" required hidden>
+                    <input type="text" name="disability[doctor]" value="<%=doctor.firstName%> <%=doctor.lastName%>" required
+                        hidden>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Disability Name</label>
+                            <input type="text" name="disability[name]" class="form-control" placeholder="disability X" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Side Effect(s)</label>
+                            <input type="text" id="total" name="disability[sideEffects]" class="form-control"
+                                placeholder="Use commas to seperate" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Medication(s)</label>
+                            <input type="text" id="total" name="disability[medication]" class="form-control"
+                                placeholder="Use commas to seperate" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-success btn-block">Add disability to patient profile</button>
+                </div>
+            </div>
+        </form>
+    </div>

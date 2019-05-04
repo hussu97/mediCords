@@ -96,46 +96,14 @@
                                 var buttonVal = $(className).text();
                                 if (buttonVal === 'Change') {
                                     $(className).text('Save');
-                                    $(idName).prop('disabled', false);
+                                    $(idName).prop('readonly', false);
                                 } else {
                                     $(className).text('Change');
-                                    $(idName).prop('disabled', true);
+                                    $(idName).prop('readonly', true);
                                 }
                             }
                         </script>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Change Password</h3>
-                            </div>
-                            <div class="card-body">
-                                <form action="/changePassword" method="POST">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <img class="avatar user-thumb" src="/images/author/avatar.png" alt="avatar">
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label class="form-label">Old Password</label>
-                                                <input type="password" class="form-control" placeholder="old password">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">New Password</label>
-                                        <input type="new_password" class="form-control" placeholder="type it once">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label">Re-type New Password</label>
-                                        <input type="password" class="form-control" placeholder="type it again">
-                                    </div>
-
-                                    <div class="form-footer">
-                                        <button class="btn btn-primary btn-block">Update Password</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        <% include ../change-password %>
                     </div>
                     <div class="col-lg-8">
                         <form class="card" method="POST" action="/hospital/<%=hospital.id %>?_method=PUT">
@@ -146,25 +114,32 @@
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label class="form-label">Company</label>
-                                            <input type="text" class="form-control" disabled="" placeholder="Company"
+                                            <input type="text" class="form-control" readonly placeholder="Company"
                                                 value="Medicords">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-3">
                                         <div class="form-group">
-                                            <label class="form-label">Hospital ID</label>
-                                            <input type="text" name="hospital[id]" class="form-control" disabled=""
-                                                placeholder="hospitalID" value="<%=hospital.id%>">
+                                            <label class="form-label">Username</label>
+                                            <input type="text" name="hospital[username]" class="form-control" readonly
+                                                value="<%=hospital.username%>">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Company Address</label>
+                                            <input type="text" class="form-control" name="hospital[address]"
+                                                placeholder="Home Address" value="<%= hospital.address %>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="form-label">Corporate ID</label>
                                             <a href="javascript:void(0);" class="change-id-btn pull-right"
                                                 onclick="changeBtn('#id','.change-id-btn')">Change</a>
                                             <input type="text" id="id" class="form-control"
                                                 placeholder="Identification Number"
-                                                name="hospital[identificationNumber]" disabled=""
+                                                name="hospital[identificationNumber]" readonly
                                                 value="<%= hospital.identificationNumber %>">
                                         </div>
                                     </div>
@@ -180,15 +155,8 @@
                                             <label class="form-label">Expiry</label>
                                             <a href="javascript:void(0);" class="change-expiry-btn pull-right"
                                                 onclick="changeBtn('#expiry','.change-expiry-btn')">Change</a>
-                                            <input type="text" id="expiry" class="form-control" placeholder="Expiry"
-                                                name="hospital[expiry]" disabled="" value="<%= hospital.expiry %>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="form-label">Address</label>
-                                            <input type="text" class="form-control" name="hospital[address]"
-                                                placeholder="Home Address" value="<%= hospital.address %>">
+                                            <input type="date" id="expiry" class="form-control" name="hospital[expiry]"
+                                                readonly value="<%= hospital.expiry %>">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
@@ -201,10 +169,18 @@
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Country</label>
-                                            <input type="text" class="form-control" name="hospital[country]"
-                                                placeholder="City" value="<%= hospital.country %>">
-                                        </div>
-                                    </div>
+                                            <select id="country" name="hospital[country]" class="form-control">
+                                                <%
+                                                                    for ( var i = 0; i < countryList.length; i++ )
+                                                                    {
+                                                                        var selected = ( hospital.country == countryList[i].name ) ? "selected" : "";
+                                                                        %>
+                                                <option value="<%=countryList[i].name %>" <%=selected %>>
+                                                    <%=countryList[i].name %></option>
+                                                <%}%>
+                                                </select>
+                                            </div>
+                                        </div> 
                                 </div>
                             </div>
                             <div class="card-footer text-right">
@@ -218,10 +194,10 @@
         </div>
         <!-- main content area end -->
         <% include ./partials/footer %>
-    </div>
-    <!-- main wrapper start -->
-    <% include ./partials/offset %>
-    <% include ./partials/scripts %>
-    </body>
+                                        </div>
+                                        <!-- main wrapper start -->
+                                        <% include ./partials/offset %>
+                                        <% include ./partials/scripts %>
+                                        </body>
 
-    </html>
+                                        </html>

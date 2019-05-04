@@ -1,0 +1,61 @@
+{
+    id:String,
+    username:String,
+    expiry:Number,
+    country:String,
+    city:String,
+    address:String,
+    firstName:String,
+    lastName:String,
+    isVerified:Boolean,
+    identificationNumber:String,
+    insuranceId : String,
+    hospitalId : String
+    operations : [
+        {
+        date:Number,
+        name:String,
+        doctor:String,
+        dischargeDate:Number,
+        daysInHospital:Number (dischargeDate-date),
+        comment:String
+        }
+    ],
+    allergies : [
+        {
+        name: String,
+        doctor : String,
+        date : Number,
+        severity : String,
+        medication : String
+        }
+    ],
+    diseases : [
+        {
+        date : Number,
+        name: String,
+        doctor : String,
+        symptoms : String,
+        medication : String
+        }
+    ],
+    disabilities : [
+        {
+        date : Number,
+        name : String,
+        doctor : String,
+        sideEffects : String,
+        medication : String
+        }
+    ],
+    bills : [
+        {
+        date : Number,
+        doctor : String,
+        cost : Number,
+        VAT : Number,
+        total : Number,
+        status : String
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+<div class="tab-pane fade" id="nav-diseases" role="tabpanel" aria-labelledby="nav-home-tab">
+    <form class="card" method="POST" action="/doctor/<%=doctor.id %>/disease">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <h3 class="card-title">2- New Disease Details</h3>
+            <div class="row">
+                <input type="text" class="patientId" name="patientid" required hidden>
+                <input type="text" name="disease[doctor]" value="<%=doctor.firstName%> <%=doctor.lastName%>" required
+                    hidden>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Disease Name</label>
+                        <input type="text" name="disease[name]" class="form-control" placeholder="disease X" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Symtom(s)</label>
+                        <input type="text" id="total" name="disease[symtoms]" class="form-control"
+                            placeholder="Use commas to seperate" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Medication(s)</label>
+                        <input type="text" id="total" name="disease[medication]" class="form-control"
+                            placeholder="Use commas to seperate" required>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-success btn-block">Add disease to patient profile</button>
+            </div>
+        </div>
+    </form>
+</div>

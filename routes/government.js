@@ -2,7 +2,8 @@ const express = require('express'),
     router = express.Router({
         mergeParams: true
     }),
-    moment = require('moment');
+    con = require('../web-service-connector'),
+    middleWareObj = require('../middleware');
 
 
 //=========================================
@@ -14,198 +15,70 @@ router.get('/:id', (req, res) => {
 //=========================================
 //                government patients routes
 //=========================================
-router.get('/:id/patients', (req, res) => {
+router.get('/:id/patients', async (req, res) => {
+    var government = await con.getGovernment(req.params.id);
+    var patients = await con.getCountryPatients(government.country);
     res.render('government/patients', {
-        government : {
-            country : 'India',
-            id : req.params.id, 
-        },
-        patients : [
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                address : 'xyz,abc, helo',
-                identificationNumber: '2iie02i3203i0ewi',
-                id: 111,
-                dob : moment().format('MMM Do YY')
-            },
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                address : 'xyz,abc, helo',
-                identificationNumber: '2iie02i3203i0ewi',
-                id: 2222,
-                dob : moment().format('MMM Do YY')
-            },
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                address : 'xyz,abc, helo',
-                identificationNumber: '2iie02i3203i0ewi',
-                id: 333,
-                dob : moment().format('MMM Do YY')
-            },
-        ]
+        government : government,
+        patients : patients
     });
 });
-router.put('/:id/patient/:patientid/verify',(req,res)=> {
-    // console.log(req.params.patientid);
-    // console.log(req.params.id);
-    // console.log(req.body.isVerified);
+router.put('/:id/patient/:patientid/verify',async (req,res)=> {
+    var status = await con.verifyPatient(req.params.patientid,req.body.isVerified);
+    req.flash('success','Record has been verified');
+    req.flash('error','Record has not been verified');
     res.redirect(`/government/${req.params.id}/patients`)
 });
 //=========================================
 //                government doctors routes
 //=========================================
-router.get('/:id/doctors', (req, res) => {
+router.get('/:id/doctors', async (req, res) => {
+    var government = await con.getGovernment(req.params.id);
+    var doctors = await con.getCountryDoctors(government.country);
     res.render('government/doctors', {
-        government : {
-            country : 'Egypt',
-            id : req.params.id
-        },
-        doctors : [
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111,
-                speciality : 'Surgeon'
-            },
-            {
-                firstName: 'John',
-                lastName: 'Carlos',
-                country: 'Madagascar',
-                isVerified: false,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111,
-                speciality : 'Home Therapist'
-            },
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                country: 'Madagascar',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111,
-                speciality : 'Surgeon'
-            }
-        ]
+        government : government,
+        doctors : doctors
     });
 });
-router.put('/:id/doctor/:doctorid/verify',(req,res)=> {
-    // console.log(req.params.doctorid);
-    // console.log(req.params.id);
-    // console.log(req.body.isVerified);
+router.put('/:id/doctor/:doctorid/verify',async (req,res)=> {
+    var status = await con.verifyDoctor(req.params.doctorid,req.body.isVerified);
+    req.flash('success','Record has been verified');
+    req.flash('error','Record has not been verified');
     res.redirect(`/government/${req.params.id}/doctors`)
 });
 
 //=========================================
 //                government hospitals routes
 //=========================================
-router.get('/:id/hospitals', (req, res) => {
+router.get('/:id/hospitals', async (req, res) => {
+    var government = await con.getGovernment(req.params.id);
+    var hospitals = await con.getCountryHospitals(government.country);
     res.render('government/hospitals', {
-        government : {
-            country : 'Egypt',
-            id : req.params.id
-        },
-        hospitals : [
-            {
-                name : 'xyz-hospital',
-                country: 'Madagascar',
-                city : 'city A',
-                address : 'Al Noor Branch',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111
-            },
-            {
-                name : 'xyz-hospital',
-                country: 'Madagascar',
-                city : 'city A',
-                address : 'Al Noor Branch',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111
-            },
-            {
-                name : 'xyz-hospital',
-                country: 'Madagascar',
-                city : 'city A',
-                address : 'Al Noor Branch',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111
-            },
-        ]
+        government : government,
+        hospitals : hospitals
     });
 });
-router.put('/:id/hospital/:hospitalid/verify',(req,res)=> {
-    // console.log(req.params.hospitalid);
-    // console.log(req.params.id);
-    // console.log(req.body.isVerified);
+router.put('/:id/hospital/:hospitalid/verify',async (req,res)=> {
+    var status = await con.verifyHospital(req.params.hospitalid,req.body.isVerified);
+    req.flash('success','Record has been verified');
+    req.flash('error','Record has not been verified');
     res.redirect(`/government/${req.params.id}/hospitals`)
 });
 //=========================================
 //                government hospitals routes
 //=========================================
-router.get('/:id/insurances', (req, res) => {
+router.get('/:id/insurances', async (req, res) => {
+    var government = await con.getGovernment(req.params.id);
+    var insurances = await con.getCountryInsurances(government.country);
     res.render('government/insurances', {
-        government : {
-            country : 'Egypt',
-            id : req.params.id
-        },
-        insurances : [
-            {
-                name : 'xyz-company',
-                country: 'Madagascar',
-                city : 'city A',
-                address : 'Al Noor Branch',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111
-            },
-            {
-                name : 'xyz-hospital',
-                country: 'Madagascar',
-                city : 'city A',
-                address : 'Al Noor Branch',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111
-            },
-            {
-                name : 'xyz-hospital',
-                country: 'Madagascar',
-                city : 'city A',
-                address : 'Al Noor Branch',
-                isVerified: true,
-                expiry : moment().format('MMM Do YY'),
-                identificationNumber: 'ii0ewi',
-                id: 111
-            },
-        ]
+        government : government,
+        insurances : insurances
     });
 });
-router.put('/:id/insurance/:insuranceid/verify',(req,res)=> {
-    // console.log(req.params.insuranceid);
-    // console.log(req.params.id);
-    // console.log(req.body.isVerified);
+router.put('/:id/insurance/:insuranceid/verify',async (req,res)=> {
+    var status = await con.verifyInsurance(req.params.insuranceid,req.body.isVerified);
+    req.flash('success','Record has been verified');
+    req.flash('error','Record has not been verified');
     res.redirect(`/government/${req.params.id}/insurances`)
 });
 module.exports = router;

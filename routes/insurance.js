@@ -2,158 +2,108 @@ const express = require('express'),
   router = express.Router({
     mergeParams: true
   }),
-  moment = require('moment');
+  {
+    countryList
+  } = require('../public/js/constants'),
+  con = require('../web-service-connector'),
+  middleWareObj = require('../middleware');
+middlware_hasTypeInsurance = middleWareObj.isLoggedIn('insurance');
 //=========================================
 //                insurance profile routes
 //=========================================
-router.get('/:id', (req, res) => {
+router.get('/:id', middlware_hasTypeInsurance, (req, res) => {
   res.redirect(`/insurance/${req.params.id}/profile`);
 });
-router.get('/:id/profile', (req, res) => {
+router.get('/:id/profile', middlware_hasTypeInsurance, async (req, res) => {
+  var insurance = await con.getInsurance(req.params.id);
+  req.session.isVerified = insurance.isVerified;
   res.render('insurance/profile', {
-    insurance: {
-      name: 'XYZ Insurance',
-      expiry: moment().format('MMM Do YY'),
-      isVerified: false,
-      address: 'insurance,helo',
-      identificationNumber: '2ii03i0ewi',
-      country: 'China',
-      city: 'Beijing',
-      id: req.params.id
-    }
+    insurance: insurance,
+    countryList: countryList
   });
+});
+//update insurance profile
+router.put('/:id', middlware_hasTypeInsurance, async (req, res) => {
+  req.body.insurance.isVerified = false;
+  var status = await con.updateInsurance(req.params.id, req.body.insurance);
+  req.flash('success', 'insurance successfully updated');
+  req.flash('error', 'insurance could not be updated');
+  req.session.isVerified = false;
+  res.redirect('back');
 });
 //=========================================
 //                insurance patients routes
 //=========================================
-router.get('/:id/patients', (req, res) => {
+router.get('/:id/patients', middlware_hasTypeInsurance, async (req, res) => {
+  var insurance = await con.getInsurance(req.params.id);
+  req.session.isVerified = insurance.isVerified;
+  patients = [];
+  for (i = 0; i < insurance.patientIds.length; i++) {
+    var p = await con.getPatient(insurance.patientIds[i])
+    patients.push(p);
+  }
   res.render('insurance/patients', {
-    insurance: {
-      name: 'XYZ Insurance',
-      expiry: moment().format('MMM Do YY'),
-      isVerified: false,
-      address: 'insurance,helo',
-      identificationNumber: '2ii03i0ewi',
-      country: 'China',
-      city: 'Beijing',
-      id: req.params.id
-    },
-    patients: [{
-        firstName: 'Jqqohn',
-        lastName: 'Doe',
-        country: 'Jamaica',
-        isVerified: true,
-        address: 'xyz,abc, hwwelo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: 111,
-        dob: moment().format('MMM Do YY')
-      },
-      {
-        firstName: 'Joddhn',
-        lastName: 'Dwoe',
-        country: 'Madagascar',
-        isVerified: true,
-        address: 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: 2222,
-        dob: moment().format('MMM Do YY')
-      },
-      {
-        firstName: 'John',
-        lastName: 'Doqqe',
-        country: 'Madaqqqgascar',
-        isVerified: true,
-        address: 'xyz,abc, helo',
-        identificationNumber: '2iie02i3203i0ewi',
-        id: 333,
-        dob: moment().format('MMM Do YY')
-      },
-    ]
+    insurance: insurance,
+    patients: patients
   });
 });
 // more info about a patient
-router.get('/:id/patients/:patientid', (req, res) => {
+router.get('/:id/patients/:patientid', middlware_hasTypeInsurance, async (req, res) => {
+  var insurance = await con.getInsurance(req.params.id);
+  req.session.isVerified = insurance.isVerified;
+  var patient = await con.getPatient(req.params.patientid);
+  patient.bills = patient.bills.filter((el) => {
+    return el.status != 'not sent';
+  })
   res.render('insurance/patient-details', {
-    insurance: {
-      name: 'XYZ insurance',
-      expiry: moment().format('MMM Do YY'),
-      isVerified: true,
-      address: 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      country: 'India',
-      city: 'Shanghai',
-      id: req.params.id
-    },
-    patient: {
-      firstName: 'John',
-      lastName: 'Doe',
-      country: 'Jamaica',
-      isVerified: true,
-      address: 'xyz,abc, helo',
-      identificationNumber: '2iie02i3203i0ewi',
-      id: req.params.id,
-      dob: moment().format('MMM Do YY'),
-      // show only bills that are sent
-      bills: [{
-        id: '1234',
-        date: moment().format('MMM Do YY'),
-        hospital: 'XYZ Hospital',
-        doctor: 'Mazin Raf',
-        cost: 234.34,
-        vat: 5.67,
-        total : 245.23,
-        status : 'not sent'
-      },
-      {
-        id: '1234',
-        date: moment().format('MMM Do YY'),
-        hospital: 'XYZ Hospital',
-        doctor: 'Mazin Raf',
-        cost: 234.34,
-        vat: 5.67,
-        total : 245.23,
-        status : 'pending'
-      },
-      {
-        id: '1234',
-        date: moment().format('MMM Do YY'),
-        hospital: 'XYZ Hospital',
-        doctor: 'Mazin Raf',
-        cost: 234.34,
-        vat: 5.67,
-        total : 245.23,
-        status : 'approved'
-      }],
-    }
+    insurance: insurance,
+    patient: patient
   });
 });
 // approve a patient bill
-router.put('/:id/patient/:patientid /approve',(req,res) => {
+router.put('/:id/patient/:patientid/bill/:billid/approve', middlware_hasTypeInsurance, async (req, res) => {
+  if (req.session.isVerified) {
+    var status = await con.insuranceApproveBill(req.params.patientid, req.params.billid, 'approved');
+    req.flash('success', 'you successfully approved the bill');
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   res.redirect('back');
 });
 // removes patient from insurance entity
-router.delete('/:id/patients/:patientid', (req, res) => {
+router.delete('/:id/patients/:patientid', middlware_hasTypeInsurance, async (req, res) => {
+  if (req.session.isVerified) {
+    var status = await con.removePatientFromInsurance(req.params.id, req.params.patientid);
+    req.flash('success', 'you successfully removed the customer');
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   var insuranceID = req.params.id;
-  var patientID = req.params.patientid;
   res.redirect(`/insurance/${insuranceID}/patients`);
 });
 //=========================================
 //                insurance add patient routes
 //=========================================
 // adds new patient using id
-router.post('/:id/patient',(req,res)=> {
-  var patientID = req.body.patientid;
-  var insuranceID = req.params.id;
-  req.flash('error','ok');
+router.post('/:id/patient', middlware_hasTypeInsurance, async (req, res) => {
+  if (req.session.isVerified) {
+    var status = await con.addPatientToInsurance(req.params.id, req.body.patientid);
+    req.flash('success', 'you successfully added the customer');
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
   res.redirect('back');
 });
 //=========================================
 //                insurance patient bill routes
 //=========================================
-router.put('/:insuranceid/patient/:patientid/bill/:billid/send',(req,res)=> {
-  var patientID = req.params.patientid;
-  var insuranceID = req.params.insuranceid;
-  var billID = req.params.billid;
-  res.redirect(`/patient/${patientID}/bill`);
+router.put('/:insuranceid/patient/:patientid/bill/:billid/send', async (req, res) => {
+  if (req.session.isVerified) {
+    var status = await con.insuranceApproveBill(req.params.patientid, req.params.billid, 'pending');
+    req.flash('success', 'bill was sent successfully');
+  } else {
+    req.flash('error', 'you need to be verified to do that');
+  }
+  res.redirect('back');
 });
 module.exports = router;

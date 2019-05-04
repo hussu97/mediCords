@@ -55,10 +55,10 @@
                             var buttonVal = $(className).text();
                             if (buttonVal === 'Change') {
                                 $(className).text('Save');
-                                $(idName).prop('disabled', false);
+                                $(idName).prop('readonly', false);
                             } else {
                                 $(className).text('Change');
-                                $(idName).prop('disabled', true);
+                                $(idName).prop('readonly', true);
                             }
                         }
                     </script>
@@ -82,7 +82,7 @@
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Customer ID</label>
-                                            <input type="text" name="patient[id]" class="form-control" disabled=""
+                                            <input type="text" name="patient[id]" class="form-control" readonly
                                                 placeholder="patientID" value="<%=patient.id%>">
                                         </div>
                                     </div>
@@ -91,35 +91,35 @@
                                             <label class="form-label">Identification ID</label>
                                             <input type="text" id="id" class="form-control"
                                                 placeholder="Identification Number" name="patient[identificationNumber]"
-                                                disabled="" value="<%= patient.identificationNumber %>">
+                                                readonly value="<%= patient.identificationNumber %>">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Date of Birth</label>
                                             <input type="text" id="dob" class="form-control" placeholder="Expiry"
-                                                name="patient[dob]" value="<%= patient.dob %>" disabled="">
+                                                name="patient[dob]" value="<%= patient.dob %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Nationality</label>
                                             <input type="text" id="country" class="form-control" name="patient[country]"
-                                                placeholder="City" value="<%= patient.country %>" disabled="">
+                                                placeholder="City" value="<%= patient.country %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">First Name</label>
                                             <input type="text" class="form-control" name="patient[firstName]"
-                                                placeholder="Company" value="<%= patient.firstName %>" disabled="">
+                                                placeholder="Company" value="<%= patient.firstName %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Last Name</label>
                                             <input type="text" class="form-control" name="patient[lastName]"
-                                                placeholder="Company" value="<%= patient.lastName %>" disabled="">
+                                                placeholder="Company" value="<%= patient.lastName %>" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +168,7 @@
                                         <td><span class="status-p bg-danger"><%= bi.status %></span></td>
                                         <td>
                                             <form
-                                                action="/insurance/<%=insurance.id%>/patient/<%=patient.id%>/approve?_method=PUT"
+                                                action="/insurance/<%=insurance.id%>/patient/<%=patient.id%>/bill/<%=bi.id%>/approve?_method=PUT"
                                                 method="POST">
                                                 <a href="javascript:void(0)"
                                                     onclick="this.parentNode.submit()">Approve</a>
@@ -187,41 +187,6 @@
                                 <br />
                                 <% }; %>
                             </table>
-                            <!-- <table id="dataTable" class="table-hover text-center">
-                                <thead class="text-uppercase bg-light">
-                                    <tr>
-                                        <th scope="col">Date of Bill</th>
-                                        <th scope="col">Hospital</th>
-                                        <th scope="col">Doctor</th>
-                                        <th scope="col">Cost (AED)</th>
-                                        <th scope="col">VAT (5% AED)</th>
-                                        <th scope="col">Total (AED)</th>
-                                        <th scope="col">Insurance Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% patient.bills.forEach((bi)=> { %>
-                                    <tr>
-                                        <% if(bi.status!=='not sent'){ %>
-                                        <th scope="row"><%= bi.date %></th>
-                                        <td><%= bi.hospital %></td>
-                                        <td><%= bi.doctor %></td>
-                                        <td><%= bi.cost %></td>
-                                        <td><%= bi.vat %></td>
-                                        <th scope="row"><%= bi.total %></td>
-                                        <%if(bi.status==='pending'){%>
-                                        <td><span class="status-p bg-danger"><%= bi.status %></span></td>
-                                        <%} else {%>
-                                        <td><span class="status-p bg-success"><%= bi.status %></span></td>
-                                        <%}%>                       
-                                            </tr>
-                                            <%}}); %>
-                                </tbody>
-                                <% if(patient.bills.length === 0) {%>
-                                <p>No bills have been recorded for this customer</p>
-                                <br />
-                                <% }; %>
-                            </table> -->
                         </div>
                     </div>
                 </div>

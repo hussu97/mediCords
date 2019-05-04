@@ -1,32 +1,28 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var assert = require('assert');
 var favicon = require('serve-favicon');
 var path = require('path');
 var flash = require('connect-flash');
 var methodOverride = require('method-override');
 var session = require('express-session');
-global.fetch = require('node-fetch');
 
 const port = 8080;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(flash());
+app.use(session({
+  secret: 'ssshhhhh',
+  saveUninitialized: true,
+  resave: true,
+  cookie: { maxAge: 60000 }
+}));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
-app.use(session({
-  cookie: {
-    maxAge: 60000
-  },
-  secret: 'woot',
-  resave: false,
-  saveUninitialized: false
-}));
 app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.success = req.flash("success");

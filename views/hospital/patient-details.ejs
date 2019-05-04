@@ -59,10 +59,10 @@
                             var buttonVal = $(className).text();
                             if (buttonVal === 'Change') {
                                 $(className).text('Save');
-                                $(idName).prop('disabled', false);
+                                $(idName).prop('readonly', false);
                             } else {
                                 $(className).text('Change');
-                                $(idName).prop('disabled', true);
+                                $(idName).prop('readonly', true);
                             }
                         }
                     </script>
@@ -86,7 +86,7 @@
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Patient ID</label>
-                                            <input type="text" name="patient[id]" class="form-control" disabled=""
+                                            <input type="text" name="patient[id]" class="form-control" readonly
                                                 placeholder="patientID" value="<%=patient.id%>">
                                         </div>
                                     </div>
@@ -95,35 +95,35 @@
                                             <label class="form-label">Identification ID</label>
                                             <input type="text" id="id" class="form-control"
                                                 placeholder="Identification Number" name="patient[identificationNumber]"
-                                                disabled="" value="<%= patient.identificationNumber %>">
+                                                readonly value="<%= patient.identificationNumber %>">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Date of Birth</label>
                                             <input type="text" id="dob" class="form-control" placeholder="Expiry"
-                                                name="patient[dob]" value="<%= patient.dob %>" disabled="">
+                                                name="patient[dob]" value="<%= patient.dob %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Nationality</label>=
                                             <input type="text" id="country" class="form-control" name="patient[country]"
-                                                placeholder="City" value="<%= patient.country %>" disabled="">
+                                                placeholder="City" value="<%= patient.country %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">First Name</label>
                                             <input type="text" class="form-control" name="patient[firstName]"
-                                                placeholder="Company" value="<%= patient.firstName %>" disabled="">
+                                                placeholder="Company" value="<%= patient.firstName %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Last Name</label>
                                             <input type="text" class="form-control" name="patient[lastName]"
-                                                placeholder="Company" value="<%= patient.lastName %>" disabled="">
+                                                placeholder="Company" value="<%= patient.lastName %>" readonly>
                                         </div>
                                     </div>
                                 </div>

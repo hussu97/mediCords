@@ -75,13 +75,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Past Bills</h4>
-                        <div class="single-table">
+                        <div class="data-tables">
                             <div class="table-responsive">
-                                <table class="table table-hover progress-table text-center">
-                                    <thead class="text-uppercase bg-primary">
+                                <table id="dataTable" class="table-hover text-center">
+                                    <thead class="text-uppercase">
                                         <tr>
                                             <th scope="col">Date of Bill</th>
-                                            <th scope="col">Hospital</th>
                                             <th scope="col">Doctor</th>
                                             <th scope="col">Cost (AED)</th>
                                             <th scope="col">VAT (5% AED)</th>
@@ -90,11 +89,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% bills.forEach((bi)=> { %>
+                                        <% patient.bills.forEach((bi)=> { %>
                                         <tr>
 
                                             <th scope="row"><%= bi.date %></th>
-                                            <td><%= bi.hospital %></td>
                                             <td><%= bi.doctor %></td>
                                             <td><%= bi.cost %></td>
                                             <td><%= bi.vat %></td>
@@ -109,7 +107,7 @@
                                         </tr>
                                         <%}); %>
                                     </tbody>
-                                    <% if(bills.length === 0) {%>
+                                    <% if(patient.bills.length === 0) {%>
                                     <p>No bills have been recorded for you</p>
                                     <br />
                                     <% }; %>

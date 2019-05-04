@@ -1,18 +1,18 @@
 {
-    "staging": {
+    "stag": {
         "awscloudformation": {
-            "AuthRoleName": "medicords-staging-20190504004101-authRole",
-            "UnauthRoleArn": "arn:aws:iam::815292321556:role/medicords-staging-20190504004101-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::815292321556:role/medicords-staging-20190504004101-authRole",
+            "AuthRoleName": "medicords-stag-20190504150837-authRole",
+            "UnauthRoleArn": "arn:aws:iam::815292321556:role/medicords-stag-20190504150837-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::815292321556:role/medicords-stag-20190504150837-authRole",
             "Region": "eu-west-1",
-            "DeploymentBucketName": "medicords-staging-20190504004101-deployment",
-            "UnauthRoleName": "medicords-staging-20190504004101-unauthRole",
-            "StackName": "medicords-staging-20190504004101",
-            "StackId": "arn:aws:cloudformation:eu-west-1:815292321556:stack/medicords-staging-20190504004101/c467ede0-6de3-11e9-885f-064aa725f74e"
+            "DeploymentBucketName": "medicords-stag-20190504150837-deployment",
+            "UnauthRoleName": "medicords-stag-20190504150837-unauthRole",
+            "StackName": "medicords-stag-20190504150837",
+            "StackId": "arn:aws:cloudformation:eu-west-1:815292321556:stack/medicords-stag-20190504150837/f796e9e0-6e5c-11e9-884c-0664065f2f2e"
         },
         "categories": {
             "auth": {
-                "cognitoc595f884": {}
+                "cognito36be6f6c": {}
             }
         }
     }

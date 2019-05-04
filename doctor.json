@@ -1,0 +1,17 @@
+{
+    id : String,
+    username : String,
+    firstName : String,
+    lastName : String,
+    identificationNumber : String,
+    address: String,
+    country : String,
+    city : String,
+    speciality : String,
+    hospitalName : String,
+    isVerified : Boolean,
+    expiry : Number
+    patientIds : [
+        id : String
+    ]
+}

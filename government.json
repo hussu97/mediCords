@@ -1,0 +1,5 @@
+{
+    id : String,
+    username : String,
+    country : String
+}

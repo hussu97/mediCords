@@ -9,55 +9,35 @@ global.fetch = require('node-fetch')
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
     aws_exports = require('../src/aws-exports'),
     AWS = require('aws-sdk/global'),
-    Amplify = require('aws-amplify');
-var API = Amplify.API;
+    Amplify = require('aws-amplify'),
+    {
+        API
+    } = require('aws-amplify');
 API.configure(aws_exports);
-    
 router.get('/', (req, res) => {
     res.render('landing');
 });
+
 router.post('/register', (req, res) => {
-    var email = '';
-    var username = '';
-    var password = '';
     switch (req.body.userType) {
         case 'patient':
-            username = `p.${req.body.patient.username}`;
-            req.body.patient.username = username;
-            password = req.body.patient.password;
-            email = req.body.patient.email;
-            var date = new Date(req.body.patient.expiry);
-            var timestamp = date.getTime();
-            req.body.patient.expiry = timestamp / 1000;
+            req.session.user = req.body.patient;
+            req.session.user.username = `p.${req.body.patient.username}`;
             break;
         case 'doctor':
-            username = `d.${req.body.doctor.username}`;
-            req.body.doctor.username = username;
-            password = req.body.doctor.password;
-            email = req.body.doctor.email;
-            var date = new Date(req.body.doctor.expiry);
-            var timestamp = date.getTime();
-            req.body.doctor.expiry = timestamp / 1000;
+            req.session.user = req.body.doctor;
+            req.session.user.username = `d.${req.body.doctor.username}`;
             break;
         case 'hospital':
-            username = `h.${req.body.hospital.username}`;
-            req.body.hospital.username = username;
-            password = req.body.hospital.password;
-            email = req.body.hospital.email;
-            var date = new Date(req.body.hospital.expiry);
-            var timestamp = date.getTime();
-            req.body.hospital.expiry = timestamp / 1000;
+            req.session.user = req.body.hospital;
+            req.session.user.username = `h.${req.body.hospital.username}`;
             break;
         case 'insurance':
-            username = `i.${req.body.insurance.username}`;
-            req.body.insurance.username = username;
-            password = req.body.insurance.password;
-            email = req.body.insurance.email;
-            var date = new Date(req.body.insurance.expiry);
-            var timestamp = date.getTime();
-            req.body.insurance.expiry = timestamp / 1000;
+            req.session.user = req.body.insurance;
+            req.session.user.username = `i.${req.body.insurance.username}`;
             break;
     }
+    req.session.user.expiry = new Date(req.session.user.expiry).getTime() / 1000;
     var poolData = {
         UserPoolId: aws_exports.aws_user_pools_id,
         ClientId: aws_exports.aws_user_pools_web_client_id
@@ -66,7 +46,7 @@ router.post('/register', (req, res) => {
     var attributeList = [];
     var dataEmail = {
         Name: 'email',
-        Value: email
+        Value: req.session.user.email
     };
     var dataType = {
         Name: 'custom:type',
@@ -74,36 +54,19 @@ router.post('/register', (req, res) => {
     };
     attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute(dataType));
     attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail));
-    userPool.signUp(username, password, attributeList, null, function (err, result) {
+    userPool.signUp(req.session.user.username, req.session.user.password, attributeList, null, function (err, result) {
         if (err) {
             console.log(err);
+            req.flash('error',err.message);
             res.redirect('/register');
             return;
         }
-        switch(req.body.userType){
-            case 'patient':
-            res.redirect('/verify?data='+encodeURIComponent(JSON.stringify(req.body.patient))+'&username='+username);
-            break;
-            case 'hospital':
-            res.redirect('/verify?data='+encodeURIComponent(JSON.stringify(req.body.hospital))+'&username='+username);
-            break;
-            case 'insurance':
-            res.redirect('/verify?data='+encodeURIComponent(JSON.stringify(req.body.insurance))+'&username='+username);
-            break;
-            case 'doctor':
-            res.redirect('/verify?data='+encodeURIComponent(JSON.stringify(req.body.doctor))+'&username='+username);
-            break;
-        }
+        res.redirect('/verify');
     });
 
 });
 router.get('/verify', (req, res) => {
-    console.log(req.query.data)
-    console.log(req.query.username);
-    res.render('verify', {
-        username: req.query.username,
-        data : req.query.data
-    });
+    res.render('verify');
 })
 router.post('/verify', (req, res) => {
     var poolData = {
@@ -112,7 +75,7 @@ router.post('/verify', (req, res) => {
     };
     var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
     var userData = {
-        Username: req.body.username,
+        Username: req.session.user.username,
         Pool: userPool
     };
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -120,58 +83,67 @@ router.post('/verify', (req, res) => {
     cognitoUser.confirmRegistration(req.body.code, true, function (err, result) {
         if (err) {
             console.log(err);
-            res.redirect('/register');
+            req.flash('error',err.message);
+            res.redirect('/verify');
             return;
         }
-        var data = {
-            body: JSON.parse(decodeURIComponent(req.body.data)),
-            headers : {
-                'x-api-key' : 'ZGvc7HHa3p2xLf9nkFiVH7P2cOxJgkhmaJIMQ6Kr'
-            }
+        var authenticationData = {
+            Username: req.session.user.username,
+            Password: req.session.user.password
         }
-        switch (req.body.username.split('.')[0]) {
-            case 'p':
-                API.post('patientsApi','/patients',data).then(response => {
-                    console.log("SUCCESSSSS")
-                    console.log(response);
-                }).catch(err => {
-                    console.log('eee');
-                    console.log(err.response.data.error);
-                    console.log('#################################');
-                    console.log(err.response.data.body);
-                })
-                break;
-            case 'd':
-                break;
-            case 'h':
-                break;
-            case 'i':
-                break;
-            case 'g':
-                break;
-        }
-        res.redirect('/login')
+        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+        cognitoUser.authenticateUser(authenticationDetails, {
+            onSuccess: function (result) {
+                console.log(result)
+                //POTENTIAL: Region needs to be set if not already set previously elsewhere.
+                AWS.config.region = aws_exports.aws_cognito_region;
+
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: aws_exports.aws_cognito_identity_pool_id, // your identity pool id here
+                    Logins: {
+                        // Change the key below according to the specific region your user pool is in.
+                        'cognito-idp.eu-west-1.amazonaws.com/eu-west-1_JGkIKeItC': result.getIdToken().getJwtToken()
+                    }
+                });
+                //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+                AWS.config.credentials.refresh((error) => {
+                    if (error) {
+                        console.error(error);
+                    } else {
+                        console.log('Successfully logged!');
+                        req.session.user.id = result.getIdToken().decodePayload().sub;
+                        var data = {
+                            body: req.session.user
+                        }
+                        req.session.user.password = '';
+                        req.session.user.email = '';
+                        switch (req.session.user.username.split('.')[0]) {
+                            case 'p':
+                                break;
+                            case 'd':
+                                break;
+                            case 'h':
+                                break;
+                            case 'i':
+                                break;
+                            case 'g':
+                                break;
+                        }
+                    }
+                    req.session.user = '';
+                });
+            },
+            onFailure: function (err) {
+                console.log(err);
+                req.flash('error',err.message);
+                res.redirect('/verify');
+            },
+        });
     });
 })
 router.post('/login', (req, res) => {
-    switch (req.body.type) {
-        case 'Patient':
-            req.body.username = `p.${req.body.username}`;
-            break;
-        case 'Doctor':
-            req.body.username = `d.${req.body.username}`;
-            break;
-        case 'Hospital':
-            req.body.username = `h.${req.body.username}`;
-            break;
-        case 'Insurance':
-            req.body.username = `i.${req.body.username}`;
-            break;
-        case 'Government':
-            req.body.username = `g.${req.body.username}`;
-            break;
-    }
-    console.log(req.body);
+    var userLetter = req.body.type.toLowerCase()[0]+".";
+    req.body.username = `${userLetter}${req.body.username}`;
     var poolData = {
         UserPoolId: aws_exports.aws_user_pools_id,
         ClientId: aws_exports.aws_user_pools_web_client_id
@@ -189,7 +161,6 @@ router.post('/login', (req, res) => {
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            console.log(result)
             //POTENTIAL: Region needs to be set if not already set previously elsewhere.
             AWS.config.region = aws_exports.aws_cognito_region;
 
@@ -197,7 +168,7 @@ router.post('/login', (req, res) => {
                 IdentityPoolId: aws_exports.aws_cognito_identity_pool_id, // your identity pool id here
                 Logins: {
                     // Change the key below according to the specific region your user pool is in.
-                    'cognito-idp.eu-west-1.amazonaws.com/eu-west-1_PVGsEcnhz': result.getIdToken().getJwtToken()
+                    'cognito-idp.eu-west-1.amazonaws.com/eu-west-1_JGkIKeItC': result.getIdToken().getJwtToken()
                 }
             });
             //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
@@ -206,35 +177,20 @@ router.post('/login', (req, res) => {
                     console.error(error);
                 } else {
                     console.log('Successfully logged!');
-                    cognitoUser.getUserAttributes((err, result) => {
-                        if (err) {
-                            console.log(err);
-                            return;
-                        }
-                        for (i = 0; i < result.length; i++) {
-                            console.log('attribute ' + result[i].getName() + ' has value ' + result[i].getValue());
-                            if (result[i].getName() === 'custom:type') {
-                                if (result[i].getValue() === req.body.type) {
-                                    console.log('right user type');
-                                    return next();
-                                } else {
-                                    console.log('wrong user type');
-                                    res.redirect('/');
-                                }
-                            }
-                        }
-                    });
+                    var userID = result.getIdToken().decodePayload().sub;
+                    res.redirect(`/${req.body.type.toLowerCase()}/${userID}`);
                 }
             });
         },
         onFailure: function (err) {
             console.log(err);
-            res.redirect('/');
+            req.flash('error',err.message);
+            res.redirect('/login');
         },
 
     });
 })
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     var poolData = {
         UserPoolId: aws_exports.aws_user_pools_id,
         ClientId: aws_exports.aws_user_pools_web_client_id
@@ -245,7 +201,7 @@ router.post('/logout', (req, res) => {
         cognitoUser.signOut();
         console.log('signed out');
     }
-    res.redirect('/');
+    res.redirect('/login');
 })
 router.get('/login', (req, res) => {
     res.render('login');
@@ -262,12 +218,38 @@ router.post('/changePassword', (req, res) => {
     };
     var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
-    cognitoUser.changePassword(req.body.password, req.body.new_password, function (err, result) {
-        if (err) {
-            console.log(err);
-            return;
-        }
+    if (cognitoUser != null) {
+        cognitoUser.getSession( (err, session)=> {
+            if (err) {
+                console.log(err)
+                req.flash('error', 'You need to be logged in to do that!');
+                res.render('back');
+                return;
+            }
+            //call refresh method in order to authenticate user and get new temp credentials
+            AWS.config.credentials.refresh((error) => {
+                if (error) {
+                    console.error(error);
+                    req.flash('error', 'You need to be logged in to do that!');
+                    res.render('back');
+                } else {
+                    cognitoUser.changePassword(req.body.password, req.body.new_password, function (err, result) {
+                        if (err) {
+                            req.flash('error',err.message);
+                            console.log(err);
+                        }else{
+                            req.flash('success','Password successfully changed');
+                        }
+                        res.redirect('back');
+                    });
+                }
+            });
+        });
+    } else {
+        console.error('no user');
+        req.flash('error', 'You need to be logged in to do that!');
         res.redirect('back');
-    });
+    }
 })
+
 module.exports = router;

@@ -1,10 +1,10 @@
 {
 	"storage": {
-		"test": {
+		"testTable": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
 		},
-		"patientsTable": {
+		"test2Table": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
 		}
@@ -17,7 +17,7 @@
 			"dependsOn": [
 				{
 					"category": "storage",
-					"resourceName": "test",
+					"resourceName": "testTable",
 					"attributes": [
 						"Name",
 						"Arn"
@@ -25,14 +25,14 @@
 				}
 			]
 		},
-		"patientsLambda": {
+		"test2Lambda": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true,
 			"dependsOn": [
 				{
 					"category": "storage",
-					"resourceName": "patientsTable",
+					"resourceName": "test2Table",
 					"attributes": [
 						"Name",
 						"Arn"
@@ -42,7 +42,7 @@
 		}
 	},
 	"auth": {
-		"cognitoc595f884": {
+		"cognito36be6f6c": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}
@@ -59,16 +59,10 @@
 						"Name",
 						"Arn"
 					]
-				}
-			]
-		},
-		"patientsApi": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
+				},
 				{
 					"category": "function",
-					"resourceName": "patientsLambda",
+					"resourceName": "test2Lambda",
 					"attributes": [
 						"Name",
 						"Arn"

@@ -5,13 +5,13 @@
 		"env": {
 			"Type": "String"
 		},
-		"storagetestName": {
+		"storagetestTableName": {
 			"Type": "String",
-			"Default": "storagetestName"
+			"Default": "storagetestTableName"
 		},
-		"storagetestArn": {
+		"storagetestTableArn": {
 			"Type": "String",
-			"Default": "storagetestArn"
+			"Default": "storagetestTableArn"
 		}
 	},
 	"Conditions": {
@@ -67,8 +67,8 @@
 				"Runtime": "nodejs8.10",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "medicords-staging-20190504004101-deployment",
-					"S3Key": "amplify-builds/testLambda-1556916344-latest-build.zip"
+					"S3Bucket": "medicords-stag-20190504150837-deployment",
+					"S3Key": "amplify-builds/testLambda-1556968531-latest-build.zip"
 				}
 			}
 		},
@@ -78,12 +78,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"medicordsLambdaRoleff3d2434",
+						"medicordsLambdaRolee69de24c",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"medicordsLambdaRoleff3d2434",
+									"medicordsLambdaRolee69de24c",
 									"-",
 									{
 										"Ref": "env"
@@ -162,7 +162,7 @@
 							],
 							"Resource": [
 								{
-									"Ref": "storagetestArn"
+									"Ref": "storagetestTableArn"
 								}
 							]
 						}

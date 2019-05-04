@@ -1,7 +1,7 @@
 {
     "paths": [
         {
-            "name": "/items",
+            "name": "/test",
             "lambdaFunction": "testLambda",
             "privacy": {
                 "protected": true,
@@ -13,8 +13,19 @@
                     "/DELETE"
                 ],
                 "unauth": [
-                    "/GET"
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
                 ]
+            }
+        },
+        {
+            "name": "/test2",
+            "lambdaFunction": "test2Lambda",
+            "privacy": {
+                "open": true
             }
         }
     ],
@@ -23,18 +34,29 @@
     "functionArns": [
         {
             "lambdaFunction": "testLambda"
+        },
+        {
+            "lambdaFunction": "test2Lambda"
         }
     ],
     "privacy": {
         "auth": 1,
         "unauth": 1,
-        "authRoleName": "medicords-staging-20190504004101-authRole",
-        "unAuthRoleName": "medicords-staging-20190504004101-unauthRole"
+        "authRoleName": "medicords-stag-20190504150837-authRole",
+        "unAuthRoleName": "medicords-stag-20190504150837-unauthRole"
     },
     "dependsOn": [
         {
             "category": "function",
             "resourceName": "testLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "test2Lambda",
             "attributes": [
                 "Name",
                 "Arn"

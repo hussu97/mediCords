@@ -38,10 +38,10 @@
             var buttonVal = $('.change-id-btn').text();
             if (buttonVal === 'Change') {
                 $('.change-id-btn').text('Save');
-                $('#id').prop('disabled', false);
+                $('#id').prop('readonly', false);
             } else {
                 $('.change-id-btn').text('Change');
-                $('#id').prop('disabled', true);
+                $('#id').prop('readonly', true);
             }
         }
     </script>
@@ -58,6 +58,7 @@
     <!-- preloader area end -->
     <!-- main wrapper start -->
     <div class="horizontal-main-wrapper">
+        <% include ../../flash-message %>
         <!-- main header area start -->
         <div class="mainheader-area">
             <div class="container">
@@ -86,7 +87,7 @@
                                 <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><%= patient.firstName %>
                                     <%= patient.lastName %><i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/login">Log Out</a>
+                                    <a class="dropdown-item" href="/logout">Log Out</a>
                                 </div>
                             </div>
                         </div>
