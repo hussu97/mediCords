@@ -8,7 +8,7 @@
     country : String,
     city : String,
     speciality : String,
-    hospitalName : String,
+    hospitalId : String,
     isVerified : Boolean,
     expiry : Number
     patientIds : [

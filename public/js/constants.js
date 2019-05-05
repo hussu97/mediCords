@@ -345,7 +345,7 @@ countryList : [
         ]
       },
       doctor : {
-        id: '292b882c-ac28-4a51-a0d8-fb76bfc532de',
+        id: 'a11fc501-d011-415c-8a39-ac048db8507c',
         username : 'insurUser',
         identificationNumber : 'w2i0wi20w',
         firstName: 'XYZ',
@@ -358,7 +358,7 @@ countryList : [
         patientIds : [
           'sss','ddd'
         ],
-        hospitalName : 'St. Marys Hospital',
+        hospitalId : 'St. Marys Hospital',
         speciality : 'Heart Surgeon'
       }
 }

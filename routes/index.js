@@ -9,7 +9,7 @@ global.fetch = require('node-fetch')
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
     aws_exports = require('../src/aws-exports'),
     AWS = require('aws-sdk/global'),
-    Amplify = require('aws-amplify'),
+    con = require('../web-service-connector'),
     {
         API
     } = require('aws-amplify');
@@ -57,7 +57,7 @@ router.post('/register', (req, res) => {
     userPool.signUp(req.session.user.username, req.session.user.password, attributeList, null, function (err, result) {
         if (err) {
             console.log(err);
-            req.flash('error',err.message);
+            req.flash('error', err.message);
             res.redirect('/register');
             return;
         }
@@ -83,7 +83,7 @@ router.post('/verify', (req, res) => {
     cognitoUser.confirmRegistration(req.body.code, true, function (err, result) {
         if (err) {
             console.log(err);
-            req.flash('error',err.message);
+            req.flash('error', err.message);
             res.redirect('/verify');
             return;
         }
@@ -115,35 +115,54 @@ router.post('/verify', (req, res) => {
                         var data = {
                             body: req.session.user
                         }
-                        req.session.user.password = '';
-                        req.session.user.email = '';
+                        delete req.session.user.password;
+                        delete req.session.user.email;
+                        req.session.user.isVerified = false;
                         switch (req.session.user.username.split('.')[0]) {
                             case 'p':
+                                req.session.user.insuranceId = '';
+                                req.session.user.hospitalId = '';
+                                req.session.user.bills = [];
+                                req.session.user.operations = [];
+                                req.session.user.disabilities = [];
+                                req.session.user.allergies = [];
+                                req.session.user.diseases = [];
+                                con.addPatient(req.session.user);
                                 break;
                             case 'd':
+                                req.session.user.hospitalId = '';
+                                req.session.user.patientIds = [];
+                                con.addDoctor(req.session.user);
                                 break;
                             case 'h':
+                                req.session.user.patientIds = [];
+                                req.session.user.doctorIds = [];
+                                con.addHospital(req.session.user);
                                 break;
                             case 'i':
+                                req.session.user.patientIds = [];
+                                con.addInsurance(req.session.user);
                                 break;
                             case 'g':
                                 break;
                         }
                     }
+                    console.log(req.session.user);
+                    req.flash('success','verification successful. Please log in now.')
                     res.redirect('/login');
-                    req.session.user = '';
+                    delete req.session.user;
                 });
             },
             onFailure: function (err) {
                 console.log(err);
-                req.flash('error',err.message);
+                req.flash('error', err.message);
                 res.redirect('/verify');
             },
         });
     });
 })
 router.post('/login', (req, res) => {
-    var userLetter = req.body.type.toLowerCase()[0]+".";
+    var userLetter = req.body.type.toLowerCase()[0] + ".";
     req.body.username = `${userLetter}${req.body.username}`;
     var poolData = {
         UserPoolId: aws_exports.aws_user_pools_id,
@@ -185,7 +204,7 @@ router.post('/login', (req, res) => {
         },
         onFailure: function (err) {
             console.log(err);
-            req.flash('error',err.message);
+            req.flash('error', err.message);
             res.redirect('/login');
         },
 
@@ -220,7 +239,7 @@ router.post('/changePassword', (req, res) => {
     var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
     if (cognitoUser != null) {
-        cognitoUser.getSession( (err, session)=> {
+        cognitoUser.getSession((err, session) => {
             if (err) {
                 console.log(err)
                 req.flash('error', 'You need to be logged in to do that!');
@@ -236,10 +255,10 @@ router.post('/changePassword', (req, res) => {
                 } else {
                     cognitoUser.changePassword(req.body.password, req.body.new_password, function (err, result) {
                         if (err) {
-                            req.flash('error',err.message);
+                            req.flash('error', err.message);
                             console.log(err);
-                        }else{
-                            req.flash('success','Password successfully changed');
+                        } else {
+                            req.flash('success', 'Password successfully changed');
                         }
                         res.redirect('back');
                     });
