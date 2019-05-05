@@ -7,7 +7,7 @@ var flash = require('connect-flash');
 var methodOverride = require('method-override');
 var session = require('express-session');
 
-const port = 8080;
+const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
