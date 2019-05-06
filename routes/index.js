@@ -108,46 +108,48 @@ router.post('/verify', (req, res) => {
                     }
                 });
                 //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
-                AWS.config.credentials.refresh((error) => {
+                AWS.config.credentials.refresh(async (error) => {
+                    var status = 500;
                     if (error) {
                         console.error(error);
                     } else {
                         console.log('Successfully logged!');
                         req.session.user.id = result.getIdToken().decodePayload().sub;
-                        var data = {
-                            body: req.session.user
-                        }
                         delete req.session.user.password;
                         delete req.session.user.email;
                         req.session.user.isVerified = false;
-                        switch (req.session.user.username.split('.')[0]) {
+                        array = req.session.user.username.split('.');
+                        req.session.user.username = array[1];
+                        switch (array[0]) {
                             case 'p':
-                                req.session.user.insuranceId = '';
-                                req.session.user.hospitalId = '';
                                 req.session.user.bills = [];
                                 req.session.user.operations = [];
                                 req.session.user.disabilities = [];
                                 req.session.user.allergies = [];
                                 req.session.user.diseases = [];
-                                con.addPatient(req.session.user);
+                                status = await con.addPatient(req.session.user);
                                 break;
                             case 'd':
-                                req.session.user.hospitalId = '';
                                 req.session.user.patientIds = [];
-                                con.addDoctor(req.session.user);
+                                status = await con.addDoctor(req.session.user);
                                 break;
                             case 'h':
                                 req.session.user.patientIds = [];
                                 req.session.user.doctorIds = [];
-                                con.addHospital(req.session.user);
+                                status = await con.addHospital(req.session.user);
                                 break;
                             case 'i':
                                 req.session.user.patientIds = [];
-                                con.addInsurance(req.session.user);
+                                status = await con.addInsurance(req.session.user);
                                 break;
                             case 'g':
                                 break;
                         }
+                    }
+                    if(status===500){
+                        req.flash('error','user could not be added');
+                        res.redirect('/register');
+                        return;
                     }
                     console.log(req.session.user);
                     req.flash('success','verification successful. Please log in now.')

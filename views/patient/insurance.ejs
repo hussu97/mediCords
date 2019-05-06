@@ -75,9 +75,10 @@
                 <div class="card card-profile">
                     <div class="card-header card-header-insurance"></div>
                     <div class="card-body text-center">
-
+                        <% if (patientInsurance.id == 1){ %>
+                        <h3 class="mb-3">No Insurance registered for patient</h3>
+                        <% }else{%>   
                         <h3 class="mb-3"><%= patientInsurance.name %></h3>
-
                         <p class="mb-4">
                             Established in <%=patientInsurance.country%>
                         </p>
@@ -97,6 +98,7 @@
                         <p class="mb-6 lg-6 status-p bg-danger pull-right">
                             Pending: <%= billsCount.pending %>
                         </p>
+                        <%}%>
                     </div>
                 </div>
             </div>
@@ -104,6 +106,9 @@
                 <form class="card">
                     <div class="card-header"></div>
                     <div class="card-body">
+                        <% if (patientInsurance.id == 1){ %>
+                        <h3 class="card-title">No Insurance Details</h3>
+                        <% }else{%>  
                         <h3 class="card-title">Insurance Details</h3>
                         <div class="row">
                             <div class="col-md-5">
@@ -156,6 +161,7 @@
 
                             </div>
                         </div>
+                        <%}%>
                     </div>
                     <div class="card-footer text-left">
                         <p><b>Please inform your insurance company for any changes to your insurance plan</b></p>

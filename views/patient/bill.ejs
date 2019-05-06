@@ -89,7 +89,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% patient.bills.forEach((bi)=> { %>
+                                        <% patient.bills.forEach((bi,index)=> { %>
                                         <tr>
 
                                             <th scope="row"><%= bi.date %></th>
@@ -98,7 +98,11 @@
                                             <td><%= bi.vat %></td>
                                             <th scope="row"><%= bi.total %></td>
                                             <% if(bi.status==='not sent'){ %>
-                                                <td><form action="/insurance/<%=insurance.id%>/patient/<%=patient.id%>/bill/<%=bi.id%>/send?_method=PUT" method="POST"><a href="javascript:void(0)" onclick="this.parentNode.submit()">Send</form></td>
+                                                <% if(insurance.id == 1){ %>
+                                                    <td><span class="status-p bg-info"><%= bi.status %></span></td>
+                                                <% }else{ %>
+                                                    <td><form action="/insurance/<%=insurance.id%>/patient/<%=patient.id%>/bill/<%=index%>/send?_method=PUT" method="POST"><a href="javascript:void(0)" onclick="this.parentNode.submit()">Send</form></td>
+                                                <% } %>
                                             <%} else if(bi.status==='pending'){%>
                                                 <td><span class="status-p bg-danger"><%= bi.status %></span></td>
                                             <%} else {%>

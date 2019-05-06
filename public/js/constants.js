@@ -301,15 +301,15 @@ countryList : [
             id : 'w22rewe',
             date: moment().format('MMM Do YY'),
             doctor: 'Mazin Raf',
-            cost: 234.34,
-            vat: 5.67,
-            total: 245.23,
+            cost: '234.34',
+            vat: '5.67',
+            total: '245.23',
             status: 'pending'
           }
         ]
       },
       insurance : {
-        id: 1234,
+        id: '1234',
         username : 'insurUser',
         identificationNumber : 'w2i0wi20w',
         name: 'XYZ Insurance',

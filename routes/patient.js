@@ -24,10 +24,12 @@ router.get('/:id/profile', middlware_hasTypePatient,async(req, res) => {
 });
 //update patient profile
 router.put('/:id', middlware_hasTypePatient,async(req, res) => {
-  req.body.patient.isVerified = false;
   var status = await con.updatePatient(req.params.id,req.body.patient);
-  req.flash('success', 'Patient successfully updated');
-  req.flash('error', 'patient could not be updated');
+  if(status===200){
+    req.flash('success', 'Patient successfully updated');
+  }else{
+    req.flash('error', 'patient could not be updated');
+  }
   res.redirect(`/patient/${req.params.id}/profile`);
 });
 //=========================================
@@ -74,7 +76,9 @@ router.get('/:id/bill', middlware_hasTypePatient,async(req, res) => {
 
 router.get('/:id/insurance', middlware_hasTypePatient,async(req, res) => {
   var patient = await con.getPatient(req.params.id);
+  console.log(patient.insuranceId);
   var insurance = await con.getInsurance(patient.insuranceId);
+  console.log(insurance);
   var pendingCount = 0;
   var approvedCount = 0;
   patient.bills.forEach((el) => {

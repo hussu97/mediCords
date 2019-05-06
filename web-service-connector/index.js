@@ -9,10 +9,16 @@ var {
     axios = require('axios');
 //FORMAT
 // P - H - D - I
-const URL = ''
+const URL = 'http://cloud-python-dev.eu-west-2.elasticbeanstalk.com'
 connector = {}
 connector.addPatient = async patient => {
-    return {status} = await axios.post(`${URL}`,patient);
+    try{
+    var {status}= await axios.post(`${URL}/patient`,patient);
+    }catch(err){
+        console.log(err);
+        return 500;
+    }
+    return status;
 }
 connector.addHospital = async hospital => {
     return {status} = await axios.post(`${URL}`,hospital);
@@ -21,7 +27,13 @@ connector.addDoctor = async doctor => {
     return {status} = await axios.post(`${URL}`,doctor);
 }
 connector.addInsurance = async insurance => {
-    return {status} = await axios.post(`${URL}`,insurance);
+    try{
+        var {status}= await axios.post(`${URL}/insurance`,insurance);
+    }catch(err){
+        console.log(err);
+        return 500;
+    }
+    return status;
 }
 
 connector.addBill = async (id, bill) => {
@@ -43,8 +55,14 @@ connector.addDisease = async (id, disease) => {
 
 connector.updatePatient = async (id, patient) => {
     patient.isVerified = false;
-    patient.expiry = middleWareObj.convertToDate(Number(patient.expiry));
-    return true;
+    patient.expiry = String(middleWareObj.convertToTimeStamp(patient.expiry));
+    try{
+    var {status} = await axios.put(`${URL}/updatepatient/${id}`,patient);
+    }catch(err){
+        console.log(err);
+        return 500;
+    }
+    return status;
 }
 connector.updateHospital = async (id, hospital) => {
     hospital.isVerified = false;
@@ -63,13 +81,15 @@ connector.updateInsurance = async (id, insurance) => {
 }
 
 connector.getPatient = async id => {
-    response = axios.get(`${URL}/${id}`);
-    if(response.statuscode===200){
-        patient = response.item;
+    response = await axios.get(`${URL}/patient/${id}`);
+    if(response.status===200){
+        patient = response.data;
         patient.expiry = middleWareObj.convertToDate(Number(patient.expiry));
         return patient;
     }else{
-        return -1;
+        return {
+            id:1
+        };
     }
 }
 connector.getHospital = async id => {
@@ -81,8 +101,16 @@ connector.getDoctor = async id => {
     return doctor;
 }
 connector.getInsurance = async id => {
-    insurance.expiry = middleWareObj.convertToDate(Number(insurance.expiry));
-    return insurance;
+    response = await axios.get(`${URL}/insurance/${id}`);
+    if(response.status===200){
+        insurance = response.data;
+        insurance.expiry = middleWareObj.convertToDate(Number(insurance.expiry));
+        return insurance;
+    }else{
+        return {
+            id:1
+        };
+    }
 }
 
 connector.getCountryPatients = async country => {
@@ -140,6 +168,9 @@ connector.addPatientToHospital = async (patientid, hospitalid) => {
     return true;
 }
 connector.addPatientToInsurance = async (insuranceid, patientid) => {
+    axios.post(`${URL}/patient/${patientid}/insurance`,{
+        insuranceid:insuranceid
+    })
     return true;
 }
 connector.addDoctorToHospital = async (doctorid, hospitalid) => {
