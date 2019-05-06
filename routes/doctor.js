@@ -74,9 +74,14 @@ router.post('/:id/bill', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the bill');
     bill = req.body.bill;
-    bill.date = middlewareObj.getCurrentTS();
+    bill.date = String(middlewareObj.getCurrentTS());
     bill.id = String(Math.floor(Math.random() * 1000000));
     var status = await con.addBill(req.body.patientid, bill);
+    if(status===200){
+      req.flash('success', 'you successfully added the allergy for the patient');
+    }else{
+      req.flash('error', 'could not add item');
+    }
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
@@ -103,9 +108,14 @@ router.post('/:id/operation', middlware_hasTypeDoctor,async (req, res) => {
     req.flash('success', 'you successfully added the operation for the patient');
     operation = req.body.operation;
     operation.daysInHospital = moment(operation.dischargeDate).diff(moment(operation.date), 'days')
-    operation.date = middlewareObj.convertToTimeStamp(operation.date);
-    operation.dischargeDate = middlewareObj.convertToTimeStamp(operation.dischargeDate);
+    operation.date = String(middlewareObj.convertToTimeStamp(operation.date));
+    operation.dischargeDate = String(middlewareObj.convertToTimeStamp(operation.dischargeDate));
     var status = await con.addOperation(req.body.patientid, operation);
+    if(status===200){
+      req.flash('success', 'you successfully added the allergy for the patient');
+    }else{
+      req.flash('error', 'could not add item');
+    }
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
@@ -113,10 +123,15 @@ router.post('/:id/operation', middlware_hasTypeDoctor,async (req, res) => {
 });
 router.post('/:id/allergy', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
-    req.flash('success', 'you successfully added the allergy for the patient');
+    
     allergy = req.body.allergy;
-    allergy.date = middlewareObj.getCurrentTS();
+    allergy.date = String(middlewareObj.getCurrentTS());
     var status = await con.addAllergy(req.body.patientid, allergy);
+    if(status===200){
+      req.flash('success', 'you successfully added the allergy for the patient');
+    }else{
+      req.flash('error', 'could not add item');
+    }
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
@@ -126,8 +141,13 @@ router.post('/:id/disability', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the disability for the patient');
     disability = req.body.disability;
-    disability.date = middlewareObj.getCurrentTS();
+    disability.date = String(middlewareObj.getCurrentTS());
     var status = await con.addDisability(req.body.patientid, disability);
+    if(status===200){
+      req.flash('success', 'you successfully added the allergy for the patient');
+    }else{
+      req.flash('error', 'could not add item');
+    }
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
@@ -137,8 +157,13 @@ router.post('/:id/disease', middlware_hasTypeDoctor,async (req, res) => {
   if (req.session.isVerified) {
     req.flash('success', 'you successfully added the disease for the patient');
     disease = req.body.disease;
-    disease.date = middlewareObj.getCurrentTS();
+    disease.date = String(middlewareObj.getCurrentTS());
     var status = await con.addDisease(req.body.patientid, disease);
+    if(status===200){
+      req.flash('success', 'you successfully added the allergy for the patient');
+    }else{
+      req.flash('error', 'could not add item');
+    }
   } else {
     req.flash('error', 'you need to be verified to do that');
   }

@@ -12,7 +12,8 @@ const AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
     con = require('../web-service-connector'),
     {
         API
-    } = require('aws-amplify');
+    } = require('aws-amplify'),
+    middleWareObj = require('../middleware');
 API.configure(aws_exports);
 router.get('/', (req, res) => {
     res.render('landing');
@@ -37,7 +38,7 @@ router.post('/register', (req, res) => {
             req.session.user.username = `i.${req.body.insurance.username}`;
             break;
     }
-    req.session.user.expiry = new Date(req.session.user.expiry).getTime() / 1000;
+    req.session.user.expiry = String(middleWareObj.getCurrentTS());
     var poolData = {
         UserPoolId: aws_exports.aws_user_pools_id,
         ClientId: aws_exports.aws_user_pools_web_client_id
@@ -61,6 +62,7 @@ router.post('/register', (req, res) => {
             res.redirect('/register');
             return;
         }
+        req.flash('success','Sign up success')
         res.redirect('/verify');
     });
 

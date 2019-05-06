@@ -29,6 +29,7 @@
     "amazon-cognito-identity-js": "^3.0.11",
     "aws-amplify": "^1.1.26",
     "aws-sdk": "^2.448.0",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "ejs": "^2.6.1",
