@@ -23,6 +23,8 @@ middlewareObj.isLoggedIn = (type) => {
                     res.sendFile(path.join(__dirname + '/../403.html'));
                     return;
                 }
+                console.log(req.params.id);
+                console.log(session.getIdToken().decodePayload().sub)
                 if(req.params.id!=session.getIdToken().decodePayload().sub){
                     req.flash('error', 'You need to be logged in to do that!');
                     res.sendFile(path.join(__dirname + '/../403.html'));

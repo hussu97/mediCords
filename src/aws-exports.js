@@ -17,14 +17,7 @@ const awsmobile = {
     "aws_cognito_region": "eu-west-1",
     "aws_user_pools_id": "eu-west-1_JGkIKeItC",
     "aws_user_pools_web_client_id": "n3q40q8k7itj0o6t47an0594j",
-    "oauth": {},
-    "aws_cloud_logic_custom": [
-        {
-            "name": "testApi",
-            "endpoint": "https://vdu4e13gq4.execute-api.eu-west-1.amazonaws.com/stag",
-            "region": "eu-west-1"
-        }
-    ]
+    "oauth": {}
 };
 
 

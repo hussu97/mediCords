@@ -2,7 +2,7 @@
 /srtdash
 /public/assets
 /srtdash
-
+.elasticbeanstalk
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -14,3 +14,7 @@ node_modules/
 awsconfiguration.json
 test.http
 push.sh
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -37,8 +37,10 @@ router.post('/register', (req, res) => {
             req.session.user = req.body.insurance;
             req.session.user.username = `i.${req.body.insurance.username}`;
             break;
+        case 'government':
+            break;
     }
-    req.session.user.expiry = String(middleWareObj.getCurrentTS());
+    req.session.user.expiry = String(middleWareObj.convertToTimeStamp(req.session.user.expiry));
     var poolData = {
         UserPoolId: aws_exports.aws_user_pools_id,
         ClientId: aws_exports.aws_user_pools_web_client_id
@@ -130,16 +132,12 @@ router.post('/verify', (req, res) => {
                                 status = await con.addPatient(req.session.user);
                                 break;
                             case 'd':
-                                req.session.user.patientIds = [];
                                 status = await con.addDoctor(req.session.user);
                                 break;
                             case 'h':
-                                req.session.user.patientIds = [];
-                                req.session.user.doctorIds = [];
                                 status = await con.addHospital(req.session.user);
                                 break;
                             case 'i':
-                                req.session.user.patientIds = [];
                                 status = await con.addInsurance(req.session.user);
                                 break;
                             case 'g':
