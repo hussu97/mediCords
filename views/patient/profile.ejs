@@ -130,12 +130,10 @@
                         <h3 class="card-title">Edit Profile</h3>
                         <div class="row">
                             <script>
-                                function copyID() {
-                                    console.log('hi');
-                                    var copyText = document.getElementById("copyid");
+                                function copyID(id) {
+                                    var copyText = document.getElementById(id);
                                     copyText.select();
                                     document.execCommand("copy");
-                                    alert("Copied the text: " + copyText.value);
                                 }
                             </script>
                             <div class="col-md-12">
@@ -145,9 +143,23 @@
                                         <input type="text" class="form-control" value="<%=patient.id%>" readonly
                                             id="copyid">
                                         <div class="input-group-append">
-                                            <span class="input-group-text" onclick="copyID()"><i
+                                            <span class="input-group-text" onclick="copyID('copyid')"><i
                                                     class="fa fa-copy"></i></span>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">API Key</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" value="<% if(patient.isVerified){%><%=patient.apikey%><%}else {%>Need to be verified to access api key<%}%> " readonly id="apiid">
+                                        <% if(patient.isVerified){%>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" onclick="copyID('apiid')"><i
+                                                    class="fa fa-copy"></i></span>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -162,65 +174,65 @@
                                     <label class="form-label">Username</label>
                                     <input type="text" name="patient[username]" class="form-control" readonly
                                         value="<%=patient.username%>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label">Home Address</label>
-                                    <input type="text" name="patient[address]" class="form-control"
-                                        placeholder="Address" value="<%= patient.address %>">
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Home Address</label>
+                                        <input type="text" name="patient[address]" class="form-control"
+                                            placeholder="Address" value="<%= patient.address %>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">First Name</label>
-                                    <input type="text" class="form-control" name="patient[firstName]" placeholder="John"
-                                        value="<%= patient.firstName %>">
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" name="patient[firstName]"
+                                            placeholder="John" value="<%= patient.firstName %>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" name="patient[lastName]" placeholder="Doe"
-                                        value="<%= patient.lastName %>">
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" name="patient[lastName]"
+                                            placeholder="Doe" value="<%= patient.lastName %>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Identity Card Number</label>
-                                    <a href="javascript:void(0);" class="change-id-btn pull-right"
-                                        onclick="changeID()">Change</a>
-                                    <input type="text" id="id" class="form-control" placeholder="Identification Number"
-                                        name="patient[identificationNumber]" readonly
-                                        value="<%= patient.identificationNumber %>">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Identity Card Number</label>
+                                        <a href="javascript:void(0);" class="change-id-btn pull-right"
+                                            onclick="changeID()">Change</a>
+                                        <input type="text" id="id" class="form-control"
+                                            placeholder="Identification Number" name="patient[identificationNumber]"
+                                            readonly value="<%= patient.identificationNumber %>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Expiry</label>
-                                    <input type="date" class="form-control" name="patient[expiry]"
-                                        value="<%= patient.expiry %>">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Expiry</label>
+                                        <input type="date" class="form-control" name="patient[expiry]"
+                                            value="<%= patient.expiry %>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">City</label>
-                                    <input type="text" class="form-control" name="patient[city]" placeholder="City"
-                                        value="<%= patient.city %>">
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        <input type="text" class="form-control" name="patient[city]" placeholder="City"
+                                            value="<%= patient.city %>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Country</label>
-                                    <select id="country" name="patient[country]" class="form-control">
-                                        <%
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Country</label>
+                                        <select id="country" name="patient[country]" class="form-control">
+                                            <%
                                                         for ( var i = 0; i < countryList.length; i++ )
                                                         {
                                                             var selected = ( patient.country == countryList[i].name ) ? "selected" : "";
                                                             %>
-                                        <option value="<%=countryList[i].name %>" <%=selected %>>
-                                            <%=countryList[i].name %></option>
-                                        <%}%>
+                                            <option value="<%=countryList[i].name %>" <%=selected %>>
+                                                <%=countryList[i].name %></option>
+                                            <%}%>
                                             </select>
                                         </div>
                                         
@@ -238,10 +250,10 @@
         </div>
         <!-- main content area end -->
         <% include ./partials/footer %>
-                                </div>
-                                <!-- main wrapper start -->
-                                <% include ./partials/offset %>
-                                <% include ./partials/scripts %>
-                                </body>
+                                    </div>
+                                    <!-- main wrapper start -->
+                                    <% include ./partials/offset %>
+                                    <% include ./partials/scripts %>
+                                    </body>
 
-                                </html>
+                                    </html>

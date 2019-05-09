@@ -334,16 +334,20 @@ connector.verifyPatient = async (id, isVerified) => {
 }
 connector.verifyHospital = async (id, isVerified) => {
     var ver;
+    var apikey;
     if (isVerified == "true") {
         ver = true;
+        apikey = middleWareObj.generateKey();
     } else {
         ver = false;
+        apikey = "null"
     }
     try {
         var {
             status
         } = await axios.put(`${URL}/hospital/${id}/verify`, mItem({
-            isVerified: ver
+            isVerified: ver,
+            apikey: apikey
         }));
     } catch (err) {
         console.log(err);
@@ -353,16 +357,20 @@ connector.verifyHospital = async (id, isVerified) => {
 }
 connector.verifyDoctor = async (id, isVerified) => {
     var ver;
+    var apikey;
     if (isVerified == "true") {
         ver = true;
+        apikey = middleWareObj.generateKey();
     } else {
         ver = false;
+        apikey = "null"
     }
     try {
         var {
             status
         } = await axios.put(`${URL}/doctor/${id}/verify`, mItem({
-            isVerified: ver
+            isVerified: ver,
+            apikey: apikey
         }));
     } catch (err) {
         console.log(err);
@@ -372,16 +380,20 @@ connector.verifyDoctor = async (id, isVerified) => {
 }
 connector.verifyInsurance = async (id, isVerified) => {
     var ver;
+    var apikey;
     if (isVerified == "true") {
         ver = true;
+        apikey = middleWareObj.generateKey();
     } else {
         ver = false;
+        apikey = "null"
     }
     try {
         var {
             status
         } = await axios.put(`${URL}/insurance/${id}/verify`, mItem({
-            isVerified: ver
+            isVerified: ver,
+            apikey: apikey
         }));
     } catch (err) {
         console.log(err);

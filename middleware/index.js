@@ -7,7 +7,7 @@ var path = require('path');
 var middlewareObj = {};
 
 middlewareObj.isLoggedIn = (type) => {
-    return function(req, res, next) {
+    return function (req, res, next) {
         var poolData = {
             UserPoolId: aws_exports.aws_user_pools_id,
             ClientId: aws_exports.aws_user_pools_web_client_id
@@ -15,17 +15,17 @@ middlewareObj.isLoggedIn = (type) => {
         var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
         var cognitoUser = userPool.getCurrentUser();
         if (cognitoUser != null) {
-            cognitoUser.getSession( (err, session)=> {
+            cognitoUser.getSession((err, session) => {
                 if (err) {
                     console.log(err)
-                    console.log('a: '+req.flash);
+                    console.log('a: ' + req.flash);
                     req.flash('error', 'You need to be logged in to do that!');
                     res.sendFile(path.join(__dirname + '/../403.html'));
                     return;
                 }
                 console.log(req.params.id);
                 console.log(session.getIdToken().decodePayload().sub)
-                if(req.params.id!=session.getIdToken().decodePayload().sub){
+                if (req.params.id != session.getIdToken().decodePayload().sub) {
                     req.flash('error', 'You need to be logged in to do that!');
                     res.sendFile(path.join(__dirname + '/../403.html'));
                     return;
@@ -33,24 +33,24 @@ middlewareObj.isLoggedIn = (type) => {
                 //call refresh method in order to authenticate user and get new temp credentials
                 AWS.config.credentials.refresh((error) => {
                     if (error) {
-                        console.log('b: '+req.flash);
+                        console.log('b: ' + req.flash);
                         console.error(error);
                         req.flash('error', 'You need to be logged in to do that!');
                         res.sendFile(path.join(__dirname + '/../403.html'));
                     } else {
-                        cognitoUser.getUserAttributes((err, result)=> {
+                        cognitoUser.getUserAttributes((err, result) => {
                             if (err) {
                                 console.log(err);
                                 return;
                             }
                             for (i = 0; i < result.length; i++) {
                                 console.log('attribute ' + result[i].getName() + ' has value ' + result[i].getValue());
-                                if(result[i].getName()==='custom:type'){
-                                    console.log('Type is: '+type);
-                                    if(result[i].getValue()===type){
+                                if (result[i].getName() === 'custom:type') {
+                                    console.log('Type is: ' + type);
+                                    if (result[i].getValue() === type) {
                                         console.log('right user type');
                                         return next();
-                                    }else{
+                                    } else {
                                         console.log('wrong user type');
                                         res.sendFile(path.join(__dirname + '/../403.html'));
                                     }
@@ -61,7 +61,7 @@ middlewareObj.isLoggedIn = (type) => {
                 });
             });
         } else {
-            console.log('c: '+req.flash);
+            console.log('c: ' + req.flash);
             console.error('no user');
             req.flash('error', 'You need to be logged in to do that!');
             res.sendFile(path.join(__dirname + '/../403.html'));
@@ -73,9 +73,18 @@ middlewareObj.convertToTimeStamp = date => {
     return new Date(date).getTime()
 }
 middlewareObj.convertToDate = timeStamp => {
-    return moment.unix(timeStamp/1000).format('YYYY-MM-DD');
+    return moment.unix(timeStamp / 1000).format('YYYY-MM-DD');
 }
 middlewareObj.getCurrentTS = () => {
     return new Date().getTime();
+}
+middlewareObj.generateKey= () => {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
 }
 module.exports = middlewareObj;

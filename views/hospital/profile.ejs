@@ -112,12 +112,10 @@
                                 <h3 class="card-title">Edit Profile</h3>
                                 <div class="row">
                                     <script>
-                                        function copyID() {
-                                            console.log('hi');
-                                            var copyText = document.getElementById("copyid");
+                                        function copyID(id) {
+                                            var copyText = document.getElementById(id);
                                             copyText.select();
                                             document.execCommand("copy");
-                                            alert("Copied the text: " + copyText.value);
                                         }
                                     </script>
                                     <div class="col-md-12">
@@ -127,9 +125,23 @@
                                                 <input type="text" class="form-control" value="<%=hospital.id%>" readonly
                                                     id="copyid">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text" onclick="copyID()"><i
+                                                    <span class="input-group-text" onclick="copyID('copyid')"><i
                                                             class="fa fa-copy"></i></span>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">API Key</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" value="<% if(hospital.isVerified){%><%=hospital.apikey%><%}else {%>Need to be verified to access api key<%}%> " readonly id="apiid">
+                                                <% if(hospital.isVerified){%>
+                                                <div class=" input-group-append">
+                                                <span class="input-group-text" onclick="copyID('apiid')"><i
+                                                        class="fa fa-copy"></i></span>
+                                            </div>
+                                            <%}%>
                                             </div>
                                         </div>
                                     </div>
