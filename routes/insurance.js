@@ -120,7 +120,7 @@ router.post('/:id/patient', middlware_hasTypeInsurance, async (req, res) => {
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
-  res.redirect('back');
+  res.redirect(`/insurance/${req.params.id}/patients`);
 });
 //=========================================
 //                insurance patient bill routes

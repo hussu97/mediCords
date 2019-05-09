@@ -78,7 +78,7 @@
                         <% if (patientInsurance.id == 1){ %>
                         <h3 class="mb-3">No Insurance registered for patient</h3>
                         <% }else{%>   
-                        <h3 class="mb-3"><%= patientInsurance.name %></h3>
+                        <h3 class="mb-3"><%= patientInsurance.Iname %></h3>
                         <p class="mb-4">
                             Established in <%=patientInsurance.country%>
                         </p>
@@ -116,7 +116,7 @@
                                     <label class="form-label">Company</label>
                                     <div class="input-group mb-3">
                                         <input type="text" id="name" name="name" class="form-control" readonly
-                                            value="<%= patientInsurance.name%>" placeholder="Company">
+                                            value="<%= patientInsurance.Iname%>" placeholder="Company">
                                     </div>
                                 </div>
                             </div>

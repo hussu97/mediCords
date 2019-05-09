@@ -50,10 +50,11 @@ router.get('/:id/patients', middlware_hasTypeDoctor, async (req, res) => {
   } else {
     req.session.isVerified = doctor.isVerified;
     patients = [];
-    console.log(doctor.patientIds);
-    for (i = 0; i < doctor.patientIds.length; i++) {
-      var p = await con.getPatient(doctor.patientIds[i])
-      patients.push(p);
+    if (doctor.patientIds) {
+      for (i = 0; i < doctor.patientIds.length; i++) {
+        var p = await con.getPatient(doctor.patientIds[i])
+        patients.push(p);
+      }
     }
     res.render('doctor/patients', {
       doctor: doctor,
@@ -85,9 +86,11 @@ router.get('/:id/bill/new', middlware_hasTypeDoctor, async (req, res) => {
   } else {
     req.session.isVerified = doctor.isVerified;
     patients = [];
-    for (i = 0; i < doctor.patientIds.length; i++) {
-      var p = await con.getPatient(doctor.patientIds[i])
-      patients.push(p);
+    if (doctor.patientIds) {
+      for (i = 0; i < doctor.patientIds.length; i++) {
+        var p = await con.getPatient(doctor.patientIds[i])
+        patients.push(p);
+      }
     }
     res.render('doctor/bill-new', {
       doctor: doctor,
@@ -109,7 +112,7 @@ router.post('/:id/bill', middlware_hasTypeDoctor, async (req, res) => {
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
-  res.redirect('back');
+  res.redirect(`/doctor/${req.params.id}/bill/new`);
 });
 //=========================================
 //                doctor add medical info routes
@@ -119,6 +122,7 @@ router.get('/:id/medical/new', middlware_hasTypeDoctor, async (req, res) => {
   if (doctor.id === 1) {
     res.sendFile(path.join(__dirname + '/../500.html'));
   } else {
+    console.log(doctor.isVerified)
     req.session.isVerified = doctor.isVerified;
     patients = [];
     if (doctor.patientIds) {
@@ -148,7 +152,7 @@ router.post('/:id/operation', middlware_hasTypeDoctor, async (req, res) => {
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
-  res.redirect('back');
+  res.redirect(`/doctor/${req.params.id}/medical/new`);
 });
 router.post('/:id/allergy', middlware_hasTypeDoctor, async (req, res) => {
   if (req.session.isVerified) {
@@ -163,7 +167,7 @@ router.post('/:id/allergy', middlware_hasTypeDoctor, async (req, res) => {
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
-  res.redirect('back');
+  res.redirect(`/doctor/${req.params.id}/medical/new`);
 });
 router.post('/:id/disability', middlware_hasTypeDoctor, async (req, res) => {
   if (req.session.isVerified) {
@@ -178,7 +182,7 @@ router.post('/:id/disability', middlware_hasTypeDoctor, async (req, res) => {
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
-  res.redirect('back');
+  res.redirect(`/doctor/${req.params.id}/medical/new`);
 });
 router.post('/:id/disease', middlware_hasTypeDoctor, async (req, res) => {
   if (req.session.isVerified) {
@@ -193,6 +197,6 @@ router.post('/:id/disease', middlware_hasTypeDoctor, async (req, res) => {
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
-  res.redirect('back');
+  res.redirect(`/doctor/${req.params.id}/medical/new`);
 });
 module.exports = router;

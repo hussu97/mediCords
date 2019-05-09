@@ -45,9 +45,11 @@ router.get('/:id/doctors', middlware_hasTypeHospital, async (req, res) => {
     res.sendFile(path.join(__dirname + '/../500.html'));
   } else {
     doctors = [];
-    for (i = 0; i < hospital.doctorIds.length; i++) {
-      var d = await con.getDoctor(hospital.doctorIds[i])
-      doctors.push(d);
+    if (hospital.doctorIds) {
+      for (i = 0; i < hospital.doctorIds.length; i++) {
+        var d = await con.getDoctor(hospital.doctorIds[i])
+        doctors.push(d);
+      }
     }
     res.render('hospital/doctors', {
       hospital: hospital,
@@ -64,9 +66,11 @@ router.get('/:id/doctors/:doctorid', middlware_hasTypeHospital, async (req, res)
     req.session.isVerified = hospital.isVerified;
     var doctor = await con.getDoctor(req.params.doctorid);
     patients = [];
-    for (i = 0; i < doctor.patientIds.length; i++) {
-      var p = await con.getPatient(doctor.patientIds[i])
-      patients.push(p);
+    if (doctor.patientIds) {
+      for (i = 0; i < doctor.patientIds.length; i++) {
+        var p = await con.getPatient(doctor.patientIds[i])
+        patients.push(p);
+      }
     }
     res.render('hospital/doctor-details', {
       hospital: hospital,
@@ -113,9 +117,11 @@ router.get('/:id/patients', middlware_hasTypeHospital, async (req, res) => {
   } else {
     req.session.isVerified = hospital.isVerified;
     patients = [];
-    for (i = 0; i < hospital.patientIds.length; i++) {
-      var p = await con.getPatient(hospital.patientIds[i])
-      patients.push(p);
+    if (hospital.patientIds) {
+      for (i = 0; i < hospital.patientIds.length; i++) {
+        var p = await con.getPatient(hospital.patientIds[i])
+        patients.push(p);
+      }
     }
     res.render('hospital/patients', {
       hospital: hospital,
@@ -156,20 +162,16 @@ router.delete('/:id/patients/:patientid', middlware_hasTypeHospital, async (req,
 //=========================================
 // adds new patient using id
 router.post('/:id/patient', middlware_hasTypeHospital, async (req, res) => {
-  if (req.session.isVerified) {
-    var status = await con.addPatientToHospital(req.params.id, req.body.patientid);
+  var status = await con.addPatientToHospital(req.params.id, req.body.patientid);
+  if (status === 200) {
+    var status = await con.addPatientToDoctor(req.body.doctorid, req.body.patientid);
     if (status === 200) {
-      var status = await con.addPatientToDoctor(req.body.doctorid, req.body.patientid);
-      if (status === 200) {
-        req.flash('success', 'you successfully added the patient');
-      } else {
-        req.flash('error', 'you could not add the patient');
-      }
+      req.flash('success', 'you successfully added the patient');
     } else {
       req.flash('error', 'you could not add the patient');
     }
   } else {
-    req.flash('error', 'you need to be verified to do that');
+    req.flash('error', 'you could not add the patient');
   }
   res.redirect('back');
 });
@@ -198,6 +200,6 @@ router.post('/:id/doctor', middlware_hasTypeHospital, async (req, res) => {
   } else {
     req.flash('error', 'you need to be verified to do that');
   }
-  res.redirect('back')
+  res.redirect(`/hospital/${req.params.id}/doctor/new`)
 })
 module.exports = router;

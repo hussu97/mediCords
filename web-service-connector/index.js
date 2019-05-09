@@ -93,7 +93,7 @@ connector.addDisability = async (id, disability) => {
     try {
         var {
             status
-        } = await axios.post(`${URL}/patient/${id}/disability`, disability);
+        } = await axios.post(`${URL}/patient/${id}/disablity`, disability);
     } catch (err) {
         console.log(err);
         return 500;
@@ -125,6 +125,7 @@ connector.updatePatient = async (id, patient) => {
     return status;
 }
 connector.updateHospital = async (id, hospital) => {
+    console.log("TCL: hospital", hospital)
     hospital.expiry = String(middleWareObj.convertToTimeStamp(hospital.expiry));
     console.log(mItem(hospital));
     try {
@@ -152,8 +153,8 @@ connector.updateDoctor = async (id, doctor) => {
     return status;
 }
 connector.updateInsurance = async (id, insurance) => {
-    insurance.isVerified = false;
     insurance.expiry = String(middleWareObj.convertToTimeStamp(insurance.expiry));
+    console.log(mItem(insurance));
     try {
         var {
             status
@@ -422,9 +423,25 @@ connector.addPatientToHospital = async (hospitalid, patientid) => {
         if (status === 200) {
             var {
                 status
-            } = await axios.post(`${URL}/hospital/${hospitalid}/patient`, {
-                patientIds: patientid
-            });
+            } = await axios.post(`${URL}/hospital/${hospitalid}/patient/${patientid}`);
+        }
+    } catch (err) {
+        console.log(err);
+        return 500;
+    }
+    return status;
+}
+connector.removePatientFromHospital = async (hospitalid, patientid) => {
+    console.log("TCL: hospitalid", hospitalid)
+    console.log("TCL: patientid", patientid)
+    try {
+        var {
+            status
+        } = await axios.delete(`${URL}/hospital/${hospitalid}/patient/${patientid}`);
+        if (status === 200) {
+            var {
+                status
+            } = await axios.delete(`${URL}/patient/${patientid}/hospital`);
         }
     } catch (err) {
         console.log(err);
@@ -436,9 +453,7 @@ connector.addPatientToInsurance = async (insuranceid, patientid) => {
     try {
         var {
             status
-        } = await axios.post(`${URL}/insurance/${insuranceid}/patient`, {
-            patientIds: patientid
-        });
+        } = await axios.post(`${URL}/insurance/${insuranceid}/patient/${patientid}`);
         if (status === 200) {
             var {
                 status
@@ -452,40 +467,9 @@ connector.addPatientToInsurance = async (insuranceid, patientid) => {
     }
     return status;
 }
-connector.addDoctorToHospital = async (hospitalid, doctorid) => {
-    try {
-        var {
-            status
-        } = await axios.post(`${URL}/doctor/${doctorid}/hospital`, {
-            hospitalId: hospitalid
-        });
-        if (status === 200) {
-            var {
-                status
-            } = await axios.post(`${URL}/hospital/${hospitalid}/doctor`, {
-                doctorIds: doctorid
-            });
-        }
-    } catch (err) {
-        console.log(err);
-        return 500;
-    }
-    return status;
-}
-connector.removePatientFromHospital = async (patientid, hospitalid) => {
-    try {
-        var {
-            status
-        } = await axios.post(`${URL}/hospital/${hospitalid}/doctor`, {
-            doctorIds: doctorid
-        });
-    } catch (err) {
-        console.log(err);
-        return 500;
-    }
-    return status;
-}
 connector.removePatientFromInsurance = async (insuranceid, patientid) => {
+    console.log("TCL: patientid", patientid)
+    console.log("TCL: insuranceid", insuranceid)
     try {
         var {
             status
@@ -493,8 +477,27 @@ connector.removePatientFromInsurance = async (insuranceid, patientid) => {
         if (status === 200) {
             var {
                 status
-            } = await axios.delete(`${URL}/insurance/${insuranceid}/patient`, {
-                patientIds: patientid
+            } = await axios.delete(`${URL}/insurance/${insuranceid}/patient/${patientid}`);
+        }
+    } catch (err) {
+        console.log(err);
+        return 500;
+    }
+    return status;
+}
+connector.addDoctorToHospital = async (hospitalid, doctorid) => {
+    console.log("TCL: doctorid", doctorid)
+    console.log("TCL: hospitalid", hospitalid)
+    try {
+        var {
+            status
+        } = await axios.post(`${URL}/hospital/${hospitalid}/doctor/${doctorid}`);
+        if (status === 200) {
+            var {
+                status
+            } =
+            await axios.post(`${URL}/doctor/${doctorid}/hospital`, {
+                hospitalId: hospitalid
             });
         }
     } catch (err) {
@@ -503,19 +506,17 @@ connector.removePatientFromInsurance = async (insuranceid, patientid) => {
     }
     return status;
 }
-connector.removeDoctorFromHospital = async (doctorid, hospitalid) => {
+connector.removeDoctorFromHospital = async (hospitalid, doctorid) => {
+    console.log("TCL: connector.removeDoctorFromHospital -> hospitalid", hospitalid)
+    console.log("TCL: connector.removeDoctorFromHospital -> doctorid", doctorid)
     try {
         var {
             status
-        } = await axios.delete(`${URL}/doctor/${doctorid}/hospital`, {
-            hospitalId: hospitalid
-        });
+        } = await axios.delete(`${URL}/doctor/${doctorid}/hospital`);
         if (status === 200) {
             var {
                 status
-            } = await axios.delete(`${URL}/hospital/${hospitalid}/doctor`, {
-                doctorIds: doctorid
-            });
+            } = await axios.delete(`${URL}/hospital/${hospitalid}/doctor/${doctorid}`);
         }
     } catch (err) {
         console.log(err);
@@ -539,6 +540,13 @@ connector.getGovernment = async id => {
         return {
             id: 1
         };
+    }
+}
+connector.addApiKey = async email => {
+    try {
+
+    } catch (err) {
+        console.log(err);
     }
 }
 module.exports = connector;
