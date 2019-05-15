@@ -17,7 +17,7 @@ We used various AWS Technologies and tools to setup and deploy our system, such 
 * [AWS Cognito](https://aws.amazon.com/cognito/) - Authentication
 * [AWS EC2](https://aws.amazon.com/ec2/) - Deploying the frontend website of the system
 * [Amazon SES](https://aws.amazon.com/ses/) - Simple Email Service provided by Amazon, for sending verification codes while registering
-* [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - Deploying the web service to the application - Find more [here](https://github.com/hussu97/medicords-web-service)
+* [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - Deploying the web service to the application - **[Web service repository](https://github.com/hussu97/medicords-web-service)**
 * [Amazon DynamoDB](https://aws.amazon.com/dynamodb/) - NoSQL database on amazon, used to store and retrieve entity data
 
 ## Requirements
