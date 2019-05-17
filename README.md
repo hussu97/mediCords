@@ -2,9 +2,7 @@
 
 **Medical Records as a service - anywhere, anytime**
 
-[![HomePage1](/screenshots/homepage1.png)](http://ec2-34-248-9-135.eu-west-1.compute.amazonaws.com/)
-[![HomePage2](/screenshots/homepage2.png)](http://ec2-34-248-9-135.eu-west-1.compute.amazonaws.com/)
-[![HomePage3](/screenshots/homepage3.png)](http://ec2-34-248-9-135.eu-west-1.compute.amazonaws.com/)
+[![Website](/screenshots/website.gif)](http://ec2-34-248-9-135.eu-west-1.compute.amazonaws.com/)
 **Project for - CMP404 - Cloud Computing**
 **Project Duration - February-May 2019**
 ***
@@ -57,7 +55,11 @@ $ npm start
 * Insurance companies can approve/reject bills, and add/remove customers into their various health plans
 
 ## Additional Screenshots
-
+###Homepage
+[![HomePage1](/screenshots/homepage1.png)](/screenshots/homepage1.png)
+[![HomePage2](/screenshots/homepage2.png)](/screenshots/homepage2.png)
+[![HomePage3](/screenshots/homepage3.png)](/screenshots/homepage3.png)
+***
 ### Patient Dashboard
 ![Patient Dashboard](/screenshots/patient.png)
 ***
