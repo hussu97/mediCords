@@ -40,7 +40,7 @@
         "flash": "^1.1.0",
         "http": "0.0.0",
         "method-override": "^3.0.0",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "node-fetch": "^2.5.0",
         "path": "^0.12.7",
         "reload": "^3.0.0",
